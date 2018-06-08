@@ -1,0 +1,48 @@
+<!-- First Container -->
+<div class="container-fluid text-center">
+  <div style="padding: 20px 0px">
+    <h1 class="fontBold">Compare your
+
+    </h1>
+  </div>
+
+</div>
+
+<!-- Circles which indicates the steps of the form: -->
+<div class="container switchsteps" style="text-align:center;margin-top:40px;max-width: 700px;">
+  <div class="col-xs-4">
+    <span class="step firststep" (click)="viewFirstStep()" [ngClass]="{'active': step ==='firststep' || step==='midstep' || step==='laststep'}">1</span>
+    <br>Select Supply Address</div>
+  <div class="col-xs-4">
+    <span class="step midstep" (click)="viewMidStep()" [ngClass]="{'active': step ==='midstep' || step==='laststep'}">2</span>
+    <br>Usage</div>
+  <div class="col-xs-4">
+    <span class="step laststep" (click)="viewLastStep()" [ngClass]="{'active':  step==='laststep'}">3</span>
+    <br>Supplier List</div>
+</div>
+
+
+
+<div class="container switchforms" style="margin: 80px auto;max-width:1000px">
+  <div [hidden]="!(step ==='firststep')">
+    <app-step1></app-step1>
+    <div class="btnRow">
+      <button class="next1 btn btn-secondary" (click)="viewMidStep()">Next </button>
+    </div>
+  </div>
+  <div [hidden]="!(step ==='midstep')">
+    <app-step2></app-step2>
+    <div class="btnRow">
+      <button class="next2 btn btn-secondary" (click)="viewLastStep()">Next </button>
+      <button class="prev1 btn btn-secondary" (click)="viewFirstStep()">Previous </button>
+    </div>
+  </div>
+  <div [hidden]="!(step ==='laststep')">
+    <app-step3></app-step3>
+    <div class="btnRow">
+      <button class="prev2 btn btn-secondary" (click)="viewMidStep()">Previous </button>
+    </div>
+  </div>
+
+  {{postCode}}
+</div>

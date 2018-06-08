@@ -1,0 +1,49 @@
+
+.navbar-brand {
+    display: inline-block;
+    padding-top: 0px;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
+    height: auto;
+}
+
+.navbar {
+    padding-top: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 1px;
+    background: #17252a !important;
+    color: #ffffff;
+    fill: #132026;
+}
+
+.navbar-nav li a:hover {
+    color: #1abc9c !important;
+}
+
+@media (min-width: 768px) {
+    .navbar-right {
+        float: right !important;
+        margin-right: 0px;
+    }
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+}
+
+.freephone {
+    font-family: vag_roundedbold;
+    font-size: 20.7px;
+    padding: 8px;
+}
+
+.freephone span {
+    color: #3697c2;
+}
+
