@@ -1,17 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { SwitchTypeComponent } from './switch-type/switch-type.component';
-import { Step1Component } from './switch-type/step1/step1.component';
-import { Step2Component } from './switch-type/step2/step2.component';
-import { Step3Component } from './switch-type/step3/step3.component';
+import { Step1Component } from './switch-steps/step1/step1.component';
+import { Step2Component } from './switch-steps/step2/step2.component';
+import { Step3Component } from './switch-steps/step3/step3.component';
+import { PersonalDetailsComponent } from './switch-steps/personal-details/personal-details.component';
+import { AddressDetailsComponent } from './switch-steps/address-details/address-details.component';
+import { PaymentDetailsComponent } from './switch-steps/payment-details/payment-details.component';
+import {HttpClientModule} from '@angular/common/http';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {DataTableModule} from "angular-6-datatable";
 
 
+
+ 
 const appRoutes: Routes = [
   {
     path: '',
@@ -19,11 +27,36 @@ const appRoutes: Routes = [
   },
   {
     path: 'gas',
-    component: SwitchTypeComponent
+    component: Step1Component
   },
   {
     path: 'electricity',
-    component: SwitchTypeComponent
+    component: Step1Component
+  },
+  {
+    path: 'electricity/usage',
+    component: Step2Component
+  }
+  , {
+    path: 'electricity/pricing-list',
+    component: Step3Component
+  }
+  ,
+  {
+    path: 'gas/usage',
+    component: Step2Component
+  }
+  , {
+    path: 'gas/pricing-list',
+    component: Step3Component
+  }
+  , {
+    path: 'personal-details',
+    component: PersonalDetailsComponent
+  }
+  , {
+    path: 'address-details',
+    component: AddressDetailsComponent
   }
 ];
 
@@ -32,15 +65,22 @@ const appRoutes: Routes = [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    SwitchTypeComponent,
     Step1Component,
     Step2Component,
-    Step3Component
+    Step3Component,
+    PersonalDetailsComponent,
+    AddressDetailsComponent,
+    PaymentDetailsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    ReactiveFormsModule,
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule,
+    NgxSpinnerModule,
+    NgbModule.forRoot(),
+    DataTableModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

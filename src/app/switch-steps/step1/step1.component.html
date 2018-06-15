@@ -1,0 +1,107 @@
+
+
+<form [formGroup]="switchForm" (ngSubmit)="submitForm(switchForm.value,2)">
+  <!-- First Container -->
+  <div class="container-fluid text-center">
+    <div style="padding: 20px 0px">
+      <h1 class="fontBold">Compare your {{switchType}}
+
+      </h1>
+    </div>
+
+  </div>
+
+  <!-- Circles which indicates the steps of the form: -->
+  <div class=" container " style="text-align:center;margin-top:40px;max-width: 700px; ">
+    <div class="row">
+      <div class="col-4 ">
+        <span class="step firststep active">1</span>
+        <br>Select Supply Address</div>
+      <div class="col-4 ">
+        <span class="step midstep" (click)="submitForm(switchForm.value,2)">2</span>
+        <br>Usage</div>
+      <div class="col-4 ">
+        <span class="step laststep " (click)="submitForm(switchForm.value,3)">3</span>
+        <br>Supplier List</div>
+    </div>
+  </div>
+
+
+
+  <div class="container switchforms " style="text-align:center;margin-top:40px;max-width: 1000px; ">
+    <div class="tab ">
+      <div class="row form-group ">
+        <div class="col-sm-3 labelTag ">
+          <label>Post Code *</label>
+        </div>
+        <div class="col-sm-6 ">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Post Code" formControlName="postCode">
+
+            <div class="input-group-append">
+              <span class="input-group-text" style="cursor: pointer;" (click)="getSupplyAddress()">Enter</span>
+            </div>
+          </div>
+
+
+          <div class=" alert-danger" *ngIf="switchForm.controls['postCode'].touched && !switchForm.controls['postCode'].valid">
+            <span *ngIf="switchForm.controls['postCode'].hasError('required') ">
+              Post Code is required!
+            </span>
+            <span *ngIf="switchForm.controls['postCode'].hasError('maxlength') ">
+              Post Code max length is 7
+            </span>
+          </div>
+
+        </div>
+        <div class="col-sm-3 " style="text-align:left ">
+          <!-- <a href=" "> Use current location</a> -->
+        </div>
+      </div>
+
+
+
+      <div class="row form-group ">
+        <div class="col-sm-3 labelTag ">
+          <label>Supply Address</label>
+        </div>
+        <div class="col-sm-6 ">
+          <select class="form-control " formControlName="supplyAddress" (change)="onChange($event.target.value)">
+            <option value="">--Select--</option>
+            <ng-container *ngIf="switchType === 'gas';else viewElectricitySupplyAddress">
+              <option *ngFor="let address of addresses" value='{{address.AddressAsLine + "," + address.MPRN}}'>
+                {{address.AddressAsLine}}
+              </option>
+            </ng-container>
+            <ng-template #viewElectricitySupplyAddress>
+              <option *ngFor="let address of addresses" value='{{address.AddressAsLine + "," + address.MPANCore + "," + address.profileclass + address.metertimeswitchclass + address.linelossfactor}}'>
+                {{address.AddressAsLine}}
+              </option>
+            </ng-template>
+          </select>
+          <div class="alert-danger" *ngIf="switchForm.controls['supplyAddress'].touched && !switchForm.controls['supplyAddress'].valid">
+            <span *ngIf="switchForm.controls['supplyAddress'].hasError('required') ">
+              Supply Address is required!
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-group" [hidden]="!MPANDivShow">
+        <div class="col-sm-3 labelTag ">
+          <label>
+            {{switchType=="electricity" ? "MPAN" : MPRN}}
+          </label>
+        </div>
+        <div class="col-sm-6 text-left">
+          {{switchType=="electricity" ? MPANBottomLineNo : MPRNNo}}
+        </div>
+      </div>
+      <div class="row ">
+        <div class="btnRow ">
+          <button class="next1 btn btn-secondary customBtn" type="submit" [disabled]='!switchForm.valid'>Next </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

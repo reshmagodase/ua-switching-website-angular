@@ -138,7 +138,7 @@ label {
 .form-control {
     font-size: 18px;
     height: 46px !important;
-    border: 1px solid #ced4da !important;
+    /* border: 1px solid #ced4da !important; */
     border-radius: 10px;
 }
 
@@ -149,7 +149,7 @@ label {
     border-radius: 10px;
 }
 
-.switchforms .btn {
+.switchforms .customBtn {
     font-family: vag_roundedregular;
     min-width: 100px;
     padding: 10px 25px;
@@ -159,7 +159,7 @@ label {
 
 .switchforms .btnRow {
     display: table;
-    margin: 80px auto;
+    margin: 50px auto;
 }
 
 .switchforms .btn:hover {
@@ -202,4 +202,49 @@ table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
 
 #pricinglist th {
     text-align: center;
+}
+
+.details .container {
+    margin: 50px auto;
+    max-width: 1100px;
+}
+
+.details .headDetails {
+    border: 2px solid #3197c1;
+    padding: 10px
+}
+
+.details h3 {
+    font-weight: bold;
+}
+
+.details p {
+    color: #99abb4;
+}
+
+.details img {
+    margin: 0 auto;
+    display: table;
+}
+
+.details label {
+    font-weight: bold;
+}
+
+.details .detailsForm {
+    border: 1px solid #e8e8e8;
+}
+
+.detailsForm .headFormDetails {
+    background-color: #3697c2;
+}
+
+.detailsForm .headFormDetails h3 {
+    font-weight: bold;
+    color: white;
+    margin-left: 10px;
+}
+
+.alert-danger{
+    background-color: transparent;
 }

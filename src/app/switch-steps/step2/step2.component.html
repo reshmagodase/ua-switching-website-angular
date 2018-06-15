@@ -1,0 +1,186 @@
+<form [formGroup]="switchForm" (ngSubmit)="submitForm(switchForm.value,3)">
+  <!-- First Container -->
+  <div class="container-fluid text-center">
+    <div style="padding: 20px 0px">
+      <h1 class="fontBold">Compare your {{switchType}}
+
+
+      </h1>
+    </div>
+
+  </div>
+
+  <!-- Circles which indicates the steps of the form: -->
+  <div class="container" style="text-align:center;margin-top:40px;max-width: 700px;">
+    <div class="row">
+      <div class="col-4">
+        <span class="step firststep active" (click)="submitForm(switchForm.value,1)">1</span>
+        <br>Select Supply Address</div>
+      <div class="col-4">
+        <span class="step midstep active">2</span>
+        <br>Usage</div>
+      <div class="col-4">
+        <span class="step laststep" (click)="submitForm(switchForm.value,3)">3</span>
+        <br>Supplier List</div>
+    </div>
+  </div>
+
+  <div class="container switchforms" style="text-align:center;margin-top:40px;max-width: 1000px;">
+    <div class="tab">
+      <div class="row form-group">
+        <div class="col-sm-3 labelTag">
+          <label>Annual Spend</label>
+        </div>
+        <div class="col-sm-6">
+
+
+
+          <div class="input-group mb-3">
+            <input placeholder="Annual Spend" class="form-control" [(ngModel)]="annualSpend" (keypress)="annualUsage=''" formControlName="annualSpend">
+
+            <div class="input-group-append">
+              <span class="input-group-text" style="font-size:20px">&#163;</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row form-group">
+        <div class="col-sm-3 labelTag">
+        </div>
+        <div class="col-sm-6 text-center">
+          OR
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-sm-3 labelTag">
+          <label>Annual Usage</label>
+        </div>
+        <div class="col-sm-6">
+
+          <div class="input-group mb-3">
+            <input placeholder="Annual Usage" class="form-control" [(ngModel)]="annualUsage" (keypress)="annualSpend=''" formControlName="annualUsage">
+
+            <div class="input-group-append">
+              <span class="input-group-text" style="font-size:20px">kWh</span>
+            </div>
+          </div>
+
+          <div class=" alert-danger" *ngIf="switchForm.controls['annualSpend'].touched && !switchForm.controls['annualSpend'].valid && switchForm.controls['annualUsage'].touched && !switchForm.controls['annualUsage'].valid">
+            <span *ngIf="switchForm.controls['annualUsage'].hasError('required') ">
+              Annual Usage or Annual Spend is required!
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-3 labelTag">
+          <label>Contract Start Date</label>
+        </div>
+        <div class="col-sm-6">
+
+
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="d2" ngbDatepicker #d2="ngbDatepicker" formControlName="contractStartDate">
+              <div class="input-group-append">
+                <button class="btn " (click)="d2.toggle()" type="button">
+                  <img src="assets/images/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                </button>
+              </div>
+            </div>
+
+          <div class=" alert-danger" *ngIf="switchForm.controls['contractStartDate'].touched && !switchForm.controls['contractStartDate'].valid">
+            <span *ngIf="switchForm.controls['contractStartDate'].hasError('required') ">
+              Contract Start Date is required!
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row form-group" *ngIf="!showhideCurrentSupplier">
+        <div class="col-sm-3 labelTag">
+          <label>Current Supplier</label>
+        </div>
+        <div class="col-sm-6">
+          <select class="form-control" formControlName="currentSupplier">
+            <option value="">--Select Supplier--</option>
+            <option value="Axis">Axis</option>
+            <option value="Bristol Energy">Bristol Energy</option>
+            <option value="Brook Green">Brook Green</option>
+            <option value="Clear Business">Clear Business</option>
+            <option value="Corona Energy">Corona Energy</option>
+            <option value="D-Energi">D-Energi</option>
+            <option value="Dual Energy">Dual Energy</option>
+            <option value="Ecotricity">Ecotricity</option>
+            <option value="E-ON">E-ON</option>
+            <option value="Extra Energy">Extra Energy</option>
+            <option value="EDF">EDF</option>
+            <option value="Hudson Energy">Hudson Energy</option>
+            <option value="Npower">Npower</option>
+            <option value="Scottish Power">Scottish Power</option>
+          </select>
+
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-sm-3 labelTag">
+        </div>
+        <div class="col-sm-9 labelTag" style="text-align: left">
+          <input style="height:15px !important" type="checkbox" [(ngModel)]="showhideCurrentSupplier" formControlName="checkManual"> My Current Supplier is not automatically listed so I prefer to enter it manually.
+        </div>
+      </div>
+      <div class="row form-group" *ngIf="showhideCurrentSupplier">
+
+        <div class="col-sm-3 labelTag">
+          <label>Current Supplier</label>
+        </div>
+        <div class="col-sm-6">
+          <input placeholder="Current Supplier" class="form-control" formControlName="manualCurrentSupplier">
+        </div>
+      </div>
+
+
+
+      <div class="row form-group">
+        <div class="col-sm-3 labelTag">
+          <label>Billing Type</label>
+        </div>
+        <div class="col-sm-6">
+          <select class="form-control" formControlName="billingType">
+            <option value="">--Select Billing Type--</option>
+            <option value="Direct Debit (Monthly)">Direct Debit (Monthly)</option>
+            <option value="Quarterly Direct Debit">Quarterly Direct Debit</option>
+            <option value="Cash or Cheque">Cash or Cheque</option>
+            <option value="PAYG Prepayment Meter">PAYG Prepayment Meter</option>
+
+
+          </select>
+          <div class=" alert-danger" *ngIf="switchForm.controls['billingType'].touched && !switchForm.controls['billingType'].valid">
+            <span *ngIf="switchForm.controls['billingType'].hasError('required') ">
+              Billing Type is required!
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-sm-3 labelTag">
+          <label>Smart Meter</label>
+        </div>
+        <div class="col-sm-6 text-left">
+          <input style="width: 4%;height:0px" type="checkbox" formControlName="smartMeter">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="btnRow">
+          <button class="prev1 btn btn-secondary customBtn" (click)="submitForm(switchForm.value,1)">Previous </button>
+          <button class="next2 btn btn-secondary customBtn" [disabled]='!switchForm.valid'>Next </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
