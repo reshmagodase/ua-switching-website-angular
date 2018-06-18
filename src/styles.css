@@ -155,7 +155,9 @@ label {
     padding: 10px 25px;
     margin: 5px;
     border: 1px solid #bbbbbb;
+    background-color: #5196c7;
 }
+
 
 .switchforms .btnRow {
     display: table;
@@ -243,8 +245,9 @@ table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
     font-weight: bold;
     color: white;
     margin-left: 10px;
+    margin-top: 10px;
 }
 
-.alert-danger{
+.alert-danger {
     background-color: transparent;
 }

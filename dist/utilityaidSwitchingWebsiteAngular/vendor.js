@@ -47391,7 +47391,7 @@ function bypassSanitizationTrustString(trustedString, mode) {
 /*!****************************************************!*\
   !*** ./node_modules/@angular/forms/fesm5/forms.js ***!
   \****************************************************/
-/*! exports provided: ɵangular_packages_forms_forms_bb, ɵangular_packages_forms_forms_ba, ɵangular_packages_forms_forms_y, ɵangular_packages_forms_forms_z, ɵangular_packages_forms_forms_a, ɵangular_packages_forms_forms_b, ɵangular_packages_forms_forms_c, ɵangular_packages_forms_forms_d, ɵangular_packages_forms_forms_e, ɵangular_packages_forms_forms_f, ɵangular_packages_forms_forms_g, ɵangular_packages_forms_forms_bg, ɵangular_packages_forms_forms_bc, ɵangular_packages_forms_forms_bd, ɵangular_packages_forms_forms_h, ɵangular_packages_forms_forms_i, ɵangular_packages_forms_forms_be, ɵangular_packages_forms_forms_bf, ɵangular_packages_forms_forms_j, ɵangular_packages_forms_forms_k, ɵangular_packages_forms_forms_l, ɵangular_packages_forms_forms_m, ɵangular_packages_forms_forms_o, ɵangular_packages_forms_forms_n, ɵangular_packages_forms_forms_p, ɵangular_packages_forms_forms_r, ɵangular_packages_forms_forms_q, ɵangular_packages_forms_forms_t, ɵangular_packages_forms_forms_u, ɵangular_packages_forms_forms_w, ɵangular_packages_forms_forms_v, ɵangular_packages_forms_forms_x, ɵangular_packages_forms_forms_s, AbstractControlDirective, AbstractFormGroupDirective, CheckboxControlValueAccessor, ControlContainer, NG_VALUE_ACCESSOR, COMPOSITION_BUFFER_MODE, DefaultValueAccessor, NgControl, NgControlStatus, NgControlStatusGroup, NgForm, NgModel, NgModelGroup, RadioControlValueAccessor, FormControlDirective, FormControlName, FormGroupDirective, FormArrayName, FormGroupName, NgSelectOption, SelectControlValueAccessor, SelectMultipleControlValueAccessor, CheckboxRequiredValidator, EmailValidator, MaxLengthValidator, MinLengthValidator, PatternValidator, RequiredValidator, FormBuilder, AbstractControl, FormArray, FormControl, FormGroup, NG_ASYNC_VALIDATORS, NG_VALIDATORS, Validators, VERSION, FormsModule, ReactiveFormsModule */
+/*! exports provided: ɵangular_packages_forms_forms_bb, ɵangular_packages_forms_forms_ba, ɵangular_packages_forms_forms_y, ɵangular_packages_forms_forms_z, ɵangular_packages_forms_forms_a, ɵangular_packages_forms_forms_b, ɵangular_packages_forms_forms_c, ɵangular_packages_forms_forms_d, ɵangular_packages_forms_forms_e, ɵangular_packages_forms_forms_f, ɵangular_packages_forms_forms_g, ɵangular_packages_forms_forms_bg, ɵangular_packages_forms_forms_bc, ɵangular_packages_forms_forms_bd, ɵangular_packages_forms_forms_h, ɵangular_packages_forms_forms_i, ɵangular_packages_forms_forms_be, ɵangular_packages_forms_forms_bf, ɵangular_packages_forms_forms_j, ɵangular_packages_forms_forms_k, ɵangular_packages_forms_forms_l, ɵangular_packages_forms_forms_m, ɵangular_packages_forms_forms_o, ɵangular_packages_forms_forms_n, ɵangular_packages_forms_forms_p, ɵangular_packages_forms_forms_r, ɵangular_packages_forms_forms_q, ɵangular_packages_forms_forms_t, ɵangular_packages_forms_forms_u, ɵangular_packages_forms_forms_w, ɵangular_packages_forms_forms_v, ɵangular_packages_forms_forms_x, ɵangular_packages_forms_forms_s, AbstractControlDirective, AbstractFormGroupDirective, CheckboxControlValueAccessor, ControlContainer, NG_VALUE_ACCESSOR, COMPOSITION_BUFFER_MODE, DefaultValueAccessor, NgControl, NgControlStatus, NgControlStatusGroup, NgForm, NgModel, NgModelGroup, RadioControlValueAccessor, FormControlDirective, formControlName, FormGroupDirective, FormArrayName, FormGroupName, NgSelectOption, SelectControlValueAccessor, SelectMultipleControlValueAccessor, CheckboxRequiredValidator, EmailValidator, MaxLengthValidator, MinLengthValidator, PatternValidator, RequiredValidator, FormBuilder, AbstractControl, FormArray, FormControl, FormGroup, NG_ASYNC_VALIDATORS, NG_VALIDATORS, Validators, VERSION, FormsModule, ReactiveFormsModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47444,7 +47444,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgModelGroup", function() { return NgModelGroup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RadioControlValueAccessor", function() { return RadioControlValueAccessor; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormControlDirective", function() { return FormControlDirective; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormControlName", function() { return FormControlName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formControlName", function() { return formControlName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormGroupDirective", function() { return FormGroupDirective; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormArrayName", function() { return FormArrayName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormGroupName", function() { return FormGroupName; });
@@ -48039,7 +48039,7 @@ function _isAndroid() {
 var COMPOSITION_BUFFER_MODE = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('CompositionEventMode');
 /**
  * The default accessor for writing a value and listening to changes that is used by the
- * `NgModel`, `FormControlDirective`, and `FormControlName` directives.
+ * `NgModel`, `FormControlDirective`, and `formControlName` directives.
  *
  *  ### Example
  *  ```
@@ -48145,7 +48145,7 @@ var NUMBER_VALUE_ACCESSOR = {
 };
 /**
  * The accessor for writing a number value and listening to changes that is used by the
- * `NgModel`, `FormControlDirective`, and `FormControlName` directives.
+ * `NgModel`, `FormControlDirective`, and `formControlName` directives.
  *
  *  ### Example
  *  ```
@@ -48289,7 +48289,7 @@ var RadioControlRegistry = /** @class */ (function () {
  *
  * Writes radio control values and listens to radio control changes.
  *
- * Used by `NgModel`, `FormControlDirective`, and `FormControlName`
+ * Used by `NgModel`, `FormControlDirective`, and `formControlName`
  * to keep the view synced with the `FormControl` model.
  *
  * If you have imported the `FormsModule` or the `ReactiveFormsModule`, this
@@ -48391,7 +48391,7 @@ var RANGE_VALUE_ACCESSOR = {
 };
 /**
  * The accessor for writing a range value and listening to changes that is used by the
- * `NgModel`, `FormControlDirective`, and `FormControlName` directives.
+ * `NgModel`, `FormControlDirective`, and `formControlName` directives.
  *
  *  ### Example
  *  ```
@@ -48479,7 +48479,7 @@ var ReactiveErrors = /** @class */ (function () {
     };
     ReactiveErrors.ngModelWarning = function (directiveName) {
         console.warn("\n    It looks like you're using ngModel on the same form field as " + directiveName + ". \n    Support for using the ngModel input property and ngModelChange event with \n    reactive form directives has been deprecated in Angular v6 and will be removed \n    in Angular v7.\n    \n    For more information on this, see our API docs here:\n    https://angular.io/api/forms/" + (directiveName === 'formControl' ? 'FormControlDirective'
-            : 'FormControlName') + "#use-with-ngmodel\n    ");
+            : 'formControlName') + "#use-with-ngmodel\n    ");
     };
     return ReactiveErrors;
 }());
@@ -48511,7 +48511,7 @@ function _extractId(valueString) {
  *
  * Writes values and listens to changes on a select element.
  *
- * Used by `NgModel`, `FormControlDirective`, and `FormControlName`
+ * Used by `NgModel`, `FormControlDirective`, and `formControlName`
  * to keep the view synced with the `FormControl` model.
  *
  * If you have imported the `FormsModule` or the `ReactiveFormsModule`, this
@@ -51238,7 +51238,7 @@ var formControlBinding$1 = {
  * Simply create a `FormControl`, save it to your component class, and pass it into the
  * `FormControlDirective`.
  *
- * This directive is designed to be used as a standalone control.  Unlike `FormControlName`,
+ * This directive is designed to be used as a standalone control.  Unlike `formControlName`,
  * it does not require that your `FormControl` instance be part of any parent
  * `FormGroup`, and it won't be registered to any `FormGroupDirective` that
  * exists above it.
@@ -51443,7 +51443,7 @@ var formDirectiveProvider$1 = {
  *
  * This directive accepts an existing `FormGroup` instance. It will then use this
  * `FormGroup` instance to match any child `FormControl`, `FormGroup`,
- * and `FormArray` instances to child `FormControlName`, `FormGroupName`,
+ * and `FormArray` instances to child `formControlName`, `FormGroupName`,
  * and `FormArrayName` directives.
  *
  * **Set value**: You can set the form's initial value when instantiating the
@@ -51813,7 +51813,7 @@ function _hasInvalidParent(parent) {
  */
 var controlNameBinding = {
     provide: NgControl,
-    useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function () { return FormControlName; })
+    useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function () { return formControlName; })
 };
 /**
  * @description
@@ -51936,9 +51936,9 @@ var controlNameBinding = {
  *
  *
  */
-var FormControlName = /** @class */ (function (_super) {
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(FormControlName, _super);
-    function FormControlName(parent, validators, asyncValidators, valueAccessors, _ngModelWarningConfig) {
+var formControlName = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(formControlName, _super);
+    function formControlName(parent, validators, asyncValidators, valueAccessors, _ngModelWarningConfig) {
         var _this = _super.call(this) || this;
         _this._ngModelWarningConfig = _ngModelWarningConfig;
         _this._added = false;
@@ -51946,7 +51946,7 @@ var FormControlName = /** @class */ (function (_super) {
         _this.update = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         /**
          * Instance property used to track whether an ngModel warning has been sent out for this
-         * particular FormControlName instance. Used to support warning config of "always".
+         * particular formControlName instance. Used to support warning config of "always".
          *
          * @internal
          */
@@ -51957,52 +51957,52 @@ var FormControlName = /** @class */ (function (_super) {
         _this.valueAccessor = selectValueAccessor(_this, valueAccessors);
         return _this;
     }
-    Object.defineProperty(FormControlName.prototype, "isDisabled", {
+    Object.defineProperty(formControlName.prototype, "isDisabled", {
         set: function (isDisabled) { ReactiveErrors.disabledAttrWarning(); },
         enumerable: true,
         configurable: true
     });
-    FormControlName.prototype.ngOnChanges = function (changes) {
+    formControlName.prototype.ngOnChanges = function (changes) {
         if (!this._added)
             this._setUpControl();
         if (isPropertyUpdated(changes, this.viewModel)) {
-            _ngModelWarning('formControlName', FormControlName, this, this._ngModelWarningConfig);
+            _ngModelWarning('formControlName', formControlName, this, this._ngModelWarningConfig);
             this.viewModel = this.model;
             this.formDirective.updateModel(this, this.model);
         }
     };
-    FormControlName.prototype.ngOnDestroy = function () {
+    formControlName.prototype.ngOnDestroy = function () {
         if (this.formDirective) {
             this.formDirective.removeControl(this);
         }
     };
-    FormControlName.prototype.viewToModelUpdate = function (newValue) {
+    formControlName.prototype.viewToModelUpdate = function (newValue) {
         this.viewModel = newValue;
         this.update.emit(newValue);
     };
-    Object.defineProperty(FormControlName.prototype, "path", {
+    Object.defineProperty(formControlName.prototype, "path", {
         get: function () { return controlPath(this.name, this._parent); },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(FormControlName.prototype, "formDirective", {
+    Object.defineProperty(formControlName.prototype, "formDirective", {
         get: function () { return this._parent ? this._parent.formDirective : null; },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(FormControlName.prototype, "validator", {
+    Object.defineProperty(formControlName.prototype, "validator", {
         get: function () { return composeValidators(this._rawValidators); },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(FormControlName.prototype, "asyncValidator", {
+    Object.defineProperty(formControlName.prototype, "asyncValidator", {
         get: function () {
             return composeAsyncValidators(this._rawAsyncValidators);
         },
         enumerable: true,
         configurable: true
     });
-    FormControlName.prototype._checkParentType = function () {
+    formControlName.prototype._checkParentType = function () {
         if (!(this._parent instanceof FormGroupName) &&
             this._parent instanceof AbstractFormGroupDirective) {
             ReactiveErrors.ngModelGroupException();
@@ -52012,7 +52012,7 @@ var FormControlName = /** @class */ (function (_super) {
             ReactiveErrors.controlParentException();
         }
     };
-    FormControlName.prototype._setUpControl = function () {
+    formControlName.prototype._setUpControl = function () {
         this._checkParentType();
         this.control = this.formDirective.addControl(this);
         if (this.control.disabled && this.valueAccessor.setDisabledState) {
@@ -52022,29 +52022,29 @@ var FormControlName = /** @class */ (function (_super) {
     };
     /**
      * Static property used to track whether any ngModel warnings have been sent across
-     * all instances of FormControlName. Used to support warning config of "once".
+     * all instances of formControlName. Used to support warning config of "once".
      *
      * @internal
      */
-    FormControlName._ngModelWarningSentOnce = false;
-    FormControlName.decorators = [
+    formControlName._ngModelWarningSentOnce = false;
+    formControlName.decorators = [
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"], args: [{ selector: '[formControlName]', providers: [controlNameBinding] },] }
     ];
     /** @nocollapse */
-    FormControlName.ctorParameters = function () { return [
+    formControlName.ctorParameters = function () { return [
         { type: ControlContainer, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Host"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["SkipSelf"] }] },
         { type: Array, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Self"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [NG_VALIDATORS,] }] },
         { type: Array, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Self"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [NG_ASYNC_VALIDATORS,] }] },
         { type: Array, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Self"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [NG_VALUE_ACCESSOR,] }] },
         { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [NG_MODEL_WITH_FORM_CONTROL_WARNING,] }] }
     ]; };
-    FormControlName.propDecorators = {
+    formControlName.propDecorators = {
         name: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"], args: ['formControlName',] }],
         isDisabled: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"], args: ['disabled',] }],
         model: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"], args: ['ngModel',] }],
         update: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"], args: ['ngModelChange',] }]
     };
-    return FormControlName;
+    return formControlName;
 }(NgControl));
 
 /**
@@ -52492,7 +52492,7 @@ var SHARED_FORM_DIRECTIVES = [
     EmailValidator,
 ];
 var TEMPLATE_DRIVEN_DIRECTIVES = [NgModel, NgModelGroup, NgForm];
-var REACTIVE_DRIVEN_DIRECTIVES = [FormControlDirective, FormGroupDirective, FormControlName, FormGroupName, FormArrayName];
+var REACTIVE_DRIVEN_DIRECTIVES = [FormControlDirective, FormGroupDirective, formControlName, FormGroupName, FormArrayName];
 /**
  * Internal module used for sharing directives between FormsModule and ReactiveFormsModule
  */

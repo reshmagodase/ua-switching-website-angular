@@ -24,19 +24,8 @@
 
 <div class="container switchforms" style="margin-top:40px;max-width: 1000px;">
   <div class="tab tab3">
-    <div class="row form-group">
-
-        <div class="col-sm-5">
-        <div class="row">
-          <div class="col-sm-5 labelTag">
-            Post Code:
-          </div>
-          <div class="col-sm-7">
-            <span>{{switchService.step1Obj.postCode}}</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-5">
+    <div class="row form-group" style="display:none">
+      <div class="col-sm-6">
 
         <div class="row">
           <div class="col-sm-5 labelTag">
@@ -47,34 +36,48 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-sm-5">
-          <div class="row">
-            <div class="col-sm-5 labelTag">
-              Annual Spend:
-            </div>
-            <div class="col-sm-7">
-              <span>{{switchService.step2Obj.annualSpend ? switchService.step2Obj.annualSpend : switchService.step2Obj.annualUsage/100 }}</span>
-            </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-5 labelTag">
+            Post Code:
           </div>
-        </div>
-        <div class="col-sm-5">
-  
-          <div class="row">
-            <div class="col-sm-5 labelTag">
-              Annual Usage:
-            </div>
-            <div class="col-sm-7">
-              <span>{{switchService.step2Obj.annualUsage ? switchService.step2Obj.annualSpend : switchService.step2Obj.annualSpend  * 100 }}</span>
-            </div>
+          <div class="col-sm-7">
+            <span>{{switchService.step1Obj.postCode}}</span>
           </div>
         </div>
       </div>
+
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-5 labelTag">
+            Annual Spend:
+          </div>
+          <div class="col-sm-7">
+            <span>{{switchService.step2Obj.annualSpend ? switchService.step2Obj.annualSpend : switchService.step2Obj.annualUsage/100
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+
+        <div class="row">
+          <div class="col-sm-5 labelTag">
+            Annual Usage:
+          </div>
+          <div class="col-sm-7">
+            <span>{{switchService.step2Obj.annualUsage ? switchService.step2Obj.annualSpend : switchService.step2Obj.annualSpend
+              * 100 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row form-group">
 
 
-      <div class="col-sm-5">
+      <div class="col-sm-6">
 
         <div class="row">
           <div class="col-sm-5 labelTag">
@@ -86,7 +89,7 @@
         </div>
       </div>
 
-      <div class="col-sm-5">
+      <div class="col-sm-6">
         <div class="row">
           <div class="col-sm-5 labelTag">
             Current Supplier:
@@ -99,7 +102,7 @@
     </div>
     <div class="row form-group">
 
-      <div class="col-sm-5">
+      <div class="col-sm-6">
 
         <div class="row">
           <div class="col-sm-5 labelTag">
@@ -112,7 +115,7 @@
       </div>
 
 
-      <div class="col-sm-5">
+      <div class="col-sm-6">
         <div class="row">
           <div class="col-sm-5 labelTag">
             Smart Meter:
@@ -132,8 +135,10 @@
 
         <thead>
           <tr>
-            <th><mfDefaultSorter by="Supplier">Supplier</mfDefaultSorter></th>
-            
+            <th>
+              <mfDefaultSorter by="Supplier">Supplier</mfDefaultSorter>
+            </th>
+
             <th>Day Rate</th>
             <th>Standing Charge</th>
             <th>Cost Per Year</th>
@@ -144,7 +149,7 @@
           <ng-container *ngFor="let price of mf.data">
             <tr *ngIf="price.AnnualPrice">
               <td>
-                <img src="http://18.218.232.48:3000/assets/images/energyLogo.png">
+                <img src="assets/images/energyLogo.png">
                 <br> {{price.Supplier}}
               </td>
               <td>{{price.DayUnitrate}}</td>
@@ -164,7 +169,7 @@
                 </ng-template>
               </td>
               <td>
-                <button class="prev1 btn customBtn" style='border:1px solid #4f95c7'>Switch Now </button>
+                <button class="prev1 btn customBtn" style='border:1px solid #4f95c7'  (click)="getSupplierDetails(price)">Switch Now </button>
               </td>
             </tr>
           </ng-container>

@@ -1,15 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { SwitchService } from '../switch.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ValidationErrors, ValidatorFn } from '@angular/forms';
-import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import { AbstractControl, FormBuilder, FormGroup, Validators, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 
 
+/* function usageAmountValidation(c: AbstractControl): any {
+  if (!c.parent || !c) return;
+  const eml = c.parent.get('annualUsage');
+  const ceml = c.parent.get('annualSpend')
 
+  if (!eml || !ceml) return;
+  if (eml.value == "" && ceml.value == "") {
+    console.log("fdg", eml.value, "here");
+    return { required: true };
+  }
+}
+ */
 @Component({
   selector: 'app-step2',
   templateUrl: './step2.component.html',
-  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 
 
@@ -17,7 +28,6 @@ export class Step2Component implements OnInit {
 
   switchType: string = '';
   switchForm: FormGroup;
-  showhideCurrentSupplier: boolean;
   annualSpend: string;
   annualUsage: string;
 
@@ -42,10 +52,9 @@ export class Step2Component implements OnInit {
         this.switchService.step2Obj.smartMeter ? this.switchService.step2Obj.smartMeter : ''],
       'checkManual': [this.switchService.step2Obj.checkManual ? this.switchService.step2Obj.checkManual : false]
     });
-    this.annualSpend= this.switchService.step2Obj.annualSpend ? this.switchService.step2Obj.annualSpend : '';
-    this.annualUsage= this.switchService.step2Obj.annualUsage ? this.switchService.step2Obj.annualUsage : '';
-    
-    this.showhideCurrentSupplier = this.switchService.step2Obj.checkManual ? this.switchService.step2Obj.checkManual : false;
+    this.annualSpend = this.switchService.step2Obj.annualSpend ? this.switchService.step2Obj.annualSpend : '';
+    this.annualUsage = this.switchService.step2Obj.annualUsage ? this.switchService.step2Obj.annualUsage : '';
+
   }
 
 
@@ -72,12 +81,11 @@ export class Step2Component implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.switchService.step2Obj.annualSpend);
     if (this.switchService.currentUrl == "") {
       this.router.navigate(['']);
     }
     else {
-      this.switchType = this.switchService.currentUrl.replace('/', '');
+      this.switchType = this.switchService.currentUrl;
     }
   }
 

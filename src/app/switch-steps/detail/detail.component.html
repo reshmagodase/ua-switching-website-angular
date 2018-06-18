@@ -1,0 +1,119 @@
+<!-- First Container -->
+<div class="details switchforms">
+
+  <div class="container detailsForm">
+    <div class="row headFormDetails">
+      <h3>Please check that you are happy with your details</h3>
+    </div>
+    <div class="row">
+      <h4 class="col-md-12" style="margin-top:10px">Personal Details</h4>
+      <div class="col-md-12">
+
+        <div class="form-group" style="background-color: #eef0f1;padding:5px;">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Name:</label> {{switchService.personalObj.name}}
+            </div>
+            <div class="col-md-6">
+              <label>Company Name:</label> {{switchService.personalObj.companyName}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Company Type:</label> {{switchService.personalObj.companyType}}
+            </div>
+            <div class="col-md-6">
+              <label>Company Registration / Charity Number:</label> {{switchService.personalObj.companyRegNo}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Mobile Number:</label> {{switchService.personalObj.mobileNo}}
+            </div>
+
+          </div>
+        </div>
+
+        <div style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
+          <button class="btn" (click)="openPage('personal-details')">
+            Edit/Update
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+    <hr>
+    <div class="row">
+      <h4 class="col-md-12" style="margin-top:10px">Address Details</h4>
+      <div class="col-md-12">
+
+        <div class="form-group" style="background-color: #eef0f1;padding:5px;">
+          <div class="row">
+            <div class="col-md-12">
+              <label>Current Address:</label> {{switchService.step1Obj.supplyAddress}}
+            </div>
+            <div class="col-md-12">
+              <label>Post Code:</label> {{switchService.step1Obj.postCode}}
+            </div>
+          </div>
+        </div>
+
+        <div style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
+          <button class="btn" (click)="openPage('address-details')">
+            Edit/Update
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+    <hr>
+    <div class="row">
+      <h4 class="col-md-12" style="margin-top:10px">Bank Details</h4>
+      <div class="col-md-12">
+
+        <div class="form-group" style="background-color: #eef0f1;padding:5px;">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Account Holder Name:</label> {{switchService.paymentObj.accountHolderName}}
+            </div>
+            <div class="col-md-6">
+              <label>Preferred Direct Debit Day:</label> {{switchService.paymentObj.directDebitDay}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Sort Code:</label> {{switchService.paymentObj.sortCode}}
+            </div>
+            <div class="col-md-6">
+              <label>Account Number:</label> {{switchService.paymentObj.accountNumber}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              
+              <label>Bank Name:</label> {{switchService.paymentObj.bankName ? switchService.paymentObj.bankName : switchService.paymentObj.manualBankName}}
+            </div>
+          </div>
+        </div>
+
+        <div style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
+          <button class="btn" (click)="openPage('payment-details')">
+            Edit/Update
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+    <hr>
+    <footer style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
+      <button class="btn btn-secondary customBtn" type="submit" (click)="submitDetails()">
+        Submit
+      </button>
+    </footer>
+  </div>
+
+
+</div>

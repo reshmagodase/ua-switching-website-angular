@@ -36,7 +36,8 @@
 
 
           <div class="input-group mb-3">
-            <input placeholder="Annual Spend" class="form-control" [(ngModel)]="annualSpend" (keypress)="annualUsage=''" formControlName="annualSpend">
+            <input placeholder="Annual Spend" class="form-control" type="number" [(ngModel)]="annualSpend" (keypress)="annualUsage=''"
+              formControlName="annualSpend">
 
             <div class="input-group-append">
               <span class="input-group-text" style="font-size:20px">&#163;</span>
@@ -59,15 +60,16 @@
         <div class="col-sm-6">
 
           <div class="input-group mb-3">
-            <input placeholder="Annual Usage" class="form-control" [(ngModel)]="annualUsage" (keypress)="annualSpend=''" formControlName="annualUsage">
+            <input placeholder="Annual Usage" class="form-control" type="number" [(ngModel)]="annualUsage" (keypress)="annualSpend=''"
+              formControlName="annualUsage">
 
             <div class="input-group-append">
               <span class="input-group-text" style="font-size:20px">kWh</span>
             </div>
           </div>
 
-          <div class=" alert-danger" *ngIf="switchForm.controls['annualSpend'].touched && !switchForm.controls['annualSpend'].valid && switchForm.controls['annualUsage'].touched && !switchForm.controls['annualUsage'].valid">
-            <span *ngIf="switchForm.controls['annualUsage'].hasError('required') ">
+          <div class=" alert-danger" *ngIf="(switchForm.controls['annualSpend'].touched && !switchForm.controls['annualSpend'].valid) || (switchForm.controls['annualUsage'].touched && !switchForm.controls['annualUsage'].valid)">
+            <span *ngIf="switchForm.controls['annualSpend'].hasError('required') || switchForm.controls['annualUsage'].hasError('required') ">
               Annual Usage or Annual Spend is required!
             </span>
           </div>
@@ -81,14 +83,14 @@
         <div class="col-sm-6">
 
 
-            <div class="input-group">
-              <input class="form-control" placeholder="yyyy-mm-dd" name="d2" ngbDatepicker #d2="ngbDatepicker" formControlName="contractStartDate">
-              <div class="input-group-append">
-                <button class="btn " (click)="d2.toggle()" type="button">
-                  <img src="assets/images/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
-                </button>
-              </div>
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="d2" ngbDatepicker #d2="ngbDatepicker" formControlName="contractStartDate">
+            <div class="input-group-append">
+              <button class="btn " (click)="d2.toggle()" type="button">
+                <img src="assets/images/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+              </button>
             </div>
+          </div>
 
           <div class=" alert-danger" *ngIf="switchForm.controls['contractStartDate'].touched && !switchForm.controls['contractStartDate'].valid">
             <span *ngIf="switchForm.controls['contractStartDate'].hasError('required') ">
@@ -100,7 +102,7 @@
 
       </div>
 
-      <div class="row form-group" *ngIf="!showhideCurrentSupplier">
+      <div class="row form-group" *ngIf="!switchForm.controls['checkManual'].value">
         <div class="col-sm-3 labelTag">
           <label>Current Supplier</label>
         </div>
@@ -129,10 +131,10 @@
         <div class="col-sm-3 labelTag">
         </div>
         <div class="col-sm-9 labelTag" style="text-align: left">
-          <input style="height:15px !important" type="checkbox" [(ngModel)]="showhideCurrentSupplier" formControlName="checkManual"> My Current Supplier is not automatically listed so I prefer to enter it manually.
+          <input style="height:15px !important" type="checkbox" formControlName="checkManual"> My Current Supplier is not automatically listed so I prefer to enter it manually.
         </div>
       </div>
-      <div class="row form-group" *ngIf="showhideCurrentSupplier">
+      <div class="row form-group" *ngIf="switchForm.controls['checkManual'].value">
 
         <div class="col-sm-3 labelTag">
           <label>Current Supplier</label>

@@ -12,23 +12,37 @@ export class SwitchService {
   step1Obj: any = {};
   step2Obj: any = {};
   step3Obj: any = {};
+  personalObj: any = {};
+  addressObj: any = {};
+  paymentObj: any = {};
   currentUrl: string = '';
+  updateForm: boolean = false;
   constructor(private http: HttpClient, private spinner: NgxSpinnerService) { }
 
   getSupplyAddresses(request) {
     this.spinner.show();
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 2000)
     return this.http.post('/api/getSupplyAddresses', request)
     //return this.http.get('/assets/address.json', httpOptions)
   }
   getElectricPricesList(request) {
-    console.log(request);
     this.spinner.show();
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 2000)
     return this.http.post('/api/getElectricPrices', request)
-   // return this.http.get('/assets/prices.json', httpOptions)
+    //  return this.http.get('/assets/prices.json', httpOptions)
   }
   getGasPricesList(request) {
-    console.log(request);
     this.spinner.show();
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 2000)
     return this.http.post('/api/getGasPrices', request)
     //return this.http.get('/assets/prices.json', httpOptions)
   }

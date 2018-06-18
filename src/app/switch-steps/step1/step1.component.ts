@@ -17,6 +17,7 @@ export class Step1Component implements OnInit {
   MPANDivShow: boolean = false;
   MPANBottomLineNo: string = '';
   MPRNNo: string = '';
+  showHideSupplyAddress: boolean = true;
 
   constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addresses = this.switchService.step1Obj.addresses;
@@ -28,14 +29,17 @@ export class Step1Component implements OnInit {
         this.switchService.step1Obj.supplyAddress ? this.switchService.step1Obj.supplyAddress : ''
         , Validators.required]
     });
+
+    this.showHideSupplyAddress = this.switchService.step1Obj.supplyAddress ? false : true;
   }
 
   ngOnInit() {
-    this.switchService.currentUrl = this.router.url;
-    this.switchType = this.switchService.currentUrl.replace('/', '');
+    this.switchService.currentUrl = this.router.url.replace('/', '');
+    this.switchType = this.switchService.currentUrl;
   }
 
   getSupplyAddress() {
+    this.showHideSupplyAddress = true;
     var request = {
       postCode: this.switchForm.controls['postCode'].value
     }
@@ -65,10 +69,12 @@ export class Step1Component implements OnInit {
         if (this.switchType == "electricity") {
           this.addresses = elecAddressArr;
           this.switchService.step1Obj.addresses = elecAddressArr;
+          this.showHideSupplyAddress = false;
         }
         else {
           this.addresses = gasAddressArr;
           this.switchService.step1Obj.addresses = gasAddressArr;
+          this.showHideSupplyAddress = false;
         }
       },
       err => this.spinner.hide(),
@@ -103,5 +109,11 @@ export class Step1Component implements OnInit {
       this.MPRNNo = code[1];
     }
     this.MPANDivShow = true;
+  }
+
+  onKeydown(event) {
+    if (event.key === "Enter") {
+      this.getSupplyAddress();
+    }
   }
 }

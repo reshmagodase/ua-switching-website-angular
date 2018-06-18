@@ -1,92 +1,197 @@
 <!-- First Container -->
-<div class="details">
-  <div class="container">
-    <div class="row headDetails">
-      <div class="col-md-8">
-        <h3>Personal Details</h3>
-        <p>Please complete the form below. If we already hold the information, it is pre-filled for your convenience.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="http://18.218.232.48:3000/assets/images/energyLogo.png">
+<form [formGroup]="switchForm" (ngSubmit)="submitForm(switchForm.value)">
+  <div class="details switchforms">
+    <div class="container">
+      <div class="row headDetails">
+        <div class="col-md-8">
+          <h3>Payment Details</h3>
+          <p>Please complete the form below. If we already hold the information, it is pre-filled for your convenience.</p>
+        </div>
+        <div class="col-md-4">
+          <img src="assets/images/energyLogo.png">
+        </div>
       </div>
     </div>
+
+    <div class="container detailsForm">
+      <div class="row headFormDetails">
+        <h3>About Your Bank and Building Society</h3>
+      </div>
+      <div class="row">
+        <h4 class="col-md-12" style="margin-top:10px">Your Account</h4>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Name of Account Holder</label>
+            <input placeholder="Name of Account Holder" class="form-control" formControlName="accountHolderName">
+            <div class=" alert-danger" *ngIf="switchForm.controls['accountHolderName'].touched && !switchForm.controls['accountHolderName'].valid">
+              <span *ngIf="switchForm.controls['accountHolderName'].hasError('required')">
+                Account Holder Name is required!
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Preferred Direct Debit Day</label>
+            <select class="form-control" formControlName="directDebitDay">
+              <option value="">--Select--</option>
+              <option value="1">01 - First</option>
+              <option value="2">02 - Second</option>
+              <option value="3">03 - Third</option>
+              <option value="4">04 - Fourth</option>
+              <option value="5">05 - Fifth</option>
+              <option value="6">06 - Sixth</option>
+              <option value="7">07 - Seventh</option>
+              <option value="8">08 - Eight</option>
+              <option value="9">09 - Ninth</option>
+              <option value="10">10 - Tenth</option>
+              <option value="11">11 - Eleventh</option>
+              <option value="12">12 - Twelfth</option>
+              <option value="13">13 - Thirteenth</option>
+              <option value="14">14 - Fourteenth</option>
+              <option value="15">15 - Fifteenth</option>
+              <option value="16">16 - Sixteenth</option>
+              <option value="17">17 - Seventeenth</option>
+              <option value="18">18 - Eighteenth</option>
+              <option value="19">19 - Ninteenth</option>
+              <option value="20">20 - Twentieth</option>
+              <option value="21">21 - Twenty-First</option>
+              <option value="22">22 - Twenty-Second</option>
+              <option value="23">23 - Twenty-Third</option>
+              <option value="24">24 - Twenty-Fourth</option>
+              <option value="25">25 - Twenty-Fifth</option>
+              <option value="26">26 - Twenty-Sixth</option>
+              <option value="27">27 - Twenty-Seventh</option>
+              <option value="28">28 - Twenty-Eight</option>
+            </select>
+            <div class=" alert-danger" *ngIf="switchForm.controls['directDebitDay'].touched && !switchForm.controls['directDebitDay'].valid">
+              <span *ngIf="switchForm.controls['directDebitDay'].hasError('required') ">
+                Preferred Direct Debit Day is required!
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Sort Code</label>
+            <input placeholder="00-00-00" class="form-control" formControlName="sortCode">
+            <div class=" alert-danger" *ngIf="switchForm.controls['sortCode'].touched && !switchForm.controls['sortCode'].valid">
+              <span *ngIf="switchForm.controls['sortCode'].hasError('required') ">
+                Sort Code is required!
+              </span>
+              <span *ngIf="switchForm.controls['sortCode'].hasError('pattern')" class="help-block">
+                Please enter valid Sort Code
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Account Number</label>
+            <input placeholder="Account Number" class="form-control" formControlName="accountNumber">
+            <div class=" alert-danger" *ngIf="switchForm.controls['accountNumber'].touched && !switchForm.controls['accountNumber'].valid">
+              <span *ngIf="switchForm.controls['accountNumber'].hasError('required') ">
+                Account Number is required!
+              </span>
+              <span *ngIf="switchForm.controls['accountNumber'].hasError('pattern')" class="help-block">
+                Please enter valid Account Number
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <h4 class="col-md-12" style="margin-top:10px">Your Bank or Building Society.</h4>
+        <div class="col-md-6" [hidden]="switchForm.controls['checkManual'].value">
+          <div class="form-group">
+            <label>Bank/Building or Society Name</label>
+            <select class="form-control" formControlName="bankName">
+              <option value="">--Select--</option>
+              <option value="Alliance &amp; Leicester Commercial Bank">Alliance &amp; Leicester Commercial Bank</option>
+              <option value="Allied Irish Banks">Allied Irish Banks</option>
+              <option value="Bank of England">Bank of England</option>
+              <option value="Bank of Ireland">Bank of Ireland</option>
+              <option value="Bank of Scotland">Bank of Scotland</option>
+              <option value="Barclays Bank">Barclays Bank</option>
+              <option value="Citibank">Citibank</option>
+              <option value="Clydesdale Bank">Clydesdale Bank</option>
+              <option value="HSBC Bank">HSBC Bank</option>
+              <option value="Lloyds TSB Bank">Lloyds TSB Bank</option>
+              <option value="National Westminster Bank">National Westminster Bank</option>
+              <option value="Nationwide Building Society">Nationwide Building Society</option>
+              <option value="Northern Bank">Northern Bank</option>
+              <option value="Royal Bank of Scotland">Royal Bank of Scotland</option>
+              <option value="Santander UK">Santander UK</option>
+              <option value="The Co-operatve Bank">The Co-operatve Bank</option>
+              <option value="Ulster Bank">Ulster Bank</option>
+
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <input type="checkbox" style="height:15px !important" formControlName="checkManual"> My current bank is not listed so I will prefer to enter it manually.
+        </div>
+        <div class="col-md-6" [hidden]="!switchForm.controls['checkManual'].value">
+          <div class="form-group">
+            <label>Bank/Building or Society Name</label>
+            <input placeholder="Bank Name" class="form-control" formControlName="manualBankName">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <ul style="font-size:14px;margin-top:20px">
+            <li>
+              This Guarantee is offered by all Banks and Building Societies that accept instructions to pay Direct Debits
+            </li>
+            <li>
+              If there are any changes to the amount, date or frequency of your Direct Debit, First Utility will notify you 10 working
+              days in advance of your account being debited or as otherwise agreed
+            </li>
+            <li>
+              If you request First Utility to collect a payment, confirmation of the amount and date will be given to you at the time of
+              the request
+            </li>
+            <li>
+              If an error is made in the payment of your Direct Debit, by First Utility or your Bank or Building Society, you are entitled
+              to a full and immediate refund of the amount paid from your Bank or Building Society If you receive a refund
+              you are not entitled to, you must pay it back when First Utility asks you to
+            </li>
+            <li>
+              You can cancel a Direct Debit at any time by simply contacting your Bank or Building Society Written confirmation may be
+              required. Please also notify First Utility
+            </li>
+          </ul>
+          <input type="checkbox" style="margin-left:40px; height:15px !important" formControlName="terms"> I agree to the Terms and Conditions
+          <div class=" alert-danger" *ngIf="switchForm.controls['terms'].touched && !switchForm.controls['terms'].valid">
+            <span *ngIf="switchForm.controls['terms'].hasError('required') ">
+              You must agree to the terms and conditions
+            </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <img src="assets/images/debitLogo.png">
+        </div>
+      </div>
+      <hr>
+      <footer style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
+        <button class="btn btn-secondary customBtn" type="submit">
+          CONTINUE
+        </button>
+      </footer>
+    </div>
+
+
   </div>
-
-  <div class="container detailsForm">
-    <div class="row headFormDetails">
-      <h3>About You</h3>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Name</label>
-          <input placeholder="Name" class="form-control">
-        </div>
-
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Company Name</label>
-          <input placeholder="Company Name" class="form-control">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Company Type</label>
-          <input placeholder="Company Type" class="form-control">
-        </div>
-
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Company Registration Number</label>
-          <input placeholder="Company Registration Number" class="form-control">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Mobile Number</label>
-          <input placeholder="Mobile Number" class="form-control">
-        </div>
-
-      </div>
-
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Email Address</label>
-          <input placeholder="Email Address" class="form-control">
-        </div>
-
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Confirm Email Address</label>
-          <input placeholder="Confirm Email Address" class="form-control">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Password</label>
-          <input placeholder="Password" class="form-control">
-        </div>
-
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Confirm Password</label>
-          <input placeholder="Confirm Password" class="form-control">
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-</div>
+</form>

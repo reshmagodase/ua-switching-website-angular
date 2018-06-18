@@ -1,5 +1,3 @@
-
-
 <form [formGroup]="switchForm" (ngSubmit)="submitForm(switchForm.value,2)">
   <!-- First Container -->
   <div class="container-fluid text-center">
@@ -36,7 +34,7 @@
         </div>
         <div class="col-sm-6 ">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Post Code" formControlName="postCode">
+            <input type="text" class="form-control" placeholder="Post Code" formControlName="postCode" (keydown)="onKeydown($event)">
 
             <div class="input-group-append">
               <span class="input-group-text" style="cursor: pointer;" (click)="getSupplyAddress()">Enter</span>
@@ -61,7 +59,7 @@
 
 
 
-      <div class="row form-group ">
+      <div class="row form-group " [hidden]="showHideSupplyAddress">
         <div class="col-sm-3 labelTag ">
           <label>Supply Address</label>
         </div>
@@ -90,11 +88,13 @@
       <div class="row form-group" [hidden]="!MPANDivShow">
         <div class="col-sm-3 labelTag ">
           <label>
-            {{switchType=="electricity" ? "MPAN" : MPRN}}
+            {{switchType=="electricity" ? "MPAN" : "MPRN"}}
           </label>
         </div>
         <div class="col-sm-6 text-left">
-          {{switchType=="electricity" ? MPANBottomLineNo : MPRNNo}}
+          <label>
+            {{switchType=="electricity" ? MPANBottomLineNo : MPRNNo}}
+          </label>
         </div>
       </div>
       <div class="row ">

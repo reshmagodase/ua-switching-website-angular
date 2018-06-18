@@ -16,18 +16,14 @@ export class Step3Component implements OnInit {
   prices: any;
   spendAmount: string;
   ngOnInit() {
-    console.log(this.switchService.step2Obj);
-    // this.spendAmount = 100//
     this.spendAmount = this.switchService.step2Obj.spendAmount;
     if (this.switchService.currentUrl == "") {
       this.router.navigate(['']);
     }
     else {
-      this.switchType = this.switchService.currentUrl.replace('/', '');
+      this.switchType = this.switchService.currentUrl;
     }
     this.getSupplyAddress();
-    this.switchType = "gas";
-
   }
 
 
@@ -94,5 +90,11 @@ export class Step3Component implements OnInit {
 
   viewFirstStep() {
     this.router.navigate([this.switchType]);
+  }
+
+  getSupplierDetails(supplier) {
+    console.log(supplier);
+    this.switchService.step3Obj.supplier = supplier;
+    this.router.navigate([this.switchType + '/personal-details']);
   }
 }

@@ -12,14 +12,15 @@ import { Step3Component } from './switch-steps/step3/step3.component';
 import { PersonalDetailsComponent } from './switch-steps/personal-details/personal-details.component';
 import { AddressDetailsComponent } from './switch-steps/address-details/address-details.component';
 import { PaymentDetailsComponent } from './switch-steps/payment-details/payment-details.component';
-import {HttpClientModule} from '@angular/common/http';
+import { DetailComponent } from './switch-steps/detail/detail.component';
+import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {DataTableModule} from "angular-6-datatable";
+import { DataTableModule } from "angular-6-datatable";
 
 
 
- 
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -51,12 +52,36 @@ const appRoutes: Routes = [
     component: Step3Component
   }
   , {
-    path: 'personal-details',
+    path: 'electricity/personal-details',
     component: PersonalDetailsComponent
   }
   , {
-    path: 'address-details',
+    path: 'electricity/address-details',
     component: AddressDetailsComponent
+  }
+  , {
+    path: 'electricity/payment-details',
+    component: PaymentDetailsComponent
+  }
+  , {
+    path: 'gas/personal-details',
+    component: PersonalDetailsComponent
+  }
+  , {
+    path: 'gas/address-details',
+    component: AddressDetailsComponent
+  }
+  , {
+    path: 'gas/payment-details',
+    component: PaymentDetailsComponent
+  }
+  , {
+    path: 'electricity/details',
+    component: DetailComponent
+  }
+  , {
+    path: 'gas/details',
+    component: DetailComponent
   }
 ];
 
@@ -70,7 +95,8 @@ const appRoutes: Routes = [
     Step3Component,
     PersonalDetailsComponent,
     AddressDetailsComponent,
-    PaymentDetailsComponent
+    PaymentDetailsComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +106,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     NgxSpinnerModule,
     NgbModule.forRoot(),
-    DataTableModule 
+    DataTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
