@@ -55,8 +55,7 @@
             Annual Spend:
           </div>
           <div class="col-sm-7">
-            <span>{{switchService.step2Obj.annualSpend ? switchService.step2Obj.annualSpend : switchService.step2Obj.annualUsage/100
-              }}
+            <span>{{switchService.step2Obj.spendAmount}}
             </span>
           </div>
         </div>
@@ -68,8 +67,7 @@
             Annual Usage:
           </div>
           <div class="col-sm-7">
-            <span>{{switchService.step2Obj.annualUsage ? switchService.step2Obj.annualSpend : switchService.step2Obj.annualSpend
-              * 100 }}</span>
+            <span>{{switchService.step2Obj.consumption}}</span>
           </div>
         </div>
       </div>
@@ -155,21 +153,21 @@
               <td>{{price.DayUnitrate}}</td>
               <td>{{price.StandingCharge}}</td>
               <td>
-                <ng-container *ngIf="price.AnnualPrice.replace('£','')/1  > spendAmount;else viewProfit">
+                <ng-container *ngIf="price.AnnualPrice.replace(',','').replace('£','')/1  > spendAmount;else viewProfit">
                   You added
-                  <span style='font-size:20px;color:red'>{{(price.AnnualPrice.replace('£','')/1 - spendAmount).toFixed(2)}}</span>/Yr
+                  <span style='font-size:20px;color:red'>£{{(price.AnnualPrice.replace(',','').replace('£','') - spendAmount).toFixed(2)}}</span>/Yr
                   <br>
                   <b style="color:black">{{price.AnnualPrice}}</b> when you choose for {{price.Term}} year.
                 </ng-container>
                 <ng-template #viewProfit>
                   You save
-                  <span style='font-size:20px;color:green'>{{(spendAmount - price.AnnualPrice.replace('£','')/1).toFixed(2)}}</span>/Yr
+                  <span style='font-size:20px;color:green'>£{{(spendAmount - price.AnnualPrice.replace(',','').replace('£','')).toFixed(2)}}</span>/Yr
                   <br>
                   <b style="color:black">{{price.AnnualPrice}}</b> when you choose for {{price.Term}} year.
                 </ng-template>
               </td>
               <td>
-                <button class="prev1 btn customBtn" style='border:1px solid #4f95c7'  (click)="getSupplierDetails(price)">Switch Now </button>
+                <button class="prev1 btn customBtn" style='border:1px solid #4f95c7' (click)="getSupplierDetails(price)">Switch Now </button>
               </td>
             </tr>
           </ng-container>

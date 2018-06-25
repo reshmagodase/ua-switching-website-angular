@@ -54,14 +54,12 @@ export class AddressDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    this.switchType = "electricity";
-    /*  if (this.switchService.currentUrl == "") {
+     if (this.switchService.currentUrl == "") {
        this.router.navigate(['']);
      }
      else {
        this.switchType = this.switchService.currentUrl.replace('/', '');
-     } */
+     }
   }
 
   submitForm(value: any): void {
@@ -81,5 +79,23 @@ export class AddressDetailsComponent implements OnInit {
     this.switchService.addressObj.billingCountry = value.billingCountry;
     this.switchService.addressObj.billingPostCode = value.billingPostCode;
     this.router.navigate([this.switchType + '/payment-details']);
+  }
+  updateForm(value: any): void {
+    this.switchService.addressObj.residentialStatus = value.residentialStatus;
+    this.switchService.addressObj.yearsAtProperty = value.yearsAtProperty;
+    this.switchService.addressObj.monthsAtProperty = value.monthsAtProperty;
+    this.switchService.addressObj.prevAddressLine1 = value.prevAddressLine1;
+    this.switchService.addressObj.prevAddressLine2 = value.prevAddressLine2;
+    this.switchService.addressObj.prevCity = value.prevCity;
+    this.switchService.addressObj.prevCountry = value.prevCountry;
+    this.switchService.addressObj.prevPostCode = value.prevPostCode;
+    this.switchService.addressObj.checkBillingAddress = value.checkBillingAddress;
+
+    this.switchService.addressObj.billingAddressLine1 = value.billingAddressLine1;
+    this.switchService.addressObj.billingAddressLine2 = value.billingAddressLine2;
+    this.switchService.addressObj.billingCity = value.billingCity;
+    this.switchService.addressObj.billingCountry = value.billingCountry;
+    this.switchService.addressObj.billingPostCode = value.billingPostCode;
+    this.router.navigate([this.switchType + '/details']);
   }
 }

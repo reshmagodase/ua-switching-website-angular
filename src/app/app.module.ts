@@ -17,6 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from "angular-6-datatable";
+import { ThankyouComponent } from './switch-steps/thankyou/thankyou.component';
+
 
 
 
@@ -83,6 +85,10 @@ const appRoutes: Routes = [
     path: 'gas/details',
     component: DetailComponent
   }
+  , {
+    path: 'thankyou',
+    component: ThankyouComponent
+  }
 ];
 
 @NgModule({
@@ -96,7 +102,8 @@ const appRoutes: Routes = [
     PersonalDetailsComponent,
     AddressDetailsComponent,
     PaymentDetailsComponent,
-    DetailComponent
+    DetailComponent,
+    ThankyouComponent
   ],
   imports: [
     BrowserModule,

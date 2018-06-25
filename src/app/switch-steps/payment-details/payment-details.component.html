@@ -9,6 +9,7 @@
         </div>
         <div class="col-md-4">
           <img src="assets/images/energyLogo.png">
+          <h3>{{switchService.step3Obj.supplier.Supplier}}</h3>
         </div>
       </div>
     </div>
@@ -186,10 +187,13 @@
       </div>
       <hr>
       <footer style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
-        <button class="btn btn-secondary customBtn" type="submit">
-          CONTINUE
-        </button>
-      </footer>
+          <button class="btn btn-secondary customBtn" *ngIf="!switchService.updateForm" type="submit" [disabled]='!switchForm.valid'>
+            CONTINUE
+          </button>
+          <button class="btn btn-secondary customBtn" *ngIf="switchService.updateForm" (click)="updateForm(switchForm.value)" [disabled]='!switchForm.valid'>
+            Update
+          </button>
+        </footer>
     </div>
 
 

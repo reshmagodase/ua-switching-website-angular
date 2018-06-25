@@ -23,10 +23,10 @@ export class PaymentDetailsComponent implements OnInit {
         , Validators.required],
       'sortCode': [
         this.switchService.paymentObj.sortCode ? this.switchService.paymentObj.sortCode : ''
-        , [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/),Validators.required]],
+        , [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/), Validators.required]],
       'accountNumber': [
         this.switchService.paymentObj.accountNumber ? this.switchService.paymentObj.accountNumber : ''
-        , [Validators.pattern(/^(\d){8}$/),Validators.required]],
+        , [Validators.pattern(/^(\d){8}$/), Validators.required]],
       'bankName': [
         this.switchService.paymentObj.bankName ? this.switchService.paymentObj.bankName : ''],
       'checkManual': [
@@ -42,16 +42,15 @@ export class PaymentDetailsComponent implements OnInit {
 
 
   ngOnInit() {
-     if (this.switchService.currentUrl == "") {
-       this.router.navigate(['']);
-     }
-     else {
-       this.switchType = this.switchService.currentUrl.replace('/', '');
-     }
+    if (this.switchService.currentUrl == "") {
+      this.router.navigate(['']);
+    }
+    else {
+      this.switchType = this.switchService.currentUrl;
+    }
   }
 
   submitForm(value: any): void {
-    alert(value.directDebitDay);
     this.switchService.paymentObj.accountHolderName = value.accountHolderName;
     this.switchService.paymentObj.directDebitDay = value.directDebitDay;
     this.switchService.paymentObj.sortCode = value.sortCode;
@@ -63,4 +62,15 @@ export class PaymentDetailsComponent implements OnInit {
     this.router.navigate([this.switchType + '/details']);
   }
 
+  updateForm(value: any): void {
+    this.switchService.paymentObj.accountHolderName = value.accountHolderName;
+    this.switchService.paymentObj.directDebitDay = value.directDebitDay;
+    this.switchService.paymentObj.sortCode = value.sortCode;
+    this.switchService.paymentObj.accountNumber = value.accountNumber;
+    this.switchService.paymentObj.bankName = value.bankName;
+    this.switchService.paymentObj.checkManual = value.checkManual;
+    this.switchService.paymentObj.terms = value.terms;
+    this.switchService.paymentObj.manualBankName = value.manualBankName;
+    this.router.navigate([this.switchType + '/details']);
+  }
 }

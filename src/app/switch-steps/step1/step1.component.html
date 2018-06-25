@@ -56,8 +56,12 @@
           <!-- <a href=" "> Use current location</a> -->
         </div>
       </div>
-
-
+      <div class="text-center" [hidden]="showHidePostCode">
+        <div class=" alert-danger">
+          Supply Address for the post code is not available. Please call us at
+          <span style="color:#3697c2;font-weight:bold">0808 1788 170</span> if you have any queries.
+        </div>
+      </div>
 
       <div class="row form-group " [hidden]="showHideSupplyAddress">
         <div class="col-sm-3 labelTag ">
@@ -81,6 +85,15 @@
             <span *ngIf="switchForm.controls['supplyAddress'].hasError('required') ">
               Supply Address is required!
             </span>
+          </div>
+
+        </div>
+        <div class="col-md-12">
+          <div class="text-center">
+            <div class=" alert-danger">
+              If your Supply Address is not listed, please call us at
+              <span style="color:#3697c2;font-weight:bold">0808 1788 170</span>.
+            </div>
           </div>
         </div>
       </div>

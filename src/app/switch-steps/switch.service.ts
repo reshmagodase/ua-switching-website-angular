@@ -24,7 +24,7 @@ export class SwitchService {
 
     setTimeout(() => {
       this.spinner.hide();
-    }, 2000)
+    }, 6000)
     return this.http.post('/api/getSupplyAddresses', request)
     //return this.http.get('/assets/address.json', httpOptions)
   }
@@ -33,7 +33,7 @@ export class SwitchService {
 
     setTimeout(() => {
       this.spinner.hide();
-    }, 2000)
+    }, 6000)
     return this.http.post('/api/getElectricPrices', request)
     //  return this.http.get('/assets/prices.json', httpOptions)
   }
@@ -42,8 +42,18 @@ export class SwitchService {
 
     setTimeout(() => {
       this.spinner.hide();
-    }, 2000)
+    }, 6000)
     return this.http.post('/api/getGasPrices', request)
+    //return this.http.get('/assets/prices.json', httpOptions)
+  }
+
+  sendDocuSign(request) {
+    this.spinner.show();
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 6000)
+    return this.http.post('/api/sendDocuSign', request)
     //return this.http.get('/assets/prices.json', httpOptions)
   }
 }

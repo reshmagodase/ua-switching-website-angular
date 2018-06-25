@@ -74,13 +74,12 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.switchType = "electricity";/* 
      if (this.switchService.currentUrl == "") {
        this.router.navigate(['']);
      }
      else {
-       this.switchType = this.switchService.currentUrl.replace('/', '');
-     } */
+       this.switchType = this.switchService.currentUrl;
+     }
   }
 
 

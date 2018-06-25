@@ -32,7 +32,7 @@ export class Step3Component implements OnInit {
     if (this.switchType == 'electricity') {
       request = {
         ElectricSupply: {
-          Consumption: { Amount: this.switchService.step2Obj.consumption, Type: "Day" },
+          DayConsumption: { Amount: this.switchService.step2Obj.consumption, Type: "Day" },
           MPANTop: this.switchService.step1Obj.MPANTopLineNo,
           MPANBottom: this.switchService.step1Obj.MPANBottomLineNo
         },

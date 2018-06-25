@@ -67,8 +67,15 @@ export class Step2Component implements OnInit {
     this.switchService.step2Obj.checkManual = value.checkManual;
     this.switchService.step2Obj.billingType = value.billingType;
     this.switchService.step2Obj.smartMeter = value.smartMeter;
-    this.switchService.step2Obj.consumption = value.annualSpend ? value.annualSpend * 100 : value.annualUsage;
-    this.switchService.step2Obj.spendAmount = value.annualSpend ? value.annualSpend : value.annualUsage / 100;
+    var pence = 0;
+    if (this.switchType == "electricity") {
+      pence = 13;
+    }
+    else {
+      pence = 3.5;
+    }
+    this.switchService.step2Obj.consumption = value.annualSpend ? (value.annualSpend / (pence/100)).toFixed(0) : value.annualUsage;
+    this.switchService.step2Obj.spendAmount = value.annualSpend ? value.annualSpend : ((value.annualUsage * pence) / 100).toFixed(0);
 
     if (this.switchForm.valid && step == 3) {
       this.router.navigate([this.switchType + '/pricing-list']);

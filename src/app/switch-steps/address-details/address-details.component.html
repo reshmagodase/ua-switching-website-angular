@@ -9,6 +9,7 @@
         </div>
         <div class="col-md-4">
           <img src="assets/images/energyLogo.png">
+          <h3>{{switchService.step3Obj.supplier.Supplier}}</h3>
         </div>
       </div>
     </div>
@@ -38,7 +39,15 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Residential Status</label>
-            <input placeholder="Residential Status" class="form-control" formControlName="residentialStatus">
+            <select class="form-control" formControlName="residentialStatus">
+              <option value="" selected="selected">Select Status</option>
+              <option value="Council Tenant">Council Tenant</option>
+              <option value="Housing Association Tenant">Housing Association Tenant</option>
+              <option value="Joint Owner">Joint Owner</option>
+              <option value="Landlord">Landlord</option>
+              <option value="Owner">Owner</option>
+              <option value="Tenant">Tenant</option>
+            </select>
           </div>
         </div>
         <div class="col-md-3">
@@ -143,9 +152,14 @@
         </div>
       </div>
       <hr>
+
+
       <footer style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
-        <button class="btn btn-secondary customBtn" type="submit">
+        <button class="btn btn-secondary customBtn" *ngIf="!switchService.updateForm" type="submit">
           CONTINUE
+        </button>
+        <button class="btn btn-secondary customBtn" *ngIf="switchService.updateForm" (click)="updateForm(switchForm.value)">
+          Update
         </button>
       </footer>
     </div>

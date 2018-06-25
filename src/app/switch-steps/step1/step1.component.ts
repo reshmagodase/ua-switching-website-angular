@@ -18,6 +18,7 @@ export class Step1Component implements OnInit {
   MPANBottomLineNo: string = '';
   MPRNNo: string = '';
   showHideSupplyAddress: boolean = true;
+  showHidePostCode: boolean = true;
 
   constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addresses = this.switchService.step1Obj.addresses;
@@ -46,36 +47,44 @@ export class Step1Component implements OnInit {
     this.switchService.getSupplyAddresses(request).subscribe(
       (data: any) => {
         var addressList = data.GetAddressesResult.Addresses;
-        var elecAddressArr = [];
-        var gasAddressArr = [];
-        var addressJson = {};
-        var bool = false;
-        for (var i = 0; i < addressList.length; i++) {
-          addressJson = {};
-          for (var j = 0; j < addressList[i].length; j++) {
-            addressJson[addressList[i][j].Key] = addressList[i][j].Value;
-            if (addressList[i][j].Key == "MPANCore") {
-              bool = true;
+        if (addressList.length > 0) {
+          var elecAddressArr = [];
+          var gasAddressArr = [];
+          var addressJson = {};
+          var bool = false;
+          for (var i = 0; i < addressList.length; i++) {
+            addressJson = {};
+            for (var j = 0; j < addressList[i].length; j++) {
+              addressJson[addressList[i][j].Key] = addressList[i][j].Value;
+              if (addressList[i][j].Key == "MPANCore") {
+                bool = true;
+              }
+            }
+            if (bool == true) {
+              bool = false;
+              elecAddressArr.push(addressJson);
+            }
+            else {
+              gasAddressArr.push(addressJson);
             }
           }
-          if (bool == true) {
-            bool = false;
-            elecAddressArr.push(addressJson);
+          if (this.switchType == "electricity") {
+            this.addresses = elecAddressArr;
+            this.switchService.step1Obj.addresses = elecAddressArr;
+            this.showHideSupplyAddress = false;
           }
           else {
-            gasAddressArr.push(addressJson);
+            this.addresses = gasAddressArr;
+            this.switchService.step1Obj.addresses = gasAddressArr;
+            this.showHideSupplyAddress = false;
           }
-        }
-        if (this.switchType == "electricity") {
-          this.addresses = elecAddressArr;
-          this.switchService.step1Obj.addresses = elecAddressArr;
-          this.showHideSupplyAddress = false;
+          this.showHidePostCode = true;
         }
         else {
-          this.addresses = gasAddressArr;
-          this.switchService.step1Obj.addresses = gasAddressArr;
-          this.showHideSupplyAddress = false;
+          this.showHidePostCode = false;
+          this.spinner.hide();
         }
+
       },
       err => this.spinner.hide(),
       () => this.spinner.hide()
