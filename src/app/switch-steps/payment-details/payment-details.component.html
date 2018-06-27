@@ -7,7 +7,7 @@
           <h3>Payment Details</h3>
           <p>Please complete the form below. If we already hold the information, it is pre-filled for your convenience.</p>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 text-center">
           <img src="assets/images/energyLogo.png">
           <h3>{{switchService.step3Obj.supplier.Supplier}}</h3>
         </div>
@@ -108,46 +108,53 @@
         </div>
       </div>
       <hr>
-      <div class="row">
-        <h4 class="col-md-12" style="margin-top:10px">Your Bank or Building Society.</h4>
-        <div class="col-md-6" [hidden]="switchForm.controls['checkManual'].value">
-          <div class="form-group">
-            <label>Bank/Building or Society Name</label>
-            <select class="form-control" formControlName="bankName">
-              <option value="">--Select--</option>
-              <option value="Alliance &amp; Leicester Commercial Bank">Alliance &amp; Leicester Commercial Bank</option>
-              <option value="Allied Irish Banks">Allied Irish Banks</option>
-              <option value="Bank of England">Bank of England</option>
-              <option value="Bank of Ireland">Bank of Ireland</option>
-              <option value="Bank of Scotland">Bank of Scotland</option>
-              <option value="Barclays Bank">Barclays Bank</option>
-              <option value="Citibank">Citibank</option>
-              <option value="Clydesdale Bank">Clydesdale Bank</option>
-              <option value="HSBC Bank">HSBC Bank</option>
-              <option value="Lloyds TSB Bank">Lloyds TSB Bank</option>
-              <option value="National Westminster Bank">National Westminster Bank</option>
-              <option value="Nationwide Building Society">Nationwide Building Society</option>
-              <option value="Northern Bank">Northern Bank</option>
-              <option value="Royal Bank of Scotland">Royal Bank of Scotland</option>
-              <option value="Santander UK">Santander UK</option>
-              <option value="The Co-operatve Bank">The Co-operatve Bank</option>
-              <option value="Ulster Bank">Ulster Bank</option>
+      <div formGroupName="bankGroup">
+        <div class="row">
+          <h4 class="col-md-12" style="margin-top:10px">Your Bank or Building Society.</h4>
+          <div class="col-md-6" [hidden]="switchForm.get('bankGroup').get('checkManual').value">
+            <div class="form-group">
+              <label>Bank/Building or Society Name</label>
+              <select class="form-control" formControlName="bankName">
+                <option value="">--Select--</option>
+                <option value="Alliance &amp; Leicester Commercial Bank">Alliance &amp; Leicester Commercial Bank</option>
+                <option value="Allied Irish Banks">Allied Irish Banks</option>
+                <option value="Bank of England">Bank of England</option>
+                <option value="Bank of Ireland">Bank of Ireland</option>
+                <option value="Bank of Scotland">Bank of Scotland</option>
+                <option value="Barclays Bank">Barclays Bank</option>
+                <option value="Citibank">Citibank</option>
+                <option value="Clydesdale Bank">Clydesdale Bank</option>
+                <option value="HSBC Bank">HSBC Bank</option>
+                <option value="Lloyds TSB Bank">Lloyds TSB Bank</option>
+                <option value="National Westminster Bank">National Westminster Bank</option>
+                <option value="Nationwide Building Society">Nationwide Building Society</option>
+                <option value="Northern Bank">Northern Bank</option>
+                <option value="Royal Bank of Scotland">Royal Bank of Scotland</option>
+                <option value="Santander UK">Santander UK</option>
+                <option value="The Co-operatve Bank">The Co-operatve Bank</option>
+                <option value="Ulster Bank">Ulster Bank</option>
 
-            </select>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <input type="checkbox" style="height:15px !important" formControlName="checkManual"> My current bank is not listed so I will prefer to enter it manually.
-        </div>
-        <div class="col-md-6" [hidden]="!switchForm.controls['checkManual'].value">
-          <div class="form-group">
-            <label>Bank/Building or Society Name</label>
-            <input placeholder="Bank Name" class="form-control" formControlName="manualBankName">
+        <div class="row">
+          <div class="col-md-12">
+            <input type="checkbox" style="height:15px !important" formControlName="checkManual"> My current bank is not listed so I will prefer to enter it manually.
           </div>
-        </div>
+          <div class="col-md-6" [hidden]="!switchForm.get('bankGroup').get('checkManual').value">
+            <div class="form-group">
+              <label>Bank/Building or Society Name</label>
+              <input placeholder="Bank Name" class="form-control" formControlName="manualBankName">
+            </div>
+          </div>
 
+        </div>
+        <div class=" alert-danger" *ngIf="(switchForm.controls['bankGroup'].touched && !switchForm.controls['bankGroup'].valid)">
+          <span *ngIf="switchForm.controls['bankGroup'].hasError('required')">
+              Bank/Building or Society Name is required!
+          </span>
+        </div>
       </div>
 
       <div class="row">
@@ -187,13 +194,13 @@
       </div>
       <hr>
       <footer style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
-          <button class="btn btn-secondary customBtn" *ngIf="!switchService.updateForm" type="submit" [disabled]='!switchForm.valid'>
-            CONTINUE
-          </button>
-          <button class="btn btn-secondary customBtn" *ngIf="switchService.updateForm" (click)="updateForm(switchForm.value)" [disabled]='!switchForm.valid'>
-            Update
-          </button>
-        </footer>
+        <button class="btn btn-secondary customBtn" *ngIf="!switchService.updateForm" type="submit" [disabled]='!switchForm.valid'>
+          CONTINUE
+        </button>
+        <button class="btn btn-secondary customBtn" *ngIf="switchService.updateForm" (click)="updateForm(switchForm.value)" [disabled]='!switchForm.valid'>
+          Update
+        </button>
+      </footer>
     </div>
 
 

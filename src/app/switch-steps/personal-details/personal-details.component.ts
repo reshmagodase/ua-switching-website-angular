@@ -4,31 +4,22 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-function passwordConfirming(c: AbstractControl): any {
-  if (!c.parent || !c) return null;
-  const pwd = c.parent.get('confirmPassword');
-  const cpwd = c.parent.get('password')
-
-  if (!pwd || !cpwd) return null;
-  if (pwd.value === cpwd.value) {
-    return null
-  }
-  else { return { confirm: false } };
-}
-function emailConfirming(c: AbstractControl): any {
-  if (!c.parent || !c) return null;
-  const eml = c.parent.get('emailAddress');
-  const ceml = c.parent.get('confirmEmailAddress')
-
-  if (!eml || !ceml) return null;
 
 
-  if (eml.value === ceml.value) {
-    return null
-  }
-  else { return { confirm: false } };
+export const emailMatcher = (control: AbstractControl): { [key: string]: boolean } => {
+  const email = control.get('emailAddress');
+  const confirm = control.get('confirmEmailAddress');
+  if (!email || !confirm) return null;
+  return email.value === confirm.value ? null : { nomatch: true };
+};
+export const passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
+  const password = control.get('password');
+  const confirm = control.get('confirmPassword');
+  if (!password || !confirm) return null;
+  return password.value === confirm.value ? null : { nomatch: true };
+};
 
-}
+
 @Component({
   selector: 'app-personal-details',
   templateUrl: './personal-details.component.html',
@@ -54,19 +45,24 @@ export class PersonalDetailsComponent implements OnInit {
         , Validators.required],
       'mobileNo': [
         this.switchService.personalObj.mobileNo ? this.switchService.personalObj.mobileNo : ''
-        , Validators.required],
-      'emailAddress': [
-        this.switchService.personalObj.emailAddress ? this.switchService.personalObj.emailAddress : ''
-        , Validators.compose([Validators.required, Validators.email])],
-      'confirmEmailAddress': [
-        this.switchService.personalObj.confirmEmailAddress ? this.switchService.personalObj.confirmEmailAddress : ''
-        , Validators.compose([Validators.required, Validators.email, emailConfirming])],
-      'password': [
-        this.switchService.personalObj.password ? this.switchService.personalObj.password : ''
         , Validators.compose([Validators.required])],
-      'confirmPassword': [
-        this.switchService.personalObj.confirmPassword ? this.switchService.personalObj.confirmPassword : ''
-        , Validators.compose([Validators.required, passwordConfirming])],
+
+      'emailGroup': this.fb.group({
+        'emailAddress': [
+          this.switchService.personalObj.emailAddress ? this.switchService.personalObj.emailAddress : ''
+          , Validators.compose([Validators.required, Validators.email])],
+        'confirmEmailAddress': [
+          this.switchService.personalObj.confirmEmailAddress ? this.switchService.personalObj.confirmEmailAddress : ''
+          , Validators.compose([Validators.required, Validators.email])],
+      }, { validator: emailMatcher }),
+      'passwordGroup': this.fb.group({
+        'password': [
+          this.switchService.personalObj.password ? this.switchService.personalObj.password : ''
+          , Validators.compose([Validators.required])],
+        'confirmPassword': [
+          this.switchService.personalObj.confirmPassword ? this.switchService.personalObj.confirmPassword : ''
+          , Validators.compose([Validators.required])],
+      }, { validator: passwordMatcher })
 
     });
 
@@ -74,12 +70,12 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   ngOnInit() {
-     if (this.switchService.currentUrl == "") {
-       this.router.navigate(['']);
-     }
-     else {
-       this.switchType = this.switchService.currentUrl;
-     }
+    if (this.switchService.currentUrl == "") {
+      this.router.navigate(['']);
+    }
+    else {
+      this.switchType = this.switchService.currentUrl;
+    }
   }
 
 
@@ -91,8 +87,8 @@ export class PersonalDetailsComponent implements OnInit {
     this.switchService.personalObj.companyType = value.companyType;
     this.switchService.personalObj.companyRegNo = value.companyRegNo;
     this.switchService.personalObj.mobileNo = value.mobileNo;
-    this.switchService.personalObj.emailAddress = value.emailAddress;
-    this.switchService.personalObj.confirmEmailAddress = value.confirmEmailAddress;
+    this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
+    this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;
     this.switchService.personalObj.password = value.password;
     this.switchService.personalObj.confirmPassword = value.confirmPassword;
     this.router.navigate([this.switchType + '/address-details']);
@@ -104,8 +100,8 @@ export class PersonalDetailsComponent implements OnInit {
     this.switchService.personalObj.companyType = value.companyType;
     this.switchService.personalObj.companyRegNo = value.companyRegNo;
     this.switchService.personalObj.mobileNo = value.mobileNo;
-    this.switchService.personalObj.emailAddress = value.emailAddress;
-    this.switchService.personalObj.confirmEmailAddress = value.confirmEmailAddress;
+    this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
+    this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;
     this.switchService.personalObj.password = value.password;
     this.switchService.personalObj.confirmPassword = value.confirmPassword;
     this.router.navigate([this.switchType + '/details']);

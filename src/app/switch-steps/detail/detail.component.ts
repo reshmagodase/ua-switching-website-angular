@@ -16,6 +16,13 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(JSON.stringify(this.switchService.step1Obj));
+    console.log(JSON.stringify(this.switchService.step2Obj));
+    console.log(JSON.stringify(this.switchService.step3Obj));
+    console.log(JSON.stringify(this.switchService.personalObj));
+    console.log(JSON.stringify(this.switchService.addressObj));
+    console.log(JSON.stringify(this.switchService.paymentObj));
+    console.log(JSON.stringify(this.switchService.currentUrl));
     this.switchService.updateForm = false;
     if (this.switchService.currentUrl == "") {
       this.router.navigate(['']);
@@ -69,7 +76,7 @@ export class DetailComponent implements OnInit {
       },
       {
         "Key": "bank name",
-        "Value": this.switchService.paymentObj.bankName ? this.switchService.paymentObj.bankName : this.switchService.paymentObj.manualBankName
+        "Value": this.switchService.paymentObj.checkManual ? this.switchService.paymentObj.manualBankName : this.switchService.paymentObj.bankName
       },
       {
         "Key": "bank account name",
@@ -134,7 +141,7 @@ export class DetailComponent implements OnInit {
       ItsAGasContract = false;
       MainDetailsData.push({
         "Key": "current electric supplier 1",
-        "Value": this.switchService.step2Obj.currentSupplier ? this.switchService.step2Obj.currentSupplier : this.switchService.step2Obj.manualCurrentSupplier
+        "Value": this.switchService.step2Obj.checkManual ? this.switchService.step2Obj.manualCurrentSupplier : this.switchService.step2Obj.currentSupplier
       });
       MainDetailsData.push({
         "Key": "mpan top line 1",

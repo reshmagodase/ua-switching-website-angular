@@ -54,12 +54,14 @@ export class AddressDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.switchService.personalObj);
      if (this.switchService.currentUrl == "") {
        this.router.navigate(['']);
      }
      else {
-       this.switchType = this.switchService.currentUrl.replace('/', '');
+       this.switchType = this.switchService.currentUrl;
      }
+
   }
 
   submitForm(value: any): void {

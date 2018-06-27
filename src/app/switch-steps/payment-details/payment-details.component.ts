@@ -1,8 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { SwitchService } from '../switch.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+
+export const bankRequired = (control: AbstractControl): { [key: string]: boolean } => {
+  const bankName = control.get('bankName');
+  const manualBankName = control.get('manualBankName');
+  const checkManual = control.get('checkManual');
+  if (!bankName.value && !manualBankName.value) {
+    return { required: true };
+  }
+  else if (checkManual.value && !manualBankName.value) {
+    return { required: true };
+  }
+  else if (!checkManual.value && !bankName.value) {
+    return { required: true };
+  }
+  else {
+    return null;
+  }
+};
+
+
+export const termsRequired = (control: AbstractControl): { [key: string]: boolean } => {
+  const terms = control.get('terms');
+  if (!terms.value) {
+    return { required: true };
+  }
+  else {
+    return null;
+  }
+};
 
 @Component({
   selector: 'app-payment-details',
@@ -27,15 +56,16 @@ export class PaymentDetailsComponent implements OnInit {
       'accountNumber': [
         this.switchService.paymentObj.accountNumber ? this.switchService.paymentObj.accountNumber : ''
         , [Validators.pattern(/^(\d){8}$/), Validators.required]],
-      'bankName': [
-        this.switchService.paymentObj.bankName ? this.switchService.paymentObj.bankName : ''],
-      'checkManual': [
-        this.switchService.paymentObj.checkManual ? this.switchService.paymentObj.checkManual : false],
-      'terms': [
-        this.switchService.paymentObj.terms ? this.switchService.paymentObj.terms : '', Validators.required],
-      'manualBankName': [
-        this.switchService.paymentObj.manualBankName ? this.switchService.paymentObj.manualBankName : '']
-    });
+      'terms': [this.switchService.paymentObj.terms ? this.switchService.paymentObj.terms : ''],
+      'bankGroup': this.fb.group({
+        'bankName': [
+          this.switchService.paymentObj.bankName ? this.switchService.paymentObj.bankName : ''],
+        'checkManual': [
+          this.switchService.paymentObj.checkManual ? this.switchService.paymentObj.checkManual : false],
+        'manualBankName': [
+          this.switchService.paymentObj.manualBankName ? this.switchService.paymentObj.manualBankName : ''],
+      }, { validator: bankRequired })
+    }, { validator: termsRequired });
 
 
   }
@@ -55,10 +85,10 @@ export class PaymentDetailsComponent implements OnInit {
     this.switchService.paymentObj.directDebitDay = value.directDebitDay;
     this.switchService.paymentObj.sortCode = value.sortCode;
     this.switchService.paymentObj.accountNumber = value.accountNumber;
-    this.switchService.paymentObj.bankName = value.bankName;
-    this.switchService.paymentObj.checkManual = value.checkManual;
+    this.switchService.paymentObj.bankName = value.bankGroup.bankName;
+    this.switchService.paymentObj.checkManual = value.bankGroup.checkManual;
     this.switchService.paymentObj.terms = value.terms;
-    this.switchService.paymentObj.manualBankName = value.manualBankName;
+    this.switchService.paymentObj.manualBankName = value.bankGroup.manualBankName;
     this.router.navigate([this.switchType + '/details']);
   }
 

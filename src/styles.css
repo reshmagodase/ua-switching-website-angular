@@ -156,8 +156,8 @@ label {
     margin: 5px;
     border: 1px solid #bbbbbb;
     background-color: #5196c7;
+    color: white;
 }
-
 
 .switchforms .btnRow {
     display: table;
@@ -250,4 +250,81 @@ table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
 
 .alert-danger {
     background-color: transparent;
+}
+
+@media(max-width: 760px) {
+    .steps {
+        min-height: auto;
+    }
+}
+
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+    /* Force table to not be like tables anymore */
+    .table,
+    .table thead,
+    .table tbody,
+    .table th,
+    .table td,
+    .table tr {
+        display: block;
+        padding: 2px 5px !important
+    }
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    .table tr {
+        border: 1px solid #ccc;
+    }
+    .table td {
+        /* Behave  like a "row" */
+        border: none !important;
+        position: relative;
+        padding-left: 50%;
+    }
+    .table td:before {
+        /* 	left: 6px;
+		width: 45%; 
+		padding-right: 10px;  */
+        white-space: nowrap;
+    }
+    /*
+	Label the data
+	*/
+    .table td:nth-of-type(1):before {
+        content: "";
+    }
+    .table td:nth-of-type(2):before {
+        content: "Day Rate :";
+    }
+    .table td:nth-of-type(3):before {
+        content: "Standing Charge :";
+    }
+    .table td:nth-of-type(4):before {
+        content: "";
+    }
+    .table td:nth-of-type(5):before {
+        content: "";
+    }
+    .table .switchNowBtn {
+        margin-top: -50px;
+        top: -150px;
+        left: 70%;
+    }
+    .table {
+        text-align: left !important;
+    }
+    .table .floatTd:before {
+        font-weight: bold;
+    }
+    .table .floatTd {
+        width: 50%;
+        float: left;
+    }
+    .table .customBtn {
+        padding: 5px;
+    }
 }

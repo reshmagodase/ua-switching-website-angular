@@ -16,6 +16,7 @@ export class Step3Component implements OnInit {
   prices: any;
   spendAmount: string;
   ngOnInit() {
+    console.log(this.switchService);
     this.spendAmount = this.switchService.step2Obj.spendAmount;
     if (this.switchService.currentUrl == "") {
       this.router.navigate(['']);

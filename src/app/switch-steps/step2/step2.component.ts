@@ -5,18 +5,36 @@ import { AbstractControl, FormBuilder, FormGroup, Validators, ValidationErrors, 
 import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 
 
-/* function usageAmountValidation(c: AbstractControl): any {
-  if (!c.parent || !c) return;
-  const eml = c.parent.get('annualUsage');
-  const ceml = c.parent.get('annualSpend')
-
-  if (!eml || !ceml) return;
-  if (eml.value == "" && ceml.value == "") {
-    console.log("fdg", eml.value, "here");
+export const usageRequired = (control: AbstractControl): { [key: string]: boolean } => {
+  const annualSpend = control.get('annualSpend');
+  const annualUsage = control.get('annualUsage');
+  if (!annualSpend.value && !annualUsage.value) {
     return { required: true };
   }
-}
- */
+  else {
+    return null;
+  }
+};
+
+export const supplierRequired = (control: AbstractControl): { [key: string]: boolean } => {
+  const currentSupplier = control.get('currentSupplier');
+  const manualCurrentSupplier = control.get('manualCurrentSupplier');
+  const checkManual = control.get('checkManual');
+
+  if (!currentSupplier.value && !manualCurrentSupplier.value) {
+    return { required: true };
+  }
+  else if (checkManual.value && !manualCurrentSupplier.value) {
+    return { required: true };
+  }
+  else if (!checkManual.value && !currentSupplier.value) {
+    return { required: true };
+  }
+  else {
+    return null;
+  }
+};
+
 @Component({
   selector: 'app-step2',
   templateUrl: './step2.component.html',
@@ -33,24 +51,29 @@ export class Step2Component implements OnInit {
 
   constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder) {
     this.switchForm = fb.group({
-      'annualSpend': [
-        this.switchService.step2Obj.annualSpend ? this.switchService.step2Obj.annualSpend : '']
-      ,
-      'annualUsage': [
-        this.switchService.step2Obj.annualUsage ? this.switchService.step2Obj.annualUsage : ''],
+
       'contractStartDate': [
         this.switchService.step2Obj.contractStartDate ? this.switchService.step2Obj.contractStartDate : ''
         , Validators.required],
-      'currentSupplier': [
-        this.switchService.step2Obj.currentSupplier ? this.switchService.step2Obj.currentSupplier : ''],
-      'manualCurrentSupplier': [
-        this.switchService.step2Obj.manualCurrentSupplier ? this.switchService.step2Obj.manualCurrentSupplier : ''],
+
       'billingType': [
         this.switchService.step2Obj.billingType ? this.switchService.step2Obj.billingType : ''
         , Validators.required],
       'smartMeter': [
         this.switchService.step2Obj.smartMeter ? this.switchService.step2Obj.smartMeter : ''],
-      'checkManual': [this.switchService.step2Obj.checkManual ? this.switchService.step2Obj.checkManual : false]
+      'usageGroup': this.fb.group({
+        'annualSpend': [
+          this.switchService.step2Obj.annualSpend ? this.switchService.step2Obj.annualSpend : ''],
+        'annualUsage': [
+          this.switchService.step2Obj.annualUsage ? this.switchService.step2Obj.annualUsage : ''],
+      }, { validator: usageRequired }),
+      'supplierGroup': this.fb.group({
+        'currentSupplier': [
+          this.switchService.step2Obj.currentSupplier ? this.switchService.step2Obj.currentSupplier : ''],
+        'checkManual': [this.switchService.step2Obj.checkManual ? this.switchService.step2Obj.checkManual : false],
+        'manualCurrentSupplier': [
+          this.switchService.step2Obj.manualCurrentSupplier ? this.switchService.step2Obj.manualCurrentSupplier : ''],
+      }, { validator: supplierRequired })
     });
     this.annualSpend = this.switchService.step2Obj.annualSpend ? this.switchService.step2Obj.annualSpend : '';
     this.annualUsage = this.switchService.step2Obj.annualUsage ? this.switchService.step2Obj.annualUsage : '';
@@ -59,12 +82,12 @@ export class Step2Component implements OnInit {
 
 
   submitForm(value: any, step: number): void {
-    this.switchService.step2Obj.annualSpend = value.annualSpend ? value.annualSpend : '';
-    this.switchService.step2Obj.annualUsage = value.annualUsage ? value.annualUsage : '';
+    this.switchService.step2Obj.annualSpend = value.usageGroup.annualSpend ? value.usageGroup.annualSpend : '';
+    this.switchService.step2Obj.annualUsage = value.usageGroup.annualUsage ? value.usageGroup.annualUsage : '';
     this.switchService.step2Obj.contractStartDate = value.contractStartDate;
-    this.switchService.step2Obj.currentSupplier = value.currentSupplier;
-    this.switchService.step2Obj.manualCurrentSupplier = value.manualCurrentSupplier;
-    this.switchService.step2Obj.checkManual = value.checkManual;
+    this.switchService.step2Obj.currentSupplier = value.supplierGroup.currentSupplier;
+    this.switchService.step2Obj.manualCurrentSupplier = value.supplierGroup.manualCurrentSupplier;
+    this.switchService.step2Obj.checkManual = value.supplierGroup.checkManual;
     this.switchService.step2Obj.billingType = value.billingType;
     this.switchService.step2Obj.smartMeter = value.smartMeter;
     var pence = 0;
@@ -74,8 +97,8 @@ export class Step2Component implements OnInit {
     else {
       pence = 3.5;
     }
-    this.switchService.step2Obj.consumption = value.annualSpend ? (value.annualSpend / (pence/100)).toFixed(0) : value.annualUsage;
-    this.switchService.step2Obj.spendAmount = value.annualSpend ? value.annualSpend : ((value.annualUsage * pence) / 100).toFixed(0);
+    this.switchService.step2Obj.consumption = value.usageGroup.annualSpend ? (value.usageGroup.annualSpend / (pence / 100)).toFixed(0) : value.usageGroup.annualUsage;
+    this.switchService.step2Obj.spendAmount = value.usageGroup.annualSpend ? value.usageGroup.annualSpend : ((value.usageGroup.annualUsage * pence) / 100).toFixed(0);
 
     if (this.switchForm.valid && step == 3) {
       this.router.navigate([this.switchType + '/pricing-list']);
