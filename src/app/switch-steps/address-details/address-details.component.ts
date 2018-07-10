@@ -15,7 +15,7 @@ export class AddressDetailsComponent implements OnInit {
   switchForm: FormGroup;
 
   constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
-
+    console.log(this.switchService.addressObj);
     this.switchForm = fb.group({
       'residentialStatus': [
         this.switchService.addressObj.residentialStatus ? this.switchService.addressObj.residentialStatus : ''
@@ -39,15 +39,15 @@ export class AddressDetailsComponent implements OnInit {
       'checkBillingAddress': [
         this.switchService.addressObj.checkBillingAddress ? this.switchService.addressObj.checkBillingAddress : false],
       'billingAddressLine1': [
-        this.switchService.addressObj.prevAddressLine1 ? this.switchService.addressObj.prevAddressLine1 : ''],
+        this.switchService.addressObj.billingAddressLine1 ? this.switchService.addressObj.billingAddressLine1 : ''],
       'billingAddressLine2': [
-        this.switchService.addressObj.prevAddressLine2 ? this.switchService.addressObj.prevAddressLine2 : ''],
+        this.switchService.addressObj.billingAddressLine2 ? this.switchService.addressObj.billingAddressLine2 : ''],
       'billingCity': [
-        this.switchService.addressObj.prevCity ? this.switchService.addressObj.prevCity : ''],
+        this.switchService.addressObj.billingCity ? this.switchService.addressObj.billingCity : ''],
       'billingCountry': [
-        this.switchService.addressObj.prevCountry ? this.switchService.addressObj.prevCountry : ''],
+        this.switchService.addressObj.billingCountry ? this.switchService.addressObj.billingCountry : ''],
       'billingPostCode': [
-        this.switchService.addressObj.prevPostCode ? this.switchService.addressObj.prevPostCode : '']
+        this.switchService.addressObj.billingPostCode ? this.switchService.addressObj.billingPostCode : '']
 
     });
 
@@ -55,12 +55,12 @@ export class AddressDetailsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.switchService.personalObj);
-     if (this.switchService.currentUrl == "") {
-       this.router.navigate(['']);
-     }
-     else {
-       this.switchType = this.switchService.currentUrl;
-     }
+    if (this.switchService.currentUrl == "") {
+      this.router.navigate(['']);
+    }
+    else {
+      this.switchType = this.switchService.currentUrl;
+    }
 
   }
 

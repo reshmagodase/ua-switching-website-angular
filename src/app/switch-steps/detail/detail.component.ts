@@ -16,13 +16,7 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(JSON.stringify(this.switchService.step1Obj));
-    console.log(JSON.stringify(this.switchService.step2Obj));
-    console.log(JSON.stringify(this.switchService.step3Obj));
-    console.log(JSON.stringify(this.switchService.personalObj));
-    console.log(JSON.stringify(this.switchService.addressObj));
-    console.log(JSON.stringify(this.switchService.paymentObj));
-    console.log(JSON.stringify(this.switchService.currentUrl));
+
     this.switchService.updateForm = false;
     if (this.switchService.currentUrl == "") {
       this.router.navigate(['']);
@@ -37,22 +31,31 @@ export class DetailComponent implements OnInit {
     this.router.navigate([this.switchType + '/' + page]);
   }
   submitDetails() {
+    var supplyAddressArr = this.switchService.step1Obj.supplyAddress.split(" ");
+    var position = (supplyAddressArr.length) / 4;
+    var address1 = supplyAddressArr.slice(0, position);
+    var address2 = supplyAddressArr.slice(position, position * 2);
+    var address3 = supplyAddressArr.slice(position * 2, position * 3);
+    var address4 = supplyAddressArr.slice(position * 3, position * 4);
+
+
+
     var MainDetailsData = [
       {
         "Key": "address 1",
-        "Value": this.switchService.step1Obj.supplyAddress
+        "Value": address1.join(" ")
       },
       {
         "Key": "address 2",
-        "Value": ""
+        "Value": address2.join(" ")
       },
       {
         "Key": "address 3",
-        "Value": ""
+        "Value": address3.join(" ")
       },
       {
         "Key": "address 4",
-        "Value": ""
+        "Value": address4.join(" ")
       },
       {
         "Key": "post code",
@@ -204,20 +207,32 @@ export class DetailComponent implements OnInit {
     ]
 
 
+
+
+    var quotationDetails = {
+      step1Obj: this.switchService.step1Obj,
+      step2Obj: this.switchService.step2Obj,
+      step3Obj: this.switchService.step3Obj,
+      personalObj: this.switchService.personalObj,
+      addressObj: this.switchService.addressObj,
+      paymentObj: this.switchService.paymentObj,
+      currentUrl: this.switchService.currentUrl
+    }
+
     var request = {
       ItsAGasContract: ItsAGasContract,
       MainDetailsData: MainDetailsData,
-      UsageRatesData: UsageRatesData
+      UsageRatesData: UsageRatesData,
+      quotationDetails: quotationDetails
     }
     this.switchService.sendDocuSign(request).subscribe(
       (data: any) => {
         this.spinner.hide();
-
-        if (data.SendDocusignResult.Error == null) {
+        if (data.code == 200) {
           this.router.navigate(['thankyou']);
         }
         else {
-          alert(data.SendDocusignResult.Error.Message);
+          alert(data.message);
         }
       },
       err => this.spinner.hide(),

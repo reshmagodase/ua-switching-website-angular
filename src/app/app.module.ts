@@ -18,6 +18,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from "angular-6-datatable";
 import { ThankyouComponent } from './switch-steps/thankyou/thankyou.component';
+import { ModalModule } from 'angular-custom-modal';
 
 
 
@@ -113,7 +114,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     NgxSpinnerModule,
     NgbModule.forRoot(),
-    DataTableModule
+    DataTableModule,
+    ModalModule
   ],
   providers: [],
   bootstrap: [AppComponent]

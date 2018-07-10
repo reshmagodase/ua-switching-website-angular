@@ -53,7 +53,7 @@
 
         </div>
         <div class="col-sm-3 " style="text-align:left ">
-          <!-- <a href=" "> Use current location</a> -->
+          <span (click)="getPostCode()" style="cursor:pointer;color:#3693cd;font-weight: bold"> Use current location</span>
         </div>
       </div>
       <div class="text-center" [hidden]="showHidePostCode">
@@ -71,12 +71,12 @@
           <select class="form-control " formControlName="supplyAddress" (change)="onChange($event.target.value)">
             <option value="">--Select--</option>
             <ng-container *ngIf="switchType === 'gas';else viewElectricitySupplyAddress">
-              <option *ngFor="let address of addresses" value='{{address.AddressAsLine + "," + address.MPRN}}'>
+              <option *ngFor="let address of addresses" value='{{address.AddressAsLine + "AAA" + address.MPRN}}'>
                 {{address.AddressAsLine}}
               </option>
             </ng-container>
             <ng-template #viewElectricitySupplyAddress>
-              <option *ngFor="let address of addresses" value='{{address.AddressAsLine + "," + address.MPANCore + "," + address.profileclass + address.metertimeswitchclass + address.linelossfactor}}'>
+              <option *ngFor="let address of addresses" value='{{address.AddressAsLine + "AAA" + address.MPANCore + "AAA" + address.profileclass + address.metertimeswitchclass + address.linelossfactor}}'>
                 {{address.AddressAsLine}}
               </option>
             </ng-template>

@@ -132,7 +132,8 @@
           <div class="col-sm-3 labelTag">
           </div>
           <div class="col-sm-9 labelTag" style="text-align: left">
-            <input style="height:15px !important" type="checkbox" formControlName="checkManual"> My Current Supplier is not automatically listed so I prefer to enter it manually.
+            <input type="checkbox" name="checkManual" id="checkManual" formControlName="checkManual">
+            <label for="checkManual" style="font-weight:normal"> My Current Supplier is not automatically listed so I prefer to enter it manually.</label>
           </div>
         </div>
         <div class="row form-group" *ngIf="switchForm.get('supplierGroup').get('checkManual').value">
@@ -177,7 +178,8 @@
           <label>Smart Meter</label>
         </div>
         <div class="col-sm-6 text-left">
-          <input style="width: 4%;height:0px" type="checkbox" formControlName="smartMeter">
+          <input type="checkbox" name="smartMeter" id="smartMeter" formControlName="smartMeter">
+          <label for="smartMeter" style="font-weight:normal"></label>
         </div>
       </div>
 

@@ -92,6 +92,22 @@ export class Step1Component implements OnInit {
   }
 
 
+  getPostCode() {
+    this.switchService.getPostCode().subscribe(
+      (data: any) => {
+        this.spinner.hide();
+        if (data.postCode == "") {
+          alert("Unable to retreive post code. Please enter it manually!")
+        }
+        else{
+          this.switchForm.controls['postCode'].setValue(data.postCode);
+        }
+      },
+      err => this.spinner.hide(),
+      () => this.spinner.hide()
+    )
+  }
+
   submitForm(value: any, step: number): void {
 
     this.switchService.step1Obj.postCode = value.postCode;
@@ -107,7 +123,7 @@ export class Step1Component implements OnInit {
   }
 
   onChange(value) {
-    var code = value.split(",");
+    var code = value.split("AAA");
     if (this.switchType == "electricity") {
       this.switchService.step1Obj.MPANBottomLineNo = code[1];
       this.switchService.step1Obj.MPANTopLineNo = code[2];

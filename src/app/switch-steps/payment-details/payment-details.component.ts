@@ -81,6 +81,17 @@ export class PaymentDetailsComponent implements OnInit {
   }
 
   submitForm(value: any): void {
+    this.setValues(value);
+    this.router.navigate([this.switchType + '/details']);
+  }
+
+  updateForm(value: any): void {
+    this.setValues(value);
+    this.router.navigate([this.switchType + '/details']);
+  }
+
+  setValues(value: any) {
+    console.log("fgh",value)
     this.switchService.paymentObj.accountHolderName = value.accountHolderName;
     this.switchService.paymentObj.directDebitDay = value.directDebitDay;
     this.switchService.paymentObj.sortCode = value.sortCode;
@@ -89,18 +100,6 @@ export class PaymentDetailsComponent implements OnInit {
     this.switchService.paymentObj.checkManual = value.bankGroup.checkManual;
     this.switchService.paymentObj.terms = value.terms;
     this.switchService.paymentObj.manualBankName = value.bankGroup.manualBankName;
-    this.router.navigate([this.switchType + '/details']);
   }
 
-  updateForm(value: any): void {
-    this.switchService.paymentObj.accountHolderName = value.accountHolderName;
-    this.switchService.paymentObj.directDebitDay = value.directDebitDay;
-    this.switchService.paymentObj.sortCode = value.sortCode;
-    this.switchService.paymentObj.accountNumber = value.accountNumber;
-    this.switchService.paymentObj.bankName = value.bankName;
-    this.switchService.paymentObj.checkManual = value.checkManual;
-    this.switchService.paymentObj.terms = value.terms;
-    this.switchService.paymentObj.manualBankName = value.manualBankName;
-    this.router.navigate([this.switchType + '/details']);
-  }
 }

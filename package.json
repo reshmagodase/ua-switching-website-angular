@@ -22,6 +22,7 @@
     "@angular/router": "^6.0.3",
     "@ng-bootstrap/ng-bootstrap": "^2.1.0",
     "angular-6-datatable": "^0.8.0",
+    "angular-custom-modal": "^1.2.0",
     "core-js": "^2.5.4",
     "ngx-spinner": "^6.0.0",
     "rxjs": "^6.0.0",

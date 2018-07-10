@@ -51,13 +51,32 @@
         <div class="form-group" style="background-color: #eef0f1;padding:5px;">
           <div class="row">
             <div class="col-md-12">
-              <label>Current Address:</label> {{switchService.step1Obj.supplyAddress}}
+              <label>Supply Address:</label> {{switchService.step1Obj.supplyAddress}}
             </div>
             <div class="col-md-12">
               <label>Post Code:</label> {{switchService.step1Obj.postCode}}
             </div>
+            <div class="col-md-12">
+              <label> {{switchType=="electricity" ? "MPAN" : "MPRN"}}: </label>
+              {{switchType=="electricity" ? switchService.step1Obj.MPANBottomLineNo : switchService.step1Obj.MPRNNo}}
+            </div>
+
+
+            <div class="col-md-12" [hidden]="!(switchService.addressObj.yearsAtProperty<3 && switchService.addressObj.yearsAtProperty!=='')">
+              <label> Previous Address: </label>
+              {{this.switchService.addressObj.prevAddressLine1 + ' ' + this.switchService.addressObj.prevAddressLine2 + ' ' + this.switchService.addressObj.prevCity
+              + ' ' + this.switchService.addressObj.prevCountry + ' ' + this.switchService.addressObj.prevPostCode}}
+            </div>
+            <div class="col-md-12" [hidden]="!switchService.addressObj.checkBillingAddress">
+              <label> Billing Address: </label>
+              {{this.switchService.addressObj.billingAddressLine1 + ' ' + this.switchService.addressObj.billingAddressLine2 + ' ' + this.switchService.addressObj.billingCity
+              + ' ' + this.switchService.addressObj.billingCountry + ' ' + this.switchService.addressObj.billingPostCode}}
+            </div>
+
           </div>
         </div>
+
+
 
         <div style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
           <button class="btn" (click)="openPage('address-details')">
