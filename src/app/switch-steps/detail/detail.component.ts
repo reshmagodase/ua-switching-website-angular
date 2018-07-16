@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class DetailComponent implements OnInit {
   switchType: string = '';
-  constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
 
   }
 
@@ -228,6 +228,7 @@ export class DetailComponent implements OnInit {
     this.switchService.sendDocuSign(request).subscribe(
       (data: any) => {
         this.spinner.hide();
+        console.log(data);
         if (data.code == 200) {
           this.router.navigate(['thankyou']);
         }

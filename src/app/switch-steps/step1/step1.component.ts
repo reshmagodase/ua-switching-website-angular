@@ -20,7 +20,7 @@ export class Step1Component implements OnInit {
   showHideSupplyAddress: boolean = true;
   showHidePostCode: boolean = true;
 
-  constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addresses = this.switchService.step1Obj.addresses;
     this.switchForm = fb.group({
       'postCode': [
@@ -111,7 +111,8 @@ export class Step1Component implements OnInit {
   submitForm(value: any, step: number): void {
 
     this.switchService.step1Obj.postCode = value.postCode;
-    this.switchService.step1Obj.supplyAddress = value.supplyAddress;
+    var supplyAddress=value.supplyAddress.split("AAA");
+    this.switchService.step1Obj.supplyAddress = supplyAddress[0];
 
     if (this.switchForm.valid && step == 2) {
       this.router.navigate([this.switchType + '/usage']);

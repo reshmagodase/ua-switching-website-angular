@@ -49,7 +49,7 @@ export class Step2Component implements OnInit {
   annualSpend: string;
   annualUsage: string;
 
-  constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder) {
+  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder) {
     this.switchForm = fb.group({
 
       'contractStartDate': [

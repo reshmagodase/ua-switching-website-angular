@@ -42,7 +42,7 @@ export class PaymentDetailsComponent implements OnInit {
   switchType: string = '';
   switchForm: FormGroup;
 
-  constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.switchForm = fb.group({
       'accountHolderName': [
         this.switchService.paymentObj.accountHolderName ? this.switchService.paymentObj.accountHolderName : ''

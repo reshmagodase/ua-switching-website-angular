@@ -12,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class Step3Component implements OnInit {
   currentStepObject: any = {};
   switchType: string = '';
-  constructor(private router: Router, private switchService: SwitchService, private spinner: NgxSpinnerService) { }
+  constructor(private router: Router, public switchService: SwitchService, private spinner: NgxSpinnerService) { }
   prices: any;
   spendAmount: string;
   ngOnInit() {
@@ -24,11 +24,11 @@ export class Step3Component implements OnInit {
     else {
       this.switchType = this.switchService.currentUrl;
     }
-    this.getSupplyAddress();
+    this.getPriceList();
   }
 
 
-  getSupplyAddress() {
+  getPriceList() {
     var request = {};
     if (this.switchType == 'electricity') {
       request = {
@@ -41,7 +41,6 @@ export class Step3Component implements OnInit {
       }
       this.switchService.getElectricPricesList(request).subscribe(
         (data: any) => {
-
           if (data.GetElectricRatesResult.Rates.length > 1) {
             this.prices = data.GetElectricRatesResult.Rates;
             this.switchService.step3Obj.prices = this.prices;

@@ -29,7 +29,7 @@ export class PersonalDetailsComponent implements OnInit {
   switchType: string = '';
   switchForm: FormGroup;
   currentStepObject: any = {};
-  constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.switchForm = fb.group({
       'name': [
         this.switchService.personalObj.name ? this.switchService.personalObj.name : ''

@@ -14,7 +14,7 @@ export class AddressDetailsComponent implements OnInit {
   switchType: string = '';
   switchForm: FormGroup;
 
-  constructor(private router: Router, private switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     console.log(this.switchService.addressObj);
     this.switchForm = fb.group({
       'residentialStatus': [

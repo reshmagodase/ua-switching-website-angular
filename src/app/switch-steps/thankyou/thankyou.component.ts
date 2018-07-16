@@ -10,7 +10,7 @@ export class ThankyouComponent implements OnInit {
 
   switchType: string = '';
   email: string = '';
-  constructor(private switchService: SwitchService) { }
+  constructor(public switchService: SwitchService) { }
 
 
   ngOnInit() {
