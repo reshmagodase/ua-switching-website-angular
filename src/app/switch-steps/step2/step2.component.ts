@@ -52,8 +52,8 @@ export class Step2Component implements OnInit {
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder) {
     this.switchForm = fb.group({
 
-      'contractStartDate': [
-        this.switchService.step2Obj.contractStartDate ? this.switchService.step2Obj.contractStartDate : ''
+      'contractEndDate': [
+        this.switchService.step2Obj.contractEndDate ? this.switchService.step2Obj.contractEndDate : ''
         , Validators.required],
 
       'billingType': [
@@ -84,7 +84,7 @@ export class Step2Component implements OnInit {
   submitForm(value: any, step: number): void {
     this.switchService.step2Obj.annualSpend = value.usageGroup.annualSpend ? value.usageGroup.annualSpend : '';
     this.switchService.step2Obj.annualUsage = value.usageGroup.annualUsage ? value.usageGroup.annualUsage : '';
-    this.switchService.step2Obj.contractStartDate = value.contractStartDate;
+    this.switchService.step2Obj.contractEndDate = value.contractEndDate;
     this.switchService.step2Obj.currentSupplier = value.supplierGroup.currentSupplier;
     this.switchService.step2Obj.manualCurrentSupplier = value.supplierGroup.manualCurrentSupplier;
     this.switchService.step2Obj.checkManual = value.supplierGroup.checkManual;

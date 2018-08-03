@@ -79,22 +79,22 @@
       </div>
       <div class="row form-group">
         <div class="col-sm-3 labelTag">
-          <label>Contract Start Date*</label>
+          <label>Contract End Date*</label>
         </div>
         <div class="col-sm-6">
 
 
           <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="d2" ngbDatepicker #d2="ngbDatepicker" formControlName="contractStartDate">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="d2" ngbDatepicker #d2="ngbDatepicker" formControlName="contractEndDate">
             <div class="input-group-append">
               <button class="btn " (click)="d2.toggle()" type="button">
                 <img src="assets/images/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
               </button>
             </div>
           </div>
-          <div class=" alert-danger" *ngIf="switchForm.controls['contractStartDate'].touched && !switchForm.controls['contractStartDate'].valid">
-            <span *ngIf="switchForm.controls['contractStartDate'].hasError('required') ">
-              Contract Start Date is required!
+          <div class=" alert-danger" *ngIf="switchForm.controls['contractEndDate'].touched && !switchForm.controls['contractEndDate'].valid">
+            <span *ngIf="switchForm.controls['contractEndDate'].hasError('required') ">
+              Contract End Date is required!
             </span>
           </div>
 

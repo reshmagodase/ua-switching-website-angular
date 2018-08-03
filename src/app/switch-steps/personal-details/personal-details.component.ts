@@ -3,8 +3,11 @@ import { SwitchService } from '../switch.service';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { LoginService } from '../../home/login.service';
+import { ProfileService } from '../../profile/profile.service';
+import { NavbarComponent } from '../../navbar/navbar.component';
 
-
+declare var $: any;
 
 export const emailMatcher = (control: AbstractControl): { [key: string]: boolean } => {
   const email = control.get('emailAddress');
@@ -28,9 +31,37 @@ export const passwordMatcher = (control: AbstractControl): { [key: string]: bool
 export class PersonalDetailsComponent implements OnInit {
   switchType: string = '';
   switchForm: FormGroup;
+  loginForm: FormGroup;
   currentStepObject: any = {};
-  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
-    this.switchForm = fb.group({
+  error: String;
+  session: Boolean;
+  emailError: String;
+  constructor(private router: Router, public loginService: LoginService, public profileService: ProfileService, public switchService: SwitchService, public fb: FormBuilder, private spinner: NgxSpinnerService) {
+    if (localStorage.getItem('userId') && !this.switchService.updateForm) {
+      this.getProfile();
+    }
+    this.setValues();
+    this.loginForm = fb.group({
+      'emailAddress': ['', Validators.compose([Validators.required, Validators.email])],
+      'password': ['', Validators.required]
+    });
+
+
+  }
+
+
+  ngOnInit() {
+    if (this.switchService.currentUrl == "") {
+      this.router.navigate(['']);
+    }
+    else {
+      this.switchType = this.switchService.currentUrl;
+    }
+
+  }
+
+  setValues() {
+    this.switchForm = this.fb.group({
       'name': [
         this.switchService.personalObj.name ? this.switchService.personalObj.name : ''
         , Validators.required],
@@ -65,23 +96,22 @@ export class PersonalDetailsComponent implements OnInit {
       }, { validator: passwordMatcher })
 
     });
-
   }
 
-
-  ngOnInit() {
-    if (this.switchService.currentUrl == "") {
-      this.router.navigate(['']);
+  clearSession() {
+    if (localStorage.getItem("userId") !== null) {
+      this.session = true;
     }
     else {
-      this.switchType = this.switchService.currentUrl;
+      this.session = false;
     }
   }
-
 
 
   submitForm(value: any): void {
-    console.log(this.switchForm);
+
+
+
     this.switchService.personalObj.name = value.name;
     this.switchService.personalObj.companyName = value.companyName;
     this.switchService.personalObj.companyType = value.companyType;
@@ -89,9 +119,41 @@ export class PersonalDetailsComponent implements OnInit {
     this.switchService.personalObj.mobileNo = value.mobileNo;
     this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
     this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;
-    this.switchService.personalObj.password = value.password;
-    this.switchService.personalObj.confirmPassword = value.confirmPassword;
-    this.router.navigate([this.switchType + '/address-details']);
+    this.switchService.personalObj.password = value.passwordGroup.password;
+    this.switchService.personalObj.confirmPassword = value.passwordGroup.confirmPassword;
+
+    if (localStorage.getItem("userId") == null) {
+      this.switchService.registerUser(this.switchService.personalObj).subscribe(
+        (data: any) => {
+          if (data) {
+            if (data.count == 0) {
+              localStorage.setItem('userId', data.userId);
+              localStorage.setItem('name', data.name);
+              $('#loginModal').modal('hide');
+              let obj = new NavbarComponent(this.router);
+              obj.clearSession();
+              this.getProfile();
+              this.router.navigate([this.switchType + '/address-details']);
+            }
+            else {
+              this.emailError = "Email already registered. Please login to continue.";
+              $("#loginModal").modal("show");
+            }
+
+
+          }
+          this.spinner.hide();
+        },
+        err => {
+          this.spinner.hide()
+        },
+        () => this.spinner.hide()
+      )
+    }
+    else {
+      this.router.navigate([this.switchType + '/address-details']);
+
+    }
   }
 
   updateForm(value: any): void {
@@ -102,10 +164,61 @@ export class PersonalDetailsComponent implements OnInit {
     this.switchService.personalObj.mobileNo = value.mobileNo;
     this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
     this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;
-    this.switchService.personalObj.password = value.password;
-    this.switchService.personalObj.confirmPassword = value.confirmPassword;
+    this.switchService.personalObj.password = value.passwordGroup.password;
+    this.switchService.personalObj.confirmPassword = value.passwordGroup.confirmPassword;
     this.router.navigate([this.switchType + '/details']);
   }
+
+
+  login(value) {
+    var request = {
+      emailAddress: value.emailAddress,
+      password: value.password
+    }
+    this.loginService.login(request).subscribe(
+      (data: any) => {
+        if (data.code == 200) {
+          localStorage.setItem('userId', data.userId);
+          localStorage.setItem('name', data.name);
+          $('#loginModal').modal('hide');
+          let obj = new NavbarComponent(this.router);
+          obj.clearSession();
+          this.getProfile();
+        }
+        else {
+          this.error = data.message;
+        }
+        this.spinner.hide();
+      },
+      err => {
+        this.spinner.hide()
+      },
+      () => this.spinner.hide()
+    )
+  }
+  getProfile() {
+    this.clearSession();
+    var request = {
+      userId: localStorage.getItem('userId')
+    }
+    this.profileService.getProfile(request).subscribe(
+      (data: any) => {
+        this.switchService.personalObj = data.details;
+        this.switchService.personalObj.confirmPassword = data.details.password;
+        this.switchService.personalObj.confirmEmailAddress = data.details.emailAddress;
+        this.switchService.addressObj = data.details.addressDetails ? data.details.addressDetails : {};
+        this.switchService.paymentObj = data.details.paymentDetails ? data.details.paymentDetails : {};
+        this.setValues();
+        this.spinner.hide();
+      },
+      err => {
+        this.spinner.hide()
+      },
+      () => this.spinner.hide()
+    )
+  }
+
+
 }
 
 

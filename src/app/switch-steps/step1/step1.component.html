@@ -1,4 +1,4 @@
-<form [formGroup]="switchForm" (ngSubmit)="submitForm(switchForm.value,2)">
+<form [formGroup]="switchForm">
   <!-- First Container -->
   <div class="container-fluid text-center">
     <div style="padding: 20px 0px">
@@ -47,7 +47,7 @@
               Post Code is required!
             </span>
             <span *ngIf="switchForm.controls['postCode'].hasError('maxlength') ">
-              Post Code max length is 7
+              Post Code max length is 8
             </span>
           </div>
 
@@ -65,7 +65,7 @@
 
       <div class="row form-group " [hidden]="showHideSupplyAddress">
         <div class="col-sm-3 labelTag ">
-          <label>Supply Address*</label>
+          <label>Supply Address* </label>
         </div>
         <div class="col-sm-6 ">
           <select class="form-control " formControlName="supplyAddress" (change)="onChange($event.target.value)">
@@ -112,7 +112,7 @@
       </div>
       <div class="row ">
         <div class="btnRow ">
-          <button class="next1 btn btn-secondary customBtn" type="submit" [disabled]='!switchForm.valid'>Next </button>
+          <button class="next1 btn btn-secondary customBtn" [disabled]='!switchForm.valid' (click)="submitForm(switchForm.value,2)">Next </button>
         </div>
       </div>
     </div>

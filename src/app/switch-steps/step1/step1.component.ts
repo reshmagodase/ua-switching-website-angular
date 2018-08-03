@@ -22,10 +22,11 @@ export class Step1Component implements OnInit {
 
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addresses = this.switchService.step1Obj.addresses;
+
     this.switchForm = fb.group({
       'postCode': [
         this.switchService.step1Obj.postCode ? this.switchService.step1Obj.postCode : '',
-        Validators.compose([Validators.required, Validators.maxLength(7)])],
+        Validators.compose([Validators.required, Validators.maxLength(8)])],
       'supplyAddress': [
         this.switchService.step1Obj.supplyAddress ? this.switchService.step1Obj.supplyAddress : ''
         , Validators.required]
@@ -35,6 +36,7 @@ export class Step1Component implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.switchService);
     this.switchService.currentUrl = this.router.url.replace('/', '');
     this.switchType = this.switchService.currentUrl;
   }
@@ -47,37 +49,36 @@ export class Step1Component implements OnInit {
     this.switchService.getSupplyAddresses(request).subscribe(
       (data: any) => {
         var addressList = data.GetAddressesResult.Addresses;
+
         if (addressList.length > 0) {
-          var elecAddressArr = [];
-          var gasAddressArr = [];
-          var addressJson = {};
-          var bool = false;
+          var jsonAddress = {};
+          var addressArr = [];
+
+          var switchType = this.switchType;
           for (var i = 0; i < addressList.length; i++) {
-            addressJson = {};
-            for (var j = 0; j < addressList[i].length; j++) {
-              addressJson[addressList[i][j].Key] = addressList[i][j].Value;
-              if (addressList[i][j].Key == "MPANCore") {
-                bool = true;
+            jsonAddress = {};
+            var address = addressList[i].map(function (obj) {
+              jsonAddress[obj.Key] = obj.Value
+              if (obj.Key == "MPANCore") {
+                jsonAddress["supplyType"] = "electricity";
               }
+              else if (obj.Key == "MPRN") {
+                jsonAddress["supplyType"] = "gas";
+              }
+              return jsonAddress;
+            })
+            if (address[0].supplyType == "electricity" && switchType == "electricity") {
+              addressArr.push(address[0]);
             }
-            if (bool == true) {
-              bool = false;
-              elecAddressArr.push(addressJson);
-            }
-            else {
-              gasAddressArr.push(addressJson);
+            else if (address[0].supplyType == "gas" && switchType == "gas") {
+              addressArr.push(address[0]);
             }
           }
-          if (this.switchType == "electricity") {
-            this.addresses = elecAddressArr;
-            this.switchService.step1Obj.addresses = elecAddressArr;
-            this.showHideSupplyAddress = false;
-          }
-          else {
-            this.addresses = gasAddressArr;
-            this.switchService.step1Obj.addresses = gasAddressArr;
-            this.showHideSupplyAddress = false;
-          }
+
+          this.addresses = addressArr;
+          this.switchService.step1Obj.addresses = addressArr;
+          this.showHideSupplyAddress = false;
+
           this.showHidePostCode = true;
         }
         else {
@@ -99,7 +100,7 @@ export class Step1Component implements OnInit {
         if (data.postCode == "") {
           alert("Unable to retreive post code. Please enter it manually!")
         }
-        else{
+        else {
           this.switchForm.controls['postCode'].setValue(data.postCode);
         }
       },
@@ -109,18 +110,22 @@ export class Step1Component implements OnInit {
   }
 
   submitForm(value: any, step: number): void {
+    console.log(value.supplyAddress);
+    if (value.supplyAddress) {
+      this.switchService.step1Obj.postCode = value.postCode;
+      var supplyAddress = value.supplyAddress.split("AAA");
+      
+      this.switchService.step1Obj.supplyAddress = supplyAddress[0];
 
-    this.switchService.step1Obj.postCode = value.postCode;
-    var supplyAddress=value.supplyAddress.split("AAA");
-    this.switchService.step1Obj.supplyAddress = supplyAddress[0];
+      if (this.switchForm.valid && step == 2) {
+        this.router.navigate([this.switchType + '/usage']);
+        this.switchService.step1Obj.completed = true;
+      }
+      else if (this.switchService.step2Obj.completed && step == 3) {
+        this.router.navigate([this.switchType + '/pricing-list']);
+      }
+    }
 
-    if (this.switchForm.valid && step == 2) {
-      this.router.navigate([this.switchType + '/usage']);
-      this.switchService.step1Obj.completed = true;
-    }
-    else if (this.switchService.step2Obj.completed && step == 3) {
-      this.router.navigate([this.switchType + '/pricing-list']);
-    }
   }
 
   onChange(value) {

@@ -19,6 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from "angular-6-datatable";
 import { ThankyouComponent } from './switch-steps/thankyou/thankyou.component';
 import { ModalModule } from 'angular-custom-modal';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -90,6 +91,10 @@ const appRoutes: Routes = [
     path: 'thankyou',
     component: ThankyouComponent
   }
+  , {
+    path: 'profile',
+    component: ProfileComponent
+  }
 ];
 
 @NgModule({
@@ -104,7 +109,8 @@ const appRoutes: Routes = [
     AddressDetailsComponent,
     PaymentDetailsComponent,
     DetailComponent,
-    ThankyouComponent
+    ThankyouComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
