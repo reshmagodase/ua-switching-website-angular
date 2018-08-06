@@ -60,6 +60,8 @@
     color: white;
     cursor: pointer;
     text-decoration: none;
+    width: 100%;
+    display: block;
 }
 
 .dropdown-menu {
