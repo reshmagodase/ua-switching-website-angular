@@ -47,9 +47,6 @@ export class PaymentDetailsComponent implements OnInit {
       'accountHolderName': [
         this.switchService.paymentObj.accountHolderName ? this.switchService.paymentObj.accountHolderName : ''
         , Validators.required],
-      'directDebitDay': [
-        this.switchService.paymentObj.directDebitDay ? this.switchService.paymentObj.directDebitDay : ''
-        , Validators.required],
       'sortCode': [
         this.switchService.paymentObj.sortCode ? this.switchService.paymentObj.sortCode : ''
         , [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/), Validators.required]],
@@ -93,9 +90,9 @@ export class PaymentDetailsComponent implements OnInit {
   setValues(value: any) {
     console.log("fgh",value)
     this.switchService.paymentObj.accountHolderName = value.accountHolderName;
-    this.switchService.paymentObj.directDebitDay = value.directDebitDay;
+    
     this.switchService.paymentObj.sortCode = value.sortCode;
-    this.switchService.paymentObj.accountNumber = value.accountNumber;
+    this.switchService.paymentObj.accountNumber = "0" + value.accountNumber;
     this.switchService.paymentObj.bankName = value.bankGroup.bankName;
     this.switchService.paymentObj.checkManual = value.bankGroup.checkManual;
     this.switchService.paymentObj.terms = value.terms;

@@ -55,7 +55,7 @@
             Annual Spend:
           </div>
           <div class="col-7">
-            <span>{{switchService.step2Obj.spendAmount}}
+            <span>{{switchService.step2Obj.spendAmount}} &#163;
             </span>
           </div>
         </div>
@@ -67,7 +67,7 @@
             Annual Usage:
           </div>
           <div class="col-7">
-            <span>{{switchService.step2Obj.consumption}}</span>
+            <span>{{switchService.step2Obj.consumption}} kWh</span> 
           </div>
         </div>
       </div>
@@ -159,15 +159,18 @@
               <td class="floatTd">{{(price.DayUnitrate/1).toFixed(2)}}</td>
               <td class="floatTd">{{(price.StandingCharge/1).toFixed(2)}}</td>
               <td>
-                <ng-container *ngIf="price.AnnualPrice.replace(',','').replace('£','')/1  > spendAmount;else viewProfit">You added
+                  <b style="color:black">{{price.AnnualPrice}}</b> when you choose for {{price.Term}} year.
+                  <br>
+                <ng-container *ngIf="price.AnnualPrice.replace(',','').replace('£','')/1  > spendAmount;else viewProfit">
+                  You added
                   <span style='font-size:20px;color:red'>£{{(price.AnnualPrice.replace(',','').replace('£','') - spendAmount).toFixed(2)}}</span>/Yr
-                  <br>
-                  <b style="color:black">{{price.AnnualPrice}}</b> when you choose for {{price.Term}} year.
+                 
                 </ng-container>
-                <ng-template #viewProfit>You save
+                <ng-template #viewProfit>
+                  You save
                   <span style='font-size:20px;color:green'>£{{(spendAmount - price.AnnualPrice.replace(',','').replace('£','')).toFixed(2)}}</span>/Yr
-                  <br>
-                  <b style="color:black">{{price.AnnualPrice}}</b> when you choose for {{price.Term}} year.
+                  
+                  
                 </ng-template>
               </td>
               <td class="switchNowBtn">

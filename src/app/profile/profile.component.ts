@@ -12,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ProfileComponent implements OnInit {
   constructor(private router: Router, public profileService: ProfileService, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
-    if(localStorage.getItem('userId')){
+    if (localStorage.getItem('userId')) {
       this.getProfile();
 
     }
@@ -30,9 +30,9 @@ export class ProfileComponent implements OnInit {
     this.profileService.getProfile(request).subscribe(
       (data: any) => {
         console.log(data);
-        this.switchService.personalObj=data.details;
-        this.switchService.addressObj=data.details.addressDetails;
-        this.switchService.paymentObj=data.details.paymentDetails;
+        this.switchService.personalObj = data.details;
+        this.switchService.addressObj = data.details.addressDetails ? data.details.addressDetails : {}
+        this.switchService.paymentObj = data.details.paymentDetails ? data.details.paymentDetails : {};
         console.log(this.switchService);
         this.spinner.hide();
       },

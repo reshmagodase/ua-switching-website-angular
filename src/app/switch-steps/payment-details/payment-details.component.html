@@ -20,7 +20,7 @@
       </div>
       <div class="row">
         <h4 class="col-md-12" style="margin-top:10px">Your Account</h4>
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group">
             <label>Name of Account Holder</label>
             <input placeholder="Name of Account Holder" class="form-control" formControlName="accountHolderName">
@@ -32,47 +32,7 @@
           </div>
 
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Preferred Direct Debit Day</label>
-            <select class="form-control" formControlName="directDebitDay">
-              <option value="">--Select--</option>
-              <option value="1">01 - First</option>`
-              <option value="2">02 - Second</option>
-              <option value="3">03 - Third</option>
-              <option value="4">04 - Fourth</option>
-              <option value="5">05 - Fifth</option>
-              <option value="6">06 - Sixth</option>
-              <option value="7">07 - Seventh</option>
-              <option value="8">08 - Eight</option>
-              <option value="9">09 - Ninth</option>
-              <option value="10">10 - Tenth</option>
-              <option value="11">11 - Eleventh</option>
-              <option value="12">12 - Twelfth</option>
-              <option value="13">13 - Thirteenth</option>
-              <option value="14">14 - Fourteenth</option>
-              <option value="15">15 - Fifteenth</option>
-              <option value="16">16 - Sixteenth</option>
-              <option value="17">17 - Seventeenth</option>
-              <option value="18">18 - Eighteenth</option>
-              <option value="19">19 - Nineteenth</option>
-              <option value="20">20 - Twentieth</option>
-              <option value="21">21 - Twenty-First</option>
-              <option value="22">22 - Twenty-Second</option>
-              <option value="23">23 - Twenty-Third</option>
-              <option value="24">24 - Twenty-Fourth</option>
-              <option value="25">25 - Twenty-Fifth</option>
-              <option value="26">26 - Twenty-Sixth</option>
-              <option value="27">27 - Twenty-Seventh</option>
-              <option value="28">28 - Twenty-Eight</option>
-            </select>
-            <div class=" alert-danger" *ngIf="switchForm.controls['directDebitDay'].touched && !switchForm.controls['directDebitDay'].valid">
-              <span *ngIf="switchForm.controls['directDebitDay'].hasError('required') ">
-                Preferred Direct Debit Day is required!
-              </span>
-            </div>
-          </div>
-        </div>
+        
       </div>
 
 

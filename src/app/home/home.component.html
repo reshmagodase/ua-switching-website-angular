@@ -1,6 +1,6 @@
 <div class="container-fluid text-center">
   <div style="padding: 20px 0px">
-    <h1 class="fontBold">Compare your gas &amp; electricity
+    <h1 class="fontBold">Compare your electricity &amp; gas
     </h1>
 
     <h2>
@@ -52,19 +52,20 @@
   </div>
   <div class="container text-center compare">
     <div class="row">
-      <div class="col-sm-6">
-        <a href="/gas">
-          <img src="assets/images/icon_gas.png">
-          <div class="switchTypeBtn">Gas</div>
-          <br>
-        </a>
-      </div>
+      
       <div class="col-sm-6">
         <a href="/electricity">
           <img src="assets/images/icon_electricity.png">
           <div class="switchTypeBtn">Electricity</div>
         </a>
       </div>
+      <div class="col-sm-6">
+          <a href="/gas">
+            <img src="assets/images/icon_gas.png">
+            <div class="switchTypeBtn">Gas</div>
+            <br>
+          </a>
+        </div>
     </div>
     <div class="row " [hidden]="session">
       <div class="col-12">
