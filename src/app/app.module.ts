@@ -15,11 +15,12 @@ import { PaymentDetailsComponent } from './switch-steps/payment-details/payment-
 import { DetailComponent } from './switch-steps/detail/detail.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from "angular-6-datatable";
 import { ThankyouComponent } from './switch-steps/thankyou/thankyou.component';
 import { ModalModule } from 'angular-custom-modal';
 import { ProfileComponent } from './profile/profile.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 
 
@@ -117,9 +118,9 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
+    BsDatepickerModule.forRoot(),
     HttpClientModule,
     NgxSpinnerModule,
-    NgbModule.forRoot(),
     DataTableModule,
     ModalModule
   ],

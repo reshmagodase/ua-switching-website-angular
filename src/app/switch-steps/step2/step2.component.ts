@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SwitchService } from '../switch.service';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
-
+import { DatePipe } from '@angular/common';
 
 export const usageRequired = (control: AbstractControl): { [key: string]: boolean } => {
   const annualSpend = control.get('annualSpend');
@@ -38,7 +37,7 @@ export const supplierRequired = (control: AbstractControl): { [key: string]: boo
 @Component({
   selector: 'app-step2',
   templateUrl: './step2.component.html',
-  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
+  providers: [DatePipe]
 })
 
 
@@ -49,11 +48,12 @@ export class Step2Component implements OnInit {
   annualSpend: string;
   annualUsage: string;
 
-  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder) {
+  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder,private datePipe: DatePipe) {
+    
     this.switchForm = fb.group({
 
       'contractEndDate': [
-        this.switchService.step2Obj.contractEndDate ? this.switchService.step2Obj.contractEndDate : ''
+        this.switchService.step2Obj.contractEndDate ? this.datePipe.transform(this.switchService.step2Obj.contractEndDate, 'dd-MM-yyyy') : ''
         , Validators.required],
 
       'billingType': [

@@ -107,7 +107,53 @@
         <div class="col-sm-6 text-left">
           <label>
             {{switchType=="electricity" ? MPANBottomLineNo : MPRNNo}}
+
+            <a *ngIf="switchType=='electricity'" href="" style="cursor:pointer;color:#3693cd;font-weight: bold;text-decoration: underline"
+              data-toggle="modal" data-target="#mpanImagePopup">Is this your {{switchType=="electricity" ? "MPAN" : "MPRN"}} number?</a>
+            <a *ngIf="switchType=='gas'" href="" style="cursor:pointer;color:#3693cd;font-weight: bold;text-decoration: underline" data-toggle="modal"
+              data-target="#mprnImagePopup">Is this your {{switchType=="electricity" ? "MPAN" : "MPRN"}} number?</a>
           </label>
+        </div>
+        <div class="modal fade" id="mpanImagePopup" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+              </div>
+              <div class="modal-body">
+                <p>Your gas MPAN (Meter Point Administration Number) is the unique identifying electricity number for your property.
+                  Your MPAN is sometimes referred to as a S Number. It is unique to your property and does not change if
+                  you change supplier.
+                  <img src="assets/images/MPAN_Format.jpg" style="border: 3px solid black;border-radius: 10px" width="100%">
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal fade" id="mprnImagePopup" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+              </div>
+              <div class="modal-body">
+                <p>Your gas MPRN (Meter Point Reference Number) is the unique identifying gas number for your property. Your MPRN
+                  is sometimes referred to as a M Number. It is unique to your property and does not change if you change
+                  supplier. 
+                  <img src="assets/images/mprn.png" width="100%">
+                </p>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
       <div class="row ">
