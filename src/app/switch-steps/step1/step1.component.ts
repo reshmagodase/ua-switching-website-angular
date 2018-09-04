@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SwitchService } from '../switch.service';
+import { SwitchService } from '../../switch.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-
-
 
 @Component({
   selector: 'app-step1',
@@ -14,29 +12,28 @@ export class Step1Component implements OnInit {
   switchType: string = '';
   switchForm: FormGroup;
   addresses: any;
-  MPANDivShow: boolean = false;
+  MPANDiv: boolean = true; //hidden
   MPANBottomLineNo: string = '';
   MPRNNo: string = '';
   showHideSupplyAddress: boolean = true;
   showHidePostCode: boolean = true;
 
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
-    this.addresses = this.switchService.step1Obj.addresses;
+    var step1Obj = this.switchService.step1Obj;
+    this.addresses = step1Obj.addresses;
 
     this.switchForm = fb.group({
-      'postCode': [
-        this.switchService.step1Obj.postCode ? this.switchService.step1Obj.postCode : '',
-        Validators.compose([Validators.required, Validators.maxLength(8)])],
-      'supplyAddress': [
-        this.switchService.step1Obj.supplyAddress ? this.switchService.step1Obj.supplyAddress : ''
-        , Validators.required]
+      'postCode': [step1Obj.postCode ? step1Obj.postCode : '',
+      Validators.compose([Validators.required, Validators.maxLength(8)])],
+      'supplyAddress': [step1Obj.formattedSupplyAddress ? step1Obj.formattedSupplyAddress : '', Validators.required]
     });
-
-    this.showHideSupplyAddress = this.switchService.step1Obj.supplyAddress ? false : true;
+    this.showHideSupplyAddress = step1Obj.formattedSupplyAddress ? false : true;
+    this.MPANDiv = step1Obj.MPANBottomLineNo ? false : true;
+    this.MPANBottomLineNo = step1Obj.MPANBottomLineNo ? step1Obj.MPANBottomLineNo : '';
+    this.MPRNNo = step1Obj.MPRNNo ? step1Obj.MPRNNo : '';
   }
 
   ngOnInit() {
-    console.log(this.switchService);
     this.switchService.currentUrl = this.router.url.replace('/', '');
     this.switchType = this.switchService.currentUrl;
   }
@@ -49,7 +46,6 @@ export class Step1Component implements OnInit {
     this.switchService.getSupplyAddresses(request).subscribe(
       (data: any) => {
         var addressList = data.GetAddressesResult.Addresses;
-
         if (addressList.length > 0) {
           var jsonAddress = {};
           var addressArr = [];
@@ -74,7 +70,6 @@ export class Step1Component implements OnInit {
               addressArr.push(address[0]);
             }
           }
-
           this.addresses = addressArr;
           this.switchService.step1Obj.addresses = addressArr;
           this.showHideSupplyAddress = false;
@@ -110,11 +105,13 @@ export class Step1Component implements OnInit {
   }
 
   submitForm(value: any, step: number): void {
-    console.log(value.supplyAddress);
+
     if (value.supplyAddress) {
-      this.switchService.step1Obj.postCode = value.postCode;
+      
       var supplyAddress = value.supplyAddress.split("AAA");
       
+      this.switchService.step1Obj.postCode = value.postCode;
+      this.switchService.step1Obj.formattedSupplyAddress = value.supplyAddress;
       this.switchService.step1Obj.supplyAddress = supplyAddress[0];
 
       if (this.switchForm.valid && step == 2) {
@@ -139,7 +136,7 @@ export class Step1Component implements OnInit {
       this.switchService.step1Obj.MPRNNo = code[1];
       this.MPRNNo = code[1];
     }
-    this.MPANDivShow = true;
+    this.MPANDiv = false; //unhide
   }
 
   onKeydown(event) {

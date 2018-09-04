@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SwitchService } from '../switch.service';
+import { SwitchService } from '../../switch.service';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { LoginService } from '../../home/login.service';
-import { ProfileService } from '../../profile/profile.service';
-import { NavbarComponent } from '../../navbar/navbar.component';
 
 declare var $: any;
 
@@ -36,111 +33,80 @@ export class PersonalDetailsComponent implements OnInit {
   error: String;
   session: Boolean;
   emailError: String;
-  constructor(private router: Router, public loginService: LoginService, public profileService: ProfileService, public switchService: SwitchService, public fb: FormBuilder, private spinner: NgxSpinnerService) {
-    if (localStorage.getItem('userId') && !this.switchService.updateForm) {
-      this.getProfile();
-    }
-    this.setValues();
-    this.loginForm = fb.group({
-      'emailAddress': ['', Validators.compose([Validators.required, Validators.email])],
-      'password': ['', Validators.required]
-    });
-
-
-  }
-
-
-  ngOnInit() {
-    if (this.switchService.currentUrl == "") {
-      this.router.navigate(['']);
-    }
-    else {
-      this.switchType = this.switchService.currentUrl;
-    }
-
-  }
-
-  setValues() {
+  constructor(private router: Router, public switchService: SwitchService, public fb: FormBuilder, public spinner: NgxSpinnerService) {
     this.switchForm = this.fb.group({
-      'name': [
-        this.switchService.personalObj.name ? this.switchService.personalObj.name : ''
-        , Validators.required],
-      'companyName': [
-        this.switchService.personalObj.companyName ? this.switchService.personalObj.companyName : ''
-        , Validators.required],
-      'companyType': [
-        this.switchService.personalObj.companyType ? this.switchService.personalObj.companyType : ''
-        , Validators.required],
-      'companyRegNo': [
-        this.switchService.personalObj.companyRegNo ? this.switchService.personalObj.companyRegNo : ''
-        , Validators.required],
-      'mobileNo': [
-        this.switchService.personalObj.mobileNo ? this.switchService.personalObj.mobileNo : ''
-        , Validators.compose([Validators.required])],
-
+      'name': ['', Validators.required],
+      'companyName': ['', Validators.required],
+      'companyType': ['', Validators.required],
+      'companyRegNo': ['', Validators.required],
+      'mobileNo': ['', Validators.compose([Validators.required])],
       'emailGroup': this.fb.group({
-        'emailAddress': [
-          this.switchService.personalObj.emailAddress ? this.switchService.personalObj.emailAddress : ''
-          , Validators.compose([Validators.required, Validators.email])],
-        'confirmEmailAddress': [
-          this.switchService.personalObj.confirmEmailAddress ? this.switchService.personalObj.confirmEmailAddress : ''
-          , Validators.compose([Validators.required, Validators.email])],
+        'emailAddress': ['',
+          Validators.compose([Validators.required, Validators.email])],
+        'confirmEmailAddress': ['',
+          Validators.compose([Validators.required, Validators.email])],
       }, { validator: emailMatcher }),
       'passwordGroup': this.fb.group({
-        'password': [
-          this.switchService.personalObj.password ? this.switchService.personalObj.password : ''
-          , Validators.compose([Validators.required])],
-        'confirmPassword': [
-          this.switchService.personalObj.confirmPassword ? this.switchService.personalObj.confirmPassword : ''
-          , Validators.compose([Validators.required])],
+        'password': ['', Validators.compose([Validators.required])],
+        'confirmPassword': ['', Validators.compose([Validators.required])],
       }, { validator: passwordMatcher })
 
     });
   }
 
-  clearSession() {
-    if (localStorage.getItem("userId") !== null) {
-      this.session = true;
-    }
-    else {
-      this.session = false;
-    }
-  }
 
-
-  submitForm(value: any): void {
-
-
-
-    this.switchService.personalObj.name = value.name;
-    this.switchService.personalObj.companyName = value.companyName;
-    this.switchService.personalObj.companyType = value.companyType;
-    this.switchService.personalObj.companyRegNo = value.companyRegNo;
-    this.switchService.personalObj.mobileNo = value.mobileNo;
-    this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
-    this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;
-    this.switchService.personalObj.password = value.passwordGroup.password;
-    this.switchService.personalObj.confirmPassword = value.passwordGroup.confirmPassword;
-
-    if (localStorage.getItem("userId") == null) {
-      this.switchService.registerUser(this.switchService.personalObj).subscribe(
+  ngOnInit() {
+    if (localStorage.getItem("stepsId") !== null) {
+      this.switchService.getSteps({ stepsId: localStorage.getItem("stepsId") }).subscribe(
         (data: any) => {
-          if (data) {
-            if (data.count == 0) {
-              localStorage.setItem('userId', data.userId);
-              localStorage.setItem('name', data.name);
-              $('#loginModal').modal('hide');
-              let obj = new NavbarComponent(this.router);
-              obj.clearSession();
-              this.getProfile();
-              this.router.navigate([this.switchType + '/address-details']);
-            }
-            else {
-              this.emailError = "Email already registered. Please login to continue.";
-              $("#loginModal").modal("show");
-            }
+          this.switchService.step1Obj = data.step1Obj;
+          this.switchService.step2Obj = data.step2Obj;
+          this.switchService.step3Obj = data.step3Obj;
+          this.switchService.currentUrl = data.switchType;
+          this.switchType = data.switchType;
+          if (localStorage.getItem("userId") !== null) {
+            this.session = true;
+            this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
+              (data: any) => {
+                this.switchService.personalObj = data;
+                this.switchService.addressObj = data.addressDetails ? data.addressDetails : {};
+                this.switchService.paymentObj = data.paymentDetails ? data.paymentDetails : {};
+                this.switchForm = this.fb.group({
+                  'name': [data.name ? data.name : '', Validators.required],
+                  'companyName': [data.companyName ? data.companyName : '', Validators.required],
+                  'companyType': [data.companyType ? data.companyType : '', Validators.required],
+                  'companyRegNo': [data.companyRegNo ? data.companyRegNo : '', Validators.required],
+                  'mobileNo': [data.mobileNo ? data.mobileNo : '', Validators.compose([Validators.required])]
+                });
 
+                this.spinner.hide();
+              },
+              err => {
+                this.spinner.hide()
+              },
+              () => this.spinner.hide()
+            )
+          }
+          else {
+            this.session = false;
+            this.switchForm = this.fb.group({
+              'name': ['', Validators.required],
+              'companyName': ['', Validators.required],
+              'companyType': ['', Validators.required],
+              'companyRegNo': ['', Validators.required],
+              'mobileNo': ['', Validators.compose([Validators.required])],
+              'emailGroup': this.fb.group({
+                'emailAddress': ['',
+                  Validators.compose([Validators.required, Validators.email])],
+                'confirmEmailAddress': ['',
+                  Validators.compose([Validators.required, Validators.email])],
+              }, { validator: emailMatcher }),
+              'passwordGroup': this.fb.group({
+                'password': ['', Validators.compose([Validators.required])],
+                'confirmPassword': ['', Validators.compose([Validators.required])],
+              }, { validator: passwordMatcher })
 
+            });
           }
           this.spinner.hide();
         },
@@ -151,43 +117,66 @@ export class PersonalDetailsComponent implements OnInit {
       )
     }
     else {
-      this.router.navigate([this.switchType + '/address-details']);
+      this.router.navigate(['']);
+    }
+
+
+    this.loginForm = this.fb.group({
+      'emailAddress': ['', Validators.compose([Validators.required, Validators.email])],
+      'password': ['', Validators.required]
+    });
+
+  }
+
+
+
+  submitForm(value: any): void {
+    this.setValues(value);
+
+
+    if (localStorage.getItem("userId") == null) {
+      this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
+      this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;
+      this.switchService.personalObj.password = value.passwordGroup.password;
+      this.switchService.personalObj.confirmPassword = value.passwordGroup.confirmPassword;
+      console.log(this.switchService,value,"fghfgh")
+      this.switchService.registerUser(this.switchService.personalObj).subscribe(
+        (data: any) => {
+          localStorage.setItem('userId', data._id);
+          localStorage.setItem('name', data.name);
+          this.router.navigate([this.switchType + '/address-details']);
+          /*     this.emailError = "Email already registered. Please login to continue.";
+              $("#loginModal").modal("show"); */
+          this.spinner.hide();
+        },
+        err => {
+          this.spinner.hide()
+        },
+        () => this.spinner.hide()
+      )
+    }
+    else {
+      this.switchService.personalObj.userId = localStorage.getItem("userId");
+      this.switchService.updateUser(this.switchService.personalObj).subscribe(
+        (data: any) => {
+          this.router.navigate([this.switchType + '/address-details']);
+          this.spinner.hide();
+        },
+        err => {
+          this.spinner.hide()
+        },
+        () => this.spinner.hide()
+      )
 
     }
   }
+
 
   updateForm(value: any): void {
-    this.switchService.personalObj.name = value.name;
-    this.switchService.personalObj.companyName = value.companyName;
-    this.switchService.personalObj.companyType = value.companyType;
-    this.switchService.personalObj.companyRegNo = value.companyRegNo;
-    this.switchService.personalObj.mobileNo = value.mobileNo;
-    this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
-    this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;
-    this.switchService.personalObj.password = value.passwordGroup.password;
-    this.switchService.personalObj.confirmPassword = value.passwordGroup.confirmPassword;
-    this.router.navigate([this.switchType + '/details']);
-  }
-
-
-  login(value) {
-    var request = {
-      emailAddress: value.emailAddress,
-      password: value.password
-    }
-    this.loginService.login(request).subscribe(
+    this.setValues(value)
+    this.switchService.updateUser(this.switchService.personalObj).subscribe(
       (data: any) => {
-        if (data.code == 200) {
-          localStorage.setItem('userId', data.userId);
-          localStorage.setItem('name', data.name);
-          $('#loginModal').modal('hide');
-          let obj = new NavbarComponent(this.router);
-          obj.clearSession();
-          this.getProfile();
-        }
-        else {
-          this.error = data.message;
-        }
+        this.router.navigate([this.switchType + '/details']);
         this.spinner.hide();
       },
       err => {
@@ -196,19 +185,34 @@ export class PersonalDetailsComponent implements OnInit {
       () => this.spinner.hide()
     )
   }
-  getProfile() {
-    this.clearSession();
-    var request = {
-      userId: localStorage.getItem('userId')
+
+  setValues(value) {
+    this.switchService.personalObj = {
+      name: value.name,
+      companyName: value.companyName,
+      companyType: value.companyType,
+      companyRegNo: value.companyRegNo,
+      mobileNo: value.mobileNo,
+      stepsId: localStorage.getItem("stepsId")
     }
-    this.profileService.getProfile(request).subscribe(
+  }
+
+
+  login(value) {
+    var request = {
+      emailAddress: value.emailAddress,
+      password: value.password
+    }
+    this.switchService.login(request).subscribe(
       (data: any) => {
-        this.switchService.personalObj = data.details;
-        this.switchService.personalObj.confirmPassword = data.details.password;
-        this.switchService.personalObj.confirmEmailAddress = data.details.emailAddress;
-        this.switchService.addressObj = data.details.addressDetails ? data.details.addressDetails : {};
-        this.switchService.paymentObj = data.details.paymentDetails ? data.details.paymentDetails : {};
-        this.setValues();
+        if (data.code == 200) {
+          localStorage.setItem('userId', data.userId);
+          localStorage.setItem('name', data.name);
+          location.reload();
+        }
+        else {
+          this.error = data.message;
+        }
         this.spinner.hide();
       },
       err => {

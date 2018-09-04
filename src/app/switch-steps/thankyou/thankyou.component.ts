@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SwitchService } from '../switch.service';
+import { SwitchService } from '../../switch.service';
 
 @Component({
   selector: 'app-thankyou',

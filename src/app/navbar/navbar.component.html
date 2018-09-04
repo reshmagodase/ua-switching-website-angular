@@ -21,8 +21,12 @@
                             <a href="/profile">My Profile</a>
                         </li>
                         <li>
+                            <a data-toggle="modal" data-target="#changePasswordModal">Change Password</a>
+                        </li>
+                        <li>
                             <a (click)="logout()">Logout</a>
                         </li>
+
                     </ul>
                 </li>
             </ul>
@@ -31,3 +35,111 @@
     </div>
 
 </nav>
+
+
+
+
+
+<!-- Modal -->
+<div id="changePasswordModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background: #17252a !important">
+                <img class="logo" src="assets/images/ua_logo.png" style="height: 40px">
+                <button type="button" class="close" data-dismiss="modal" style="color: white">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="changePasswordForm">
+                    <div class="container" formGroupName="passwordGroup">
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label>Old Password</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="input-group mb-3">
+                                    <input style="font-size:14px;font-family:  Arial, Helvetica, sans-serif" placeholder="Enter Old Password" class="form-control"
+                                        type="password" formControlName="oldPassword">
+
+
+                                </div>
+                                <div class=" alert-danger" *ngIf="changePasswordForm.controls['passwordGroup'].touched && !changePasswordForm.controls['passwordGroup'].valid">
+                                    <span *ngIf="changePasswordForm.get('passwordGroup').get('oldPassword').hasError('required') ">
+                                        Confirm Password is required!
+                                    </span>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label>New Password</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="input-group mb-3">
+                                    <input style="font-size:14px;font-family:  Arial, Helvetica, sans-serif" placeholder="Enter New Password" class="form-control"
+                                        type="password" formControlName="password">
+
+                                </div>
+                                <div class=" alert-danger" *ngIf="changePasswordForm.controls['passwordGroup'].touched && !changePasswordForm.controls['passwordGroup'].valid">
+                                    <span *ngIf="changePasswordForm.get('passwordGroup').get('password').hasError('required') ">
+                                        New password is required!
+                                    </span>
+                                    <span *ngIf="!changePasswordForm.get('passwordGroup').get('password').hasError('required') && changePasswordForm.controls['passwordGroup'].hasError('match')">
+                                        New password should not be same as old password!
+                                    </span>
+                                    <span *ngIf="!changePasswordForm.get('passwordGroup').get('password').hasError('required') && changePasswordForm.controls['passwordGroup'].hasError('nomatch')">
+                                        Password doesn't match!
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label>Confirm New Password</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="input-group mb-3">
+                                    <input style="font-size:14px;font-family:  Arial, Helvetica, sans-serif" placeholder="Enter New Password" class="form-control"
+                                        type="password" formControlName="confirmPassword">
+
+                                </div>
+                                <div class=" alert-danger" *ngIf="changePasswordForm.controls['passwordGroup'].touched && !changePasswordForm.controls['passwordGroup'].valid">
+                                    <span *ngIf="changePasswordForm.get('passwordGroup').get('password').hasError('required') ">
+                                        Confirm password is required!
+                                    </span>
+
+                                    <span *ngIf="!changePasswordForm.get('passwordGroup').get('confirmPassword').hasError('required') && changePasswordForm.controls['passwordGroup'].hasError('nomatch')">
+                                        Password doesn't match!
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="btnRow">
+                                    <button class="next2 btn btn-secondary customBtn" [disabled]='!changePasswordForm.valid'>Change Password </button>
+
+                                    <div class=" alert-danger">
+
+                                        <span>
+                                            {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

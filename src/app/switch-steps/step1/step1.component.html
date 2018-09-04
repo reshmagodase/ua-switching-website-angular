@@ -1,33 +1,33 @@
-<form [formGroup]="switchForm">
-  <!-- First Container -->
-  <div class="container-fluid text-center">
-    <div style="padding: 20px 0px">
-      <h1 class="fontBold">Compare your {{switchType}}
+<!-- First Container -->
+<div class="container-fluid text-center">
+  <div style="padding: 20px 0px">
+    <h1 class="fontBold">Compare your {{switchType}}
 
-      </h1>
-    </div>
-
+    </h1>
   </div>
 
-  <!-- Circles which indicates the steps of the form: -->
-  <div class=" container " style="text-align:center;margin-top:40px;max-width: 700px; ">
-    <div class="row">
-      <div class="col-4 ">
-        <span class="step firststep active">1</span>
-        <br>Select Supply Address</div>
-      <div class="col-4 ">
-        <span class="step midstep" (click)="submitForm(switchForm.value,2)">2</span>
-        <br>Usage</div>
-      <div class="col-4 ">
-        <span class="step laststep " (click)="submitForm(switchForm.value,3)">3</span>
-        <br>Supplier List</div>
-    </div>
+</div>
+
+<!-- Circles which indicates the steps of the form: -->
+<div class=" container " style="text-align:center;margin-top:40px;max-width: 700px; ">
+  <div class="row">
+    <div class="col-4 ">
+      <span class="step firststep active">1</span>
+      <br>Select Supply Address</div>
+    <div class="col-4 ">
+      <span class="step midstep" (click)="submitForm(switchForm.value,2)">2</span>
+      <br>Usage</div>
+    <div class="col-4 ">
+      <span class="step laststep " (click)="submitForm(switchForm.value,3)">3</span>
+      <br>Supplier List</div>
   </div>
+</div>
 
 
 
-  <div class="container switchforms " style="text-align:center;margin-top:40px;max-width: 1000px; ">
-    <div class="tab ">
+<div class="container switchforms " style="text-align:center;margin-top:40px;max-width: 1000px; ">
+  <div class="tab ">
+    <form [formGroup]="switchForm">
       <div class="row form-group ">
         <div class="col-sm-3 labelTag ">
           <label>Post Code *</label>
@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <div class="row form-group" [hidden]="!MPANDivShow">
+      <div class="row form-group" [hidden]="MPANDiv">
         <div class="col-sm-3 labelTag ">
           <label>
             {{switchType=="electricity" ? "MPAN" : "MPRN"}}
@@ -145,9 +145,9 @@
 
               </div>
               <div class="modal-body">
-                <p>Your gas MPRN (Meter Point Reference Number) is the unique identifying gas number for your property. Your MPRN
-                  is sometimes referred to as a M Number. It is unique to your property and does not change if you change
-                  supplier. 
+                <p>Your gas MPRN (Meter Point Reference Number) is the unique identifying gas number for your property. Your
+                  MPRN is sometimes referred to as a M Number. It is unique to your property and does not change if you change
+                  supplier.
                   <img src="assets/images/mprn.png" width="100%">
                 </p>
               </div>
@@ -156,11 +156,11 @@
           </div>
         </div>
       </div>
-      <div class="row ">
-        <div class="btnRow ">
-          <button class="next1 btn btn-secondary customBtn" [disabled]='!switchForm.valid' (click)="submitForm(switchForm.value,2)">Next </button>
-        </div>
+    </form>
+    <div class="row ">
+      <div class="btnRow ">
+        <button class="next1 btn btn-secondary customBtn" [disabled]='!switchForm.valid' (click)="submitForm(switchForm.value,2)">Next </button>
       </div>
     </div>
   </div>
-</form>
+</div>

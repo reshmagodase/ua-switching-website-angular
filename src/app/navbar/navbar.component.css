@@ -52,7 +52,6 @@
 }
 
 .dropdown-menu li {
-    padding: 5px;
     border: 1px solid white;
 }
 
@@ -62,6 +61,7 @@
     text-decoration: none;
     width: 100%;
     display: block;
+    padding: 5px;
 }
 
 .dropdown-menu {
@@ -69,7 +69,6 @@
 }
 
 .dropdown-menu li:hover, .dropdown-menu li a:hover {
-    padding: 5px;
     background-color: white;
-    color: #17252a;
+    color: #132026;
 }

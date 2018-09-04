@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './login.service';
+import { SwitchService } from '../switch.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,7 +13,8 @@ export class HomeComponent implements OnInit {
   loginForm: FormGroup;
   error: String;
   session: Boolean = true;
-  constructor(private router: Router, public loginService: LoginService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+  constructor(private router: Router, public switchService: SwitchService,
+    private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.loginForm = fb.group({
       'emailAddress': ['', Validators.compose([Validators.required, Validators.email])],
       'password': ['', Validators.required]
@@ -35,9 +36,8 @@ export class HomeComponent implements OnInit {
       emailAddress: value.emailAddress,
       password: value.password
     }
-    this.loginService.login(request).subscribe(
+    this.switchService.login(request).subscribe(
       (data: any) => {
-        console.log(data);
         if (data.code == 200) {
           localStorage.setItem('userId', data.userId);
           localStorage.setItem('name', data.name);

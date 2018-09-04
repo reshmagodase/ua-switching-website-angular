@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SwitchService } from '../switch.service';
+import { SwitchService } from '../../switch.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,13 +16,12 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.switchService.updateForm = false;
-    if (this.switchService.currentUrl == "") {
-      this.router.navigate(['']);
+    if (localStorage.getItem("userId") !== null) {
+      this.switchType = this.switchService.currentUrl;
     }
     else {
-      this.switchType = this.switchService.currentUrl;
+      this.router.navigate(['']);
     }
   }
 
@@ -37,8 +36,6 @@ export class DetailComponent implements OnInit {
     var address2 = supplyAddressArr.slice(position, position * 2);
     var address3 = supplyAddressArr.slice(position * 2, position * 3);
     var address4 = supplyAddressArr.slice(position * 3, position * 4);
-
-
 
     var MainDetailsData = [
       {
@@ -207,7 +204,8 @@ export class DetailComponent implements OnInit {
     ]
 
 
-
+    delete this.switchService.step1Obj.addresses;
+    delete this.switchService.step3Obj.prices;
 
     var quotationDetails = {
       step1Obj: this.switchService.step1Obj,
@@ -216,7 +214,8 @@ export class DetailComponent implements OnInit {
       personalObj: this.switchService.personalObj,
       addressObj: this.switchService.addressObj,
       paymentObj: this.switchService.paymentObj,
-      currentUrl: this.switchService.currentUrl
+      currentUrl: this.switchService.currentUrl,
+      userId: localStorage.getItem("userId")
     }
 
     var request = {
@@ -230,6 +229,7 @@ export class DetailComponent implements OnInit {
         this.spinner.hide();
         console.log(data);
         if (data.code == 200) {
+          localStorage.removeItem("stepsId");
           this.router.navigate(['thankyou']);
         }
         else {

@@ -9,6 +9,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class SwitchService {
+  stepsId: string = '';
   step1Obj: any = {};
   step2Obj: any = {};
   step3Obj: any = {};
@@ -62,9 +63,49 @@ export class SwitchService {
   }
 
     
+
+
+
+  login(request) {
+    this.spinner.show();
+    return this.http.post('/api/login', request)
+  }
+
+  logout() {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userID");
+    localStorage.removeItem("stepsId");
+    localStorage.removeItem("name");
+    this.spinner.show();
+    return this.http.get('/api/logout', httpOptions)
+  }
+
+
+  saveSteps(request) {
+    this.spinner.show();
+    return this.http.post('/api/steps', request)
+  }
+
+  getSteps(request) {
+    this.spinner.show();
+    return this.http.get('/api/steps/' + request.stepsId, httpOptions)
+  }
+
+      
   registerUser(request) {
     this.spinner.show();
-    return this.http.post('/api/registerUser', request)
+    return this.http.post('/api/users', request)
   }
+
+  updateUser(request) {
+    this.spinner.show();
+    return this.http.put('/api/users/' + request.userId, request)
+  }
+
+  getUser(request) {
+    this.spinner.show();
+    return this.http.get('/api/users/' + request.userId, httpOptions)
+  }
+
 }
 

@@ -10,18 +10,20 @@
 
         <div class="col-md-4 text-center">
           <img src="assets/images/energyLogo.png">
-          <h3>{{switchService.step3Obj.supplier.Supplier}}</h3>
+          <h3>{{switchService?.step3Obj?.supplier?.Supplier}}</h3>
         </div>
 
       </div>
-      <div class="row " [hidden]="session">
-        <br>
-        <div class="col-12 text-right">
-          <h5> Already have an account?
-            <a data-toggle="modal" data-target="#loginModal" style="color:#0897C7;cursor:pointer">Login</a>
-          </h5>
+      <ng-container *ngIf="session==false">
+        <div class="row ">
+          <br>
+          <div class="col-12 text-right">
+            <h5> Already have an account?
+              <a data-toggle="modal" data-target="#loginModal" style="color:#0897C7;cursor:pointer">Login</a>
+            </h5>
+          </div>
         </div>
-      </div>
+      </ng-container>
 
     </div>
 
@@ -112,72 +114,74 @@
         </div>
 
       </div>
-      <div class="row" formGroupName="emailGroup" [hidden]="session">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Email Address</label>
-            <input placeholder="Email Address" type="email" class="form-control" formControlName="emailAddress">
-            <div class=" alert-danger" *ngIf="switchForm.controls['emailGroup'].touched && !switchForm.controls['emailGroup'].valid">
-              <span *ngIf="switchForm.get('emailGroup').get('emailAddress').hasError('required') ">
-                Email Address is required!
-              </span>
-              <span *ngIf="switchForm.get('emailGroup').get('emailAddress').hasError('email') ">
-                Invalid Email Address!
-              </span>
-            </div>
-          </div>
-
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Confirm Email Address</label>
-            <input placeholder="Confirm Email Address" class="form-control" type="email" formControlName="confirmEmailAddress">
-            <div class=" alert-danger" *ngIf="switchForm.controls['emailGroup'].touched && !switchForm.controls['emailGroup'].valid">
-              <span *ngIf="switchForm.get('emailGroup').get('confirmEmailAddress').hasError('required') ">
-                Confirm Email Address is required!
-              </span>
-              <span *ngIf="switchForm.get('emailGroup').get('confirmEmailAddress').hasError('email') ">
-                Invalid Email Address!
-              </span>
-              <span *ngIf="!switchForm.get('emailGroup').get('confirmEmailAddress').hasError('required')  && !switchForm.get('emailGroup').get('confirmEmailAddress').hasError('email')  && switchForm.controls['emailGroup'].hasError('nomatch')">
-                Email Address doesn't match!
-              </span>
+      <ng-container *ngIf="session==false">
+        <div class="row" formGroupName="emailGroup">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email Address</label>
+              <input placeholder="Email Address" type="email" class="form-control" formControlName="emailAddress">
+              <div class=" alert-danger" *ngIf="switchForm.controls['emailGroup'].touched && !switchForm.controls['emailGroup'].valid">
+                <span *ngIf="switchForm.get('emailGroup').get('emailAddress').hasError('required') ">
+                  Email Address is required!
+                </span>
+                <span *ngIf="switchForm.get('emailGroup').get('emailAddress').hasError('email') ">
+                  Invalid Email Address!
+                </span>
+              </div>
             </div>
 
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Confirm Email Address</label>
+              <input placeholder="Confirm Email Address" class="form-control" type="email" formControlName="confirmEmailAddress">
+              <div class=" alert-danger" *ngIf="switchForm.controls['emailGroup'].touched && !switchForm.controls['emailGroup'].valid">
+                <span *ngIf="switchForm.get('emailGroup').get('confirmEmailAddress').hasError('required') ">
+                  Confirm Email Address is required!
+                </span>
+                <span *ngIf="switchForm.get('emailGroup').get('confirmEmailAddress').hasError('email') ">
+                  Invalid Email Address!
+                </span>
+                <span *ngIf="!switchForm.get('emailGroup').get('confirmEmailAddress').hasError('required')  && !switchForm.get('emailGroup').get('confirmEmailAddress').hasError('email')  && switchForm.controls['emailGroup'].hasError('nomatch')">
+                  Email Address doesn't match!
+                </span>
+              </div>
 
+
+
+            </div>
 
           </div>
-
         </div>
-      </div>
-      <div class="row" formGroupName="passwordGroup" [hidden]="session">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Password</label>
-            <input placeholder="Password" class="form-control" type="password" formControlName="password" style="font-family:Arial">
-            <div class=" alert-danger" *ngIf="switchForm.controls['passwordGroup'].touched && !switchForm.controls['passwordGroup'].valid">
-              <span *ngIf="switchForm.get('passwordGroup').get('password').hasError('required') ">
-                Password is required!
-              </span>
+        <div class="row" formGroupName="passwordGroup">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Password</label>
+              <input placeholder="Password" class="form-control" type="password" formControlName="password" style="font-family:Arial">
+              <div class=" alert-danger" *ngIf="switchForm.controls['passwordGroup'].touched && !switchForm.controls['passwordGroup'].valid">
+                <span *ngIf="switchForm.get('passwordGroup').get('password').hasError('required') ">
+                  Password is required!
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input placeholder="Confirm Password" class="form-control" type="password" formControlName="confirmPassword" style="font-family:Arial">
+
+              <div class=" alert-danger" *ngIf="switchForm.controls['passwordGroup'].touched && !switchForm.controls['passwordGroup'].valid">
+                <span *ngIf="switchForm.get('passwordGroup').get('confirmPassword').hasError('required') ">
+                  Confirm Password is required!
+                </span>
+                <span *ngIf="!switchForm.get('passwordGroup').get('confirmPassword').hasError('required') && switchForm.controls['passwordGroup'].hasError('nomatch')">
+                  Password doesn't match!
+                </span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Confirm Password</label>
-            <input placeholder="Confirm Password" class="form-control" type="password" formControlName="confirmPassword" style="font-family:Arial">
-
-            <div class=" alert-danger" *ngIf="switchForm.controls['passwordGroup'].touched && !switchForm.controls['passwordGroup'].valid">
-              <span *ngIf="switchForm.get('passwordGroup').get('confirmPassword').hasError('required') ">
-                Confirm Password is required!
-              </span>
-              <span *ngIf="!switchForm.get('passwordGroup').get('confirmPassword').hasError('required') && switchForm.controls['passwordGroup'].hasError('nomatch')">
-                Password doesn't match!
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      </ng-container>
 
       <hr>
       <footer style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
@@ -185,10 +189,10 @@
           CONTINUE
         </button>
         <button class="btn btn-secondary customBtn" *ngIf="switchService.updateForm" (click)="updateForm(switchForm.value)" [disabled]='!switchForm.valid'>
-          Update
+          UPDATE
         </button>
       </footer>
-    
+
     </div>
 
 
@@ -199,7 +203,7 @@
 <!-- Modal -->
 <div id="loginModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-   
+
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="background: #17252a !important">
@@ -207,9 +211,9 @@
         <button type="button" class="close" data-dismiss="modal" style="color: white">&times;</button>
       </div>
       <div class="modal-body">
-          <div class=" alert-danger" >
-              <span>{{emailError}}</span>
-          </div>
+        <div class=" alert-danger">
+          <span>{{emailError}}</span>
+        </div>
         <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
           <div class="container">
             <div class="row form-group">
@@ -240,7 +244,8 @@
               </div>
               <div class="col-sm-8">
                 <div class="input-group mb-3">
-                  <input  style="font-family: Arial, Helvetica, sans-serif"  placeholder="Enter Password" class="form-control" type="password" formControlName="password">
+                  <input style="font-family: Arial, Helvetica, sans-serif" placeholder="Enter Password" class="form-control" type="password"
+                    formControlName="password">
                 </div>
 
               </div>

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SwitchService } from '../switch.service';
+import { SwitchService } from '../../switch.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-
 
 
 @Component({
@@ -12,11 +11,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class Step3Component implements OnInit {
   currentStepObject: any = {};
   switchType: string = '';
-  constructor(private router: Router, public switchService: SwitchService, private spinner: NgxSpinnerService) { }
   prices: any;
   spendAmount: string;
+  constructor(private router: Router, public switchService: SwitchService, private spinner: NgxSpinnerService) { }
+
   ngOnInit() {
-    console.log(this.switchService);
     this.spendAmount = this.switchService.step2Obj.spendAmount;
     if (this.switchService.currentUrl == "") {
       this.router.navigate(['']);
@@ -73,7 +72,6 @@ export class Step3Component implements OnInit {
             alert("No rates found for this meter. Please check that you have entered the correct details.");
             this.spinner.hide()
           }
-          console.log(this.prices);
         },
         err => this.spinner.hide(),
         () => this.spinner.hide()
@@ -92,9 +90,29 @@ export class Step3Component implements OnInit {
     this.router.navigate([this.switchType]);
   }
 
-  getSupplierDetails(supplier) {
-    console.log(supplier);
+  switchNow(supplier) {
     this.switchService.step3Obj.supplier = supplier;
-    this.router.navigate([this.switchType + '/personal-details']);
+    var request = {
+      step1Obj: this.switchService.step1Obj,
+      step2Obj: this.switchService.step2Obj,
+      step3Obj: this.switchService.step3Obj,
+      switchType: this.switchType
+    }
+    if (localStorage.getItem("userId") !== null) {
+      request["userId"] = localStorage.getItem("userId")
+    }
+    this.switchService.saveSteps(request).subscribe(
+      (data: any) => {
+        localStorage.removeItem("stepsId");
+        localStorage.setItem('stepsId', data._id);
+        this.spinner.hide();
+        this.router.navigate([this.switchType + '/personal-details']);
+      },
+      err => {
+        this.spinner.hide()
+      },
+      () => this.spinner.hide()
+    )
+
   }
 }
