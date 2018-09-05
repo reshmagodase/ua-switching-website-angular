@@ -26,6 +26,7 @@
     "ngx-bootstrap": "^3.0.1",
     "ngx-spinner": "^6.0.0",
     "rxjs": "^6.0.0",
+    "sweetalert2": "^7.26.14",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

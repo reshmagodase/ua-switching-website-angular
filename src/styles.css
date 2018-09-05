@@ -312,7 +312,7 @@ table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
     .table .switchNowBtn {
         margin-top: -50px;
         top: -150px;
-        left: 70%;
+        right: -60%;
     }
     .table {
         text-align: left !important;

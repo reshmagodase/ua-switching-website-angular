@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
         else {
           this.error = data.message;
         }
-        this.spinner.hide();
       },
       err => {
         this.spinner.hide()

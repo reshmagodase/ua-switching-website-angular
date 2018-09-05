@@ -3,6 +3,8 @@ import { SwitchService } from '../switch.service';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
+
 
 declare var $: any;
 export const passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
@@ -16,7 +18,7 @@ export const passwordMatcher = (control: AbstractControl): { [key: string]: bool
   else if (password.value !== confirm.value) {
     return { nomatch: true };
   }
-  else{
+  else {
     return null;
   }
 };
@@ -58,7 +60,6 @@ export class NavbarComponent implements OnInit {
     this.switchService.logout().subscribe(
       (data: any) => {
         location.reload();
-        this.router.navigate(['/']);
         this.spinner.hide();
       },
       err => {
@@ -67,23 +68,24 @@ export class NavbarComponent implements OnInit {
       () => this.spinner.hide()
     )
 
-   
+
   }
 
 
 
   changePassword(value) {
     var request = {
-      emailAddress: value.emailAddress,
-      password: value.password
+      userId: localStorage.getItem("userId"),
+      oldPassword: value.passwordGroup.oldPassword,
+      newPassword: value.passwordGroup.password
     }
-    this.switchService.login(request).subscribe(
+
+    this.switchService.changePassword(request).subscribe(
       (data: any) => {
         if (data.code == 200) {
-          localStorage.setItem('userId', data.userId);
-          localStorage.setItem('name', data.name);
-          this.logout();
-          
+          Swal("", "Password changed successfully! Please login to continue.", "success").then(() => {
+            this.logout();
+          })
         }
         else {
           this.error = data.message;

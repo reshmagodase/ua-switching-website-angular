@@ -72,3 +72,11 @@
     background-color: white;
     color: #132026;
 }
+
+.modal-header {
+    border-radius: 0;
+}
+
+.navbar-nav {
+    text-align: right;
+}

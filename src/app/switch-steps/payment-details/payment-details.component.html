@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-4 text-center">
           <img src="assets/images/energyLogo.png">
-          <h3>{{switchService.step3Obj.supplier.Supplier}}</h3>
+          <h3>{{switchService?.step3Obj?.supplier?.Supplier}}</h3>
         </div>
       </div>
     </div>
@@ -124,17 +124,17 @@
               This Guarantee is offered by all Banks and Building Societies that accept instructions to pay Direct Debits
             </li>
             <li>
-              If there are any changes to the amount, date or frequency of your Direct Debit, First Utility will notify you 10 working
+              If there are any changes to the amount, date or frequency of your Direct Debit, {{switchService?.step3Obj?.supplier?.Supplier}} will notify you 10 working
               days in advance of your account being debited or as otherwise agreed
             </li>
             <li>
-              If you request First Utility to collect a payment, confirmation of the amount and date will be given to you at the time of
+              If you request {{switchService?.step3Obj?.supplier?.Supplier}} to collect a payment, confirmation of the amount and date will be given to you at the time of
               the request
             </li>
             <li>
-              If an error is made in the payment of your Direct Debit, by First Utility or your Bank or Building Society, you are entitled
+              If an error is made in the payment of your Direct Debit, by {{switchService?.step3Obj?.supplier?.Supplier}} or your Bank or Building Society, you are entitled
               to a full and immediate refund of the amount paid from your Bank or Building Society If you receive a refund
-              you are not entitled to, you must pay it back when First Utility asks you to
+              you are not entitled to, you must pay it back when {{switchService?.step3Obj?.supplier?.Supplier}} asks you to
             </li>
             <li>
               You can cancel a Direct Debit at any time by simply contacting your Bank or Building Society Written confirmation may be
@@ -150,11 +150,11 @@
 
 
 
-          <div class=" alert-danger" *ngIf="switchForm.controls['terms'].touched && !switchForm.controls['terms'].valid">
+       <!--    <div class=" alert-danger" *ngIf="switchForm.controls['terms'].touched && !switchForm.controls['terms'].valid">
             <span *ngIf="switchForm.controls['terms'].hasError('required') ">
               You must agree to the terms and conditions
             </span>
-          </div>
+          </div> -->
         </div>
         <div class="col-md-4">
           <img src="assets/images/debitLogo.png">

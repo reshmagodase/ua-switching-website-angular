@@ -15,47 +15,95 @@ export class AddressDetailsComponent implements OnInit {
   switchForm: FormGroup;
 
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
-    var addressObj = this.switchService.addressObj;
     this.switchForm = fb.group({
-      'residentialStatus': [addressObj.residentialStatus ? addressObj.residentialStatus : '', Validators.required],
-      'yearsAtProperty': [addressObj.yearsAtProperty ? addressObj.yearsAtProperty : '', Validators.required],
-      'monthsAtProperty': [addressObj.monthsAtProperty ? addressObj.monthsAtProperty : '', Validators.required],
-      'prevAddressLine1': [addressObj.prevAddressLine1 ? addressObj.prevAddressLine1 : ''],
-      'prevAddressLine2': [addressObj.prevAddressLine2 ? addressObj.prevAddressLine2 : ''],
-      'prevCity': [addressObj.prevCity ? addressObj.prevCity : ''],
-      'prevCountry': [addressObj.prevCountry ? addressObj.prevCountry : ''],
-      'prevPostCode': [addressObj.prevPostCode ? addressObj.prevPostCode : ''],
-      'checkBillingAddress': [addressObj.checkBillingAddress ? addressObj.checkBillingAddress : false],
-      'billingAddressLine1': [addressObj.billingAddressLine1 ? addressObj.billingAddressLine1 : ''],
-      'billingAddressLine2': [addressObj.billingAddressLine2 ? addressObj.billingAddressLine2 : ''],
-      'billingCity': [addressObj.billingCity ? addressObj.billingCity : ''],
-      'billingCountry': [addressObj.billingCountry ? addressObj.billingCountry : ''],
-      'billingPostCode': [addressObj.billingPostCode ? addressObj.billingPostCode : '']
+      'residentialStatus': ['', Validators.required],
+      'yearsAtProperty': ['', Validators.required],
+      'monthsAtProperty': ['', Validators.required],
+      'prevAddressLine1': [''],
+      'prevAddressLine2': [''],
+      'prevCity': [''],
+      'prevCountry': [''],
+      'prevPostCode': [''],
+      'checkBillingAddress': [false],
+      'billingAddressLine1': [''],
+      'billingAddressLine2': [''],
+      'billingCity': [''],
+      'billingCountry': [''],
+      'billingPostCode': ['']
     });
 
   }
 
   ngOnInit() {
-    if (localStorage.getItem("userId") !== null) {
-      this.switchType = this.switchService.currentUrl;
+    if (localStorage.getItem("stepsId") !== null && localStorage.getItem("userId") !== null) {
+      this.switchService.getSteps({ stepsId: localStorage.getItem("stepsId") }).subscribe(
+        (data: any) => {
+          this.switchService.step1Obj = data.step1Obj;
+          this.switchService.step2Obj = data.step2Obj;
+          this.switchService.step3Obj = data.step3Obj;
+          this.switchService.currentUrl = data.switchType;
+          this.switchType = data.switchType;
+          this.spinner.hide();
+          this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
+            (data: any) => {
+              this.switchService.personalObj = data;
+              this.switchService.addressObj = data.addressObj ? data.addressObj : {};
+              this.switchService.paymentObj = data.paymentObj ? data.paymentObj : {};
+
+              if (data.addressObj) {
+                this.switchForm = this.fb.group({
+                  'residentialStatus': [data.addressObj.residentialStatus ? data.addressObj.residentialStatus : '', Validators.required],
+                  'yearsAtProperty': [data.addressObj.yearsAtProperty ? data.addressObj.yearsAtProperty : '', Validators.required],
+                  'monthsAtProperty': [data.addressObj.monthsAtProperty ? data.addressObj.monthsAtProperty : '', Validators.required],
+                  'prevAddressLine1': [data.addressObj.prevAddressLine1 ? data.addressObj.prevAddressLine1 : ''],
+                  'prevAddressLine2': [data.addressObj.prevAddressLine2 ? data.addressObj.prevAddressLine2 : ''],
+                  'prevCity': [data.addressObj.prevCity ? data.addressObj.prevCity : ''],
+                  'prevCountry': [data.addressObj.prevCountry ? data.addressObj.prevCountry : ''],
+                  'prevPostCode': [data.addressObj.prevPostCode ? data.addressObj.prevPostCode : ''],
+                  'checkBillingAddress': [data.addressObj.checkBillingAddress ? data.addressObj.checkBillingAddress : false],
+                  'billingAddressLine1': [data.addressObj.billingAddressLine1 ? data.addressObj.billingAddressLine1 : ''],
+                  'billingAddressLine2': [data.addressObj.billingAddressLine2 ? data.addressObj.billingAddressLine2 : ''],
+                  'billingCity': [data.addressObj.billingCity ? data.addressObj.billingCity : ''],
+                  'billingCountry': [data.addressObj.billingCountry ? data.addressObj.billingCountry : ''],
+                  'billingPostCode': [data.addressObj.billingPostCode ? data.addressObj.billingPostCode : '']
+                });
+              }
+
+              this.spinner.hide();
+            },
+            err => {
+              this.spinner.hide()
+            },
+            () => this.spinner.hide()
+          )
+
+        },
+        err => {
+          this.spinner.hide()
+        },
+        () => this.spinner.hide()
+      )
     }
-    else{
+    else {
       this.router.navigate(['']);
     }
+
+
   }
+
 
   submitForm(value: any): void {
-    var url=this.switchType + '/payment-details';
-    this.setAddressObj(value,url);
- 
+    var url = this.switchType + '/payment-details';
+    this.setAddressObj(value, url);
+
   }
   updateForm(value: any): void {
-    var url=this.switchType + '/details';
-    this.setAddressObj(value,url);
- 
+    var url = this.switchType + '/details';
+    this.setAddressObj(value, url);
+
   }
 
-  setAddressObj(value,url) {
+  setAddressObj(value, url) {
     this.switchService.addressObj = {
       residentialStatus: value.residentialStatus,
       yearsAtProperty: value.yearsAtProperty,
@@ -72,8 +120,7 @@ export class AddressDetailsComponent implements OnInit {
       billingCountry: value.billingCountry,
       billingPostCode: value.billingPostCode
     }
-    this.switchService.addressObj.userId=localStorage.getItem("userId");
-    this.switchService.updateUser(this.switchService.addressObj).subscribe(
+    this.switchService.updateUser({ addressObj: this.switchService.addressObj, userId: localStorage.getItem("userId") }).subscribe(
       (data: any) => {
         this.router.navigate([url]);
         this.spinner.hide();

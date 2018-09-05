@@ -3,6 +3,7 @@ import { SwitchService } from '../../switch.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-step1',
@@ -93,7 +94,7 @@ export class Step1Component implements OnInit {
       (data: any) => {
         this.spinner.hide();
         if (data.postCode == "") {
-          alert("Unable to retreive post code. Please enter it manually!")
+          Swal("Unable to retreive post code. Please enter it manually!")
         }
         else {
           this.switchForm.controls['postCode'].setValue(data.postCode);

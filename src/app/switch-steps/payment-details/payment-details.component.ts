@@ -43,25 +43,15 @@ export class PaymentDetailsComponent implements OnInit {
   switchForm: FormGroup;
 
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
-    var paymentObj = this.switchService.paymentObj;
     this.switchForm = fb.group({
-      'accountHolderName': [
-        paymentObj.accountHolderName ? paymentObj.accountHolderName : ''
-        , Validators.required],
-      'sortCode': [
-        paymentObj.sortCode ? paymentObj.sortCode : ''
-        , [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/), Validators.required]],
-      'accountNumber': [
-        paymentObj.accountNumber ? paymentObj.accountNumber : ''
-        , [Validators.pattern(/^(\d){8}$/), Validators.required]],
-      'terms': [paymentObj.terms ? paymentObj.terms : ''],
+      'accountHolderName': ['', Validators.required],
+      'sortCode': ['', [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/), Validators.required]],
+      'accountNumber': ['', [Validators.pattern(/^(\d){8}$/), Validators.required]],
+      'terms': [''],
       'bankGroup': this.fb.group({
-        'bankName': [
-          paymentObj.bankName ? paymentObj.bankName : ''],
-        'checkManual': [
-          paymentObj.checkManual ? paymentObj.checkManual : false],
-        'manualBankName': [
-          paymentObj.manualBankName ? paymentObj.manualBankName : ''],
+        'bankName': [''],
+        'checkManual': [false],
+        'manualBankName': [''],
       }, { validator: bankRequired })
     }, { validator: termsRequired });
 
@@ -69,35 +59,84 @@ export class PaymentDetailsComponent implements OnInit {
   }
 
 
+
   ngOnInit() {
-    if (localStorage.getItem("userId") !== null) {
-      this.switchType = this.switchService.currentUrl;
+    if (localStorage.getItem("stepsId") !== null && localStorage.getItem("userId") !== null) {
+      this.switchService.getSteps({ stepsId: localStorage.getItem("stepsId") }).subscribe(
+        (data: any) => {
+          this.switchService.step1Obj = data.step1Obj;
+          this.switchService.step2Obj = data.step2Obj;
+          this.switchService.step3Obj = data.step3Obj;
+          this.switchService.currentUrl = data.switchType;
+          this.switchType = data.switchType;
+          this.spinner.hide();
+
+            this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
+              (data: any) => {
+                this.switchService.personalObj = data;
+                this.switchService.addressObj = data.addressObj ? data.addressObj : {};
+                this.switchService.paymentObj = data.paymentObj ? data.paymentObj : {};
+                if (data.paymentObj) {
+                  this.switchForm = this.fb.group({
+                    'accountHolderName': [data.paymentObj.accountHolderName ? data.paymentObj.accountHolderName : '', Validators.required],
+                    'sortCode': [data.paymentObj.sortCode ? data.paymentObj.sortCode : ''
+                      , [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/), Validators.required]],
+                    'accountNumber': [data.paymentObj.accountNumber ? data.paymentObj.accountNumber : ''
+                      , [Validators.pattern(/^(\d){8}$/), Validators.required]],
+                    'terms': [''],
+                    'bankGroup': this.fb.group({
+                      'bankName': [data.paymentObj.bankName ? data.paymentObj.bankName : ''],
+                      'checkManual': [data.paymentObj.checkManual ? data.paymentObj.checkManual : false],
+                      'manualBankName': [data.paymentObj.manualBankName ? data.paymentObj.manualBankName : ''],
+                    }, { validator: bankRequired })
+                  }, { validator: termsRequired });
+                }
+
+                this.spinner.hide();
+              },
+              err => {
+                this.spinner.hide()
+              },
+              () => this.spinner.hide()
+            )
+
+        },
+        err => {
+          this.spinner.hide()
+        },
+        () => this.spinner.hide()
+      )
     }
     else {
       this.router.navigate(['']);
     }
+
+
   }
 
+
+
   submitForm(value: any): void {
-    var url=this.switchType + '/details';
-    this.setValues(value,url);
+    var url = this.switchType + '/details';
+    this.setValues(value, url);
   }
 
   updateForm(value: any): void {
-    var url=this.switchType + '/details';
-    this.setValues(value,url);
+    var url = this.switchType + '/details';
+    this.setValues(value, url);
   }
 
-  setValues(value: any,url) {
+  setValues(value: any, url) {
     this.switchService.paymentObj.accountHolderName = value.accountHolderName;
     this.switchService.paymentObj.sortCode = value.sortCode;
-    this.switchService.paymentObj.accountNumber = "0" + value.accountNumber;
+    this.switchService.paymentObj.accountNumber = value.accountNumber;
     this.switchService.paymentObj.bankName = value.bankGroup.bankName;
     this.switchService.paymentObj.checkManual = value.bankGroup.checkManual;
     this.switchService.paymentObj.terms = value.terms;
     this.switchService.paymentObj.manualBankName = value.bankGroup.manualBankName;
-    this.switchService.paymentObj.userId=localStorage.getItem("userId");
-    this.switchService.updateUser(this.switchService.paymentObj).subscribe(
+    this.switchService.paymentObj.userId = localStorage.getItem("userId");
+    this.switchService.updateUser({ paymentObj: this.switchService.paymentObj, userId: localStorage.getItem("userId") }).subscribe(
+
       (data: any) => {
         this.router.navigate([url]);
         this.spinner.hide();

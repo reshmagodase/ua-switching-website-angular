@@ -52,11 +52,17 @@ export class PersonalDetailsComponent implements OnInit {
       }, { validator: passwordMatcher })
 
     });
+
+    this.loginForm = this.fb.group({
+      'emailAddress': ['', Validators.compose([Validators.required, Validators.email])],
+      'password': ['', Validators.required]
+    });
+
   }
 
 
   ngOnInit() {
-    if (localStorage.getItem("stepsId") !== null) {
+    if (localStorage.getItem("stepsId") !== null && localStorage.getItem("userId") !== null) {
       this.switchService.getSteps({ stepsId: localStorage.getItem("stepsId") }).subscribe(
         (data: any) => {
           this.switchService.step1Obj = data.step1Obj;
@@ -64,13 +70,15 @@ export class PersonalDetailsComponent implements OnInit {
           this.switchService.step3Obj = data.step3Obj;
           this.switchService.currentUrl = data.switchType;
           this.switchType = data.switchType;
-          if (localStorage.getItem("userId") !== null) {
-            this.session = true;
-            this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
-              (data: any) => {
+          this.spinner.hide();
+          this.session = true;
+          this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
+            (data: any) => {
+
+              if (data) {
                 this.switchService.personalObj = data;
-                this.switchService.addressObj = data.addressDetails ? data.addressDetails : {};
-                this.switchService.paymentObj = data.paymentDetails ? data.paymentDetails : {};
+                this.switchService.addressObj = data.addressObj ? data.addressObj : {};
+                this.switchService.paymentObj = data.paymentObj ? data.paymentObj : {};
                 this.switchForm = this.fb.group({
                   'name': [data.name ? data.name : '', Validators.required],
                   'companyName': [data.companyName ? data.companyName : '', Validators.required],
@@ -78,37 +86,16 @@ export class PersonalDetailsComponent implements OnInit {
                   'companyRegNo': [data.companyRegNo ? data.companyRegNo : '', Validators.required],
                   'mobileNo': [data.mobileNo ? data.mobileNo : '', Validators.compose([Validators.required])]
                 });
+              }
 
-                this.spinner.hide();
-              },
-              err => {
-                this.spinner.hide()
-              },
-              () => this.spinner.hide()
-            )
-          }
-          else {
-            this.session = false;
-            this.switchForm = this.fb.group({
-              'name': ['', Validators.required],
-              'companyName': ['', Validators.required],
-              'companyType': ['', Validators.required],
-              'companyRegNo': ['', Validators.required],
-              'mobileNo': ['', Validators.compose([Validators.required])],
-              'emailGroup': this.fb.group({
-                'emailAddress': ['',
-                  Validators.compose([Validators.required, Validators.email])],
-                'confirmEmailAddress': ['',
-                  Validators.compose([Validators.required, Validators.email])],
-              }, { validator: emailMatcher }),
-              'passwordGroup': this.fb.group({
-                'password': ['', Validators.compose([Validators.required])],
-                'confirmPassword': ['', Validators.compose([Validators.required])],
-              }, { validator: passwordMatcher })
 
-            });
-          }
-          this.spinner.hide();
+              this.spinner.hide();
+            },
+            err => {
+              this.spinner.hide()
+            },
+            () => this.spinner.hide()
+          )
         },
         err => {
           this.spinner.hide()
@@ -120,11 +107,6 @@ export class PersonalDetailsComponent implements OnInit {
       this.router.navigate(['']);
     }
 
-
-    this.loginForm = this.fb.group({
-      'emailAddress': ['', Validators.compose([Validators.required, Validators.email])],
-      'password': ['', Validators.required]
-    });
 
   }
 
@@ -139,7 +121,6 @@ export class PersonalDetailsComponent implements OnInit {
       this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;
       this.switchService.personalObj.password = value.passwordGroup.password;
       this.switchService.personalObj.confirmPassword = value.passwordGroup.confirmPassword;
-      console.log(this.switchService,value,"fghfgh")
       this.switchService.registerUser(this.switchService.personalObj).subscribe(
         (data: any) => {
           localStorage.setItem('userId', data._id);

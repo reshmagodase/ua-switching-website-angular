@@ -107,5 +107,15 @@ export class SwitchService {
     return this.http.get('/api/users/' + request.userId, httpOptions)
   }
 
+  getQuotations(request) {
+    this.spinner.show();
+    return this.http.get('/api/quotations?userId=' + request.userId, httpOptions)
+  }
+
+  changePassword(request) {
+    this.spinner.show();
+    return this.http.post('/api/changePassword', request)
+  }
+
 }
 

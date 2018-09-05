@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SwitchService } from '../../switch.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-step3',
@@ -45,7 +45,7 @@ export class Step3Component implements OnInit {
             this.switchService.step3Obj.prices = this.prices;
           }
           else {
-            alert("No rates found for this meter. Please check that you have entered the correct details.");
+            Swal("No rates found for this meter. Please check that you have entered the correct details.");
             this.spinner.hide()
           }
         },
@@ -69,7 +69,7 @@ export class Step3Component implements OnInit {
             this.switchService.step3Obj.prices = this.prices;
           }
           else {
-            alert("No rates found for this meter. Please check that you have entered the correct details.");
+            Swal("No rates found for this meter. Please check that you have entered the correct details.");
             this.spinner.hide()
           }
         },

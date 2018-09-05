@@ -3,6 +3,7 @@ import { SwitchService } from '../../switch.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detail',
@@ -15,15 +16,49 @@ export class DetailComponent implements OnInit {
 
   }
 
+  
+
   ngOnInit() {
     this.switchService.updateForm = false;
-    if (localStorage.getItem("userId") !== null) {
-      this.switchType = this.switchService.currentUrl;
+    if (localStorage.getItem("stepsId") !== null && localStorage.getItem("userId") !== null) {
+      this.switchService.getSteps({ stepsId: localStorage.getItem("stepsId") }).subscribe(
+        (data: any) => {
+          this.switchService.step1Obj = data.step1Obj;
+          this.switchService.step2Obj = data.step2Obj;
+          this.switchService.step3Obj = data.step3Obj;
+          this.switchService.currentUrl = data.switchType;
+          this.switchType = data.switchType;
+          this.spinner.hide();
+
+          if (localStorage.getItem("userId") !== null) {
+            this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
+              (data: any) => {
+                this.switchService.personalObj = data;
+                this.switchService.addressObj = data.addressObj ? data.addressObj : {};
+                this.switchService.paymentObj = data.paymentObj ? data.paymentObj : {};
+                this.spinner.hide();
+              },
+              err => {
+                this.spinner.hide()
+              },
+              () => this.spinner.hide()
+            )
+          }
+
+        },
+        err => {
+          this.spinner.hide()
+        },
+        () => this.spinner.hide()
+      )
     }
     else {
       this.router.navigate(['']);
     }
+
+
   }
+
 
   openPage(page: string) {
     this.switchService.updateForm = true;
@@ -233,7 +268,7 @@ export class DetailComponent implements OnInit {
           this.router.navigate(['thankyou']);
         }
         else {
-          alert(data.message);
+          Swal(data.message);
         }
       },
       err => this.spinner.hide(),

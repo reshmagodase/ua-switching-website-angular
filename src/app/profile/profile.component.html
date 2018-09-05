@@ -1,143 +1,180 @@
-<!-- <div class="container text-center compare">
-  <div style="padding: 20px 0px">
-    <h2>Start comparing prices and tariffs now</h2>
+
+<div class="container" id="personal-details">
+  <div style="padding-top:20px">
+    <h2 class="fontBold">My profile </h2>
   </div>
+
   <div class="row">
-    <div class="col-sm-6">
-      <a href="/gas">
-        <img src="assets/images/icon_gas.png">
-        <div class="switchTypeBtn">Gas</div>
-        <br>
-      </a>
+    <div class="col-md-6">
+      <table border="1">
+        <tr>
+          <th colspan="2">Personal/Address Details</th>
+        </tr>
+        <tr>
+          <td>Name:</td>
+          <td class="fontBold">{{switchService.personalObj.name}}</td>
+        </tr>
+        <tr>
+          <td>Company Name:</td>
+          <td class="fontBold">{{switchService.personalObj.companyName}}</td>
+        </tr>
+        <tr>
+          <td>Company Type:</td>
+          <td class="fontBold">{{switchService.personalObj.companyType}}</td>
+        </tr>
+        <tr>
+          <td>Registration No.:</td>
+          <td class="fontBold">{{switchService.personalObj.companyRegNo}}</td>
+        </tr>
+        <tr>
+          <td>Mobile No.:</td>
+          <td class="fontBold">{{switchService.personalObj.mobileNo}}</td>
+        </tr>
+
+        <tr [hidden]="!switchService.addressObj.checkBillingAddress">
+          <td>Billing Address:</td>
+          <td class="fontBold"> {{this.switchService.addressObj.billingAddressLine1 + ' ' + this.switchService.addressObj.billingAddressLine2 +
+            ' ' + this.switchService.addressObj.billingCity + ' ' + this.switchService.addressObj.billingCountry + ' ' +
+            this.switchService.addressObj.billingPostCode}}
+          </td>
+        </tr>
+        <tr [hidden]="!(switchService.addressObj.yearsAtProperty<3 && switchService.addressObj.yearsAtProperty!=='')">
+          <td>Previous Address:</td>
+          <td class="fontBold"> {{this.switchService.addressObj.prevAddressLine1 + ' ' + this.switchService.addressObj.prevAddressLine2 + ' ' +
+            this.switchService.addressObj.prevCity + ' ' + this.switchService.addressObj.prevCountry + ' ' + this.switchService.addressObj.prevPostCode}}</td>
+        </tr>
+
+      </table>
     </div>
-    <div class="col-sm-6">
-      <a href="/electricity">
-        <img src="assets/images/icon_electricity.png">
-        <div class="switchTypeBtn">Electricity</div>
-      </a>
+    <div class="col-md-6">
+
+      <table border="1">
+        <tr>
+          <th colspan="2">Bank Details</th>
+        </tr>
+        <tr>
+          <td>Account Holder Name:</td>
+          <td class="fontBold">{{switchService.paymentObj.accountHolderName}}</td>
+        </tr>
+        <tr>
+          <td>Sort Code:</td>
+          <td class="fontBold">{{switchService.paymentObj.sortCode}}</td>
+        </tr>
+        <tr>
+          <td>Account Number:</td>
+          <td class="fontBold">{{switchService.paymentObj.accountNumber}}</td>
+        </tr>
+        <tr>
+          <td>Bank Name:</td>
+          <td class="fontBold">{{switchService.paymentObj.checkManual ? switchService.paymentObj.manualBankName : switchService.paymentObj.bankName}}</td>
+        </tr>
+
+
+
+
+      </table>
+
+
     </div>
   </div>
-
-</div> -->
-<div class="details switchforms">
-
-
-
-  <div class="container detailsForm">
-
-    <div class="row">
-      <h4 class="col-md-12" style="margin-top:10px">Personal Details</h4>
-      <div class="col-md-12">
-
-        <div class="form-group" style="background-color: #eef0f1;padding:5px;">
-          <div class="row">
-            <div class="col-md-6">
-              <label>Name:</label> {{switchService.personalObj.name}}
-            </div>
-            <div class="col-md-6">
-              <label>Company Name:</label> {{switchService.personalObj.companyName}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label>Company Type:</label> {{switchService.personalObj.companyType}}
-            </div>
-            <div class="col-md-6">
-              <label>Company Registration / Charity Number:</label> {{switchService.personalObj.companyRegNo}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label>Mobile Number:</label> {{switchService.personalObj.mobileNo}}
-            </div>
-
-          </div>
-        </div>
-
-        <!--    <div style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
-            <button class="btn" (click)="openPage('personal-details')">
-              Edit/Update
-            </button>
-          </div>
-   -->
-      </div>
-
-    </div>
-    <hr>
-    <div class="row">
-      <h4 class="col-md-12" style="margin-top:10px">Address Details</h4>
-      <div class="col-md-12">
-
-        <div class="form-group" style="background-color: #eef0f1;padding:5px;">
-          <div class="row">
-
-            <div class="col-md-12" [hidden]="!(switchService.addressObj.yearsAtProperty<3 && switchService.addressObj.yearsAtProperty!=='')">
-              <label> Previous Address: </label>
-              {{this.switchService.addressObj.prevAddressLine1 + ' ' + this.switchService.addressObj.prevAddressLine2 + ' ' + this.switchService.addressObj.prevCity
-              + ' ' + this.switchService.addressObj.prevCountry + ' ' + this.switchService.addressObj.prevPostCode}}
-            </div>
-            <div class="col-md-12" [hidden]="!switchService.addressObj.checkBillingAddress">
-              <label> Billing Address: </label>
-              {{this.switchService.addressObj.billingAddressLine1 + ' ' + this.switchService.addressObj.billingAddressLine2 + ' ' + this.switchService.addressObj.billingCity
-              + ' ' + this.switchService.addressObj.billingCountry + ' ' + this.switchService.addressObj.billingPostCode}}
-            </div>
-
-          </div>
-        </div>
-
-
-
-        <!--      <div style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
-            <button class="btn" (click)="openPage('address-details')">
-              Edit/Update
-            </button>
-          </div> -->
-
-      </div>
-
-    </div>
-    <hr>
-    <div class="row">
-      <h4 class="col-md-12" style="margin-top:10px">Bank Details</h4>
-      <div class="col-md-12">
-
-        <div class="form-group" style="background-color: #eef0f1;padding:5px;">
-          <div class="row">
-            <div class="col-md-6">
-              <label>Account Holder Name:</label> {{switchService.paymentObj.accountHolderName}}
-            </div>
-            
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label>Sort Code:</label> {{switchService.paymentObj.sortCode}}
-            </div>
-            <div class="col-md-6">
-              <label>Account Number:</label> {{switchService.paymentObj.accountNumber}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-
-              <label>Bank Name:</label> {{switchService.paymentObj.checkManual ? switchService.paymentObj.manualBankName : switchService.paymentObj.bankName}}
-            </div>
-          </div>
-        </div>
-
-        <!--  <div style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
-            <button class="btn" (click)="openPage('payment-details')">
-              Edit/Update
-            </button>
-          </div> -->
-
-      </div>
-
-    </div>
-
-
-
+  <div style="padding-top:20px">
+    <h2 class="fontBold">Switching History</h2>
   </div>
+  <div style="overflow-x:auto;">
+    <table class="table table-striped" [mfData]="switchingHistory" #mf="mfDataTable" [mfRowsOnPage]="10">
+      <thead>
+        <tr>
+          <th>
+            Sr No.
+          </th>
+
+          <th>
+            Supply Details
+          </th>
+          <th>
+            Previous Supply Details
+          </th>
+          <th>
+            Switch Details
+          </th>
+          <th>
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let history of mf.data;let i=index">
+          <tr>
+            <td class="text-center"><b style="text-decoration: underline">{{i+1}}</b>
+            </td>
+
+            <td style="max-width: 300px;">Supply Type:
+              <b>{{history.quotationDetails.currentUrl | uppercase}}</b>
+              <br> Post Code:
+              <b>{{history.quotationDetails.step1Obj.postCode  | uppercase}} </b>
+              <br> Supply Address:
+              <b>
+                {{history.quotationDetails.step1Obj.supplyAddress}}</b>
+              <br> MPAN/MPRN:
+              <b> {{history.quotationDetails.currentUrl=='electricity' ? history.quotationDetails.step1Obj.MPANBottomLineNo :history.quotationDetails.step1Obj.MPRN}}</b>
+            </td>
+            <td>Annual Spend:
+              <b>{{history.quotationDetails.step2Obj.spendAmount}}</b>
+              <br> Annual Usage:
+              <b>{{history.quotationDetails.step2Obj.consumption}} </b>
+              <br> Contract End Date:
+              <b>
+                {{history.quotationDetails.step2Obj.contractEndDate}}</b>
+              <br> Current Supplier:
+              <b>
+                {{history.quotationDetails.step2Obj.checkManual ? history.quotationDetails.step2Obj.manualCurrentSupplier : history.quotationDetails.step2Obj.currentSupplier}}</b>
+              <br> Billing Type:
+              <b>
+                {{history.quotationDetails.step2Obj.billingType}}</b>
+              <br> Smart Meter:
+              <b>
+                {{history.quotationDetails.step2Obj.smartMeter ? "Yes" : "No"}}</b>
+
+            </td>
+            <td><b style="color: #3697c2">
+                {{history.quotationDetails.step3Obj.supplier.Supplier}}</b>
+              <br> Day Rate:
+              <b>
+                {{(history.quotationDetails.step3Obj.supplier.DayUnitrate/1).toFixed(2)}}</b> pence per kWh
+              <br> Standing Charge:
+              <b>
+                {{(history.quotationDetails.step3Obj.supplier.StandingCharge/1).toFixed(2)}}</b> pence per day
 
 
+            </td>
+            <td class="text-center">
+              <ng-container *ngIf="history.documentSigned; then documentSigned; else pendingDocumentSigned">
+              </ng-container>
+              <ng-template #documentSigned>
+                <ng-container *ngIf="history.LOASigned; then completed; else pendingLOA">
+                </ng-container>
+                <ng-template #completed>
+                  <span class="badge badge-pill badge-success">Completed</span>
+                </ng-template>
+                <ng-template #pendingLOA>
+                  <span class="badge badge-pill badge-primary">Pending LOA</span>
+                </ng-template>
+              </ng-template>
+              <ng-template #pendingDocumentSigned>
+                <span class="badge badge-pill badge-danger">Pending DocuSign</span>
+              </ng-template>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5" style="font-family:Arial, Helvetica, sans-serif">
+            <mfBootstrapPaginator></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
 </div>
