@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -32,7 +37,7 @@ export class SwitchService {
 
   getSupplyAddresses(request) {
     this.spinner.show();
-    return this.http.post('/api/getSupplyAddresses', request, httpOptions)
+    return this.http.post('/api/getSupplyAddresses', request, httpOptions);
     //return this.http.get('/assets/address.json', httpOptions)
   }
   getElectricPricesList(request) {
@@ -54,15 +59,19 @@ export class SwitchService {
 
   getPostCode() {
     this.spinner.show();
-    return this.http.get('/api/getPostCode', httpOptions)
+    return this.http.get('/api/getPostCode', httpOptions).pipe(
+      map(data => data),
+      catchError((error: any) => {
+          return Observable.throw(new Error(error));
+      }))
   }
-  
+
   checkEmail(request) {
     this.spinner.show();
     return this.http.post('/api/checkEmail', request)
   }
 
-    
+
 
 
 
@@ -91,7 +100,7 @@ export class SwitchService {
     return this.http.get('/api/steps/' + request.stepsId, httpOptions)
   }
 
-      
+
   registerUser(request) {
     this.spinner.show();
     return this.http.post('/api/users', request)

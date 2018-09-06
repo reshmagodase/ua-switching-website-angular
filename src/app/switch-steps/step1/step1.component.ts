@@ -100,7 +100,7 @@ export class Step1Component implements OnInit {
           this.switchForm.controls['postCode'].setValue(data.postCode);
         }
       },
-      err => this.spinner.hide(),
+      err => { Swal("Unable to retreive post code. Please enter it manually!"); this.spinner.hide() },
       () => this.spinner.hide()
     )
   }
@@ -108,9 +108,9 @@ export class Step1Component implements OnInit {
   submitForm(value: any, step: number): void {
 
     if (value.supplyAddress) {
-      
+
       var supplyAddress = value.supplyAddress.split("AAA");
-      
+
       this.switchService.step1Obj.postCode = value.postCode;
       this.switchService.step1Obj.formattedSupplyAddress = value.supplyAddress;
       this.switchService.step1Obj.supplyAddress = supplyAddress[0];
