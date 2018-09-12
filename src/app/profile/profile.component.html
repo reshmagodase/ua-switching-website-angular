@@ -1,4 +1,3 @@
-
 <div class="container" id="personal-details">
   <div style="padding-top:20px">
     <h2 class="fontBold">My profile </h2>
@@ -105,13 +104,14 @@
       <tbody>
         <ng-container *ngFor="let history of mf.data;let i=index">
           <tr>
-            <td class="text-center"><b style="text-decoration: underline">{{i+1}}</b>
+            <td class="text-center">
+              <b style="text-decoration: underline">{{i+1}}</b>
             </td>
 
             <td style="max-width: 300px;">Supply Type:
               <b>{{history.quotationDetails.currentUrl | uppercase}}</b>
               <br> Post Code:
-              <b>{{history.quotationDetails.step1Obj.postCode  | uppercase}} </b>
+              <b>{{history.quotationDetails.step1Obj.postCode | uppercase}} </b>
               <br> Supply Address:
               <b>
                 {{history.quotationDetails.step1Obj.supplyAddress}}</b>
@@ -136,7 +136,8 @@
                 {{history.quotationDetails.step2Obj.smartMeter ? "Yes" : "No"}}</b>
 
             </td>
-            <td><b style="color: #3697c2">
+            <td>
+              <b style="color: #3697c2">
                 {{history.quotationDetails.step3Obj.supplier.Supplier}}</b>
               <br> Day Rate:
               <b>
@@ -147,7 +148,7 @@
 
 
             </td>
-            <td class="text-center">
+            <td class="text-center" style="vertical-align: middle">
               <ng-container *ngIf="history.documentSigned; then documentSigned; else pendingDocumentSigned">
               </ng-container>
               <ng-template #documentSigned>
@@ -158,6 +159,10 @@
                 </ng-template>
                 <ng-template #pendingLOA>
                   <span class="badge badge-pill badge-primary">Pending LOA</span>
+                  <br>
+                  <span style="cursor: pointer;" (click)="downloadPDF(history.quotationDetails.step3Obj.supplier.Supplier,history.quotationDetails.currentUrl,history.docuSignRefID)">
+                    <img alt="DocuSign" src="assets/images/docuSign.png" style="width:40px;margin-top: 5px;" title="Download DocuSign">
+                  </span>
                 </ng-template>
               </ng-template>
               <ng-template #pendingDocumentSigned>

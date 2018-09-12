@@ -47,6 +47,7 @@ export class Step2Component implements OnInit {
   switchForm: FormGroup;
   annualSpend: string;
   annualUsage: string;
+  unitRate: number;
 
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private datePipe: DatePipe) {
     var step2Obj = this.switchService.step2Obj;
@@ -75,18 +76,28 @@ export class Step2Component implements OnInit {
     else {
       this.switchType = this.switchService.currentUrl;
     }
+
+
+    this.switchService.getUnitRate().subscribe(
+      (data: any) => {
+        if (data) {
+          if (this.switchType == "electricity") {
+            this.unitRate = data[0].electricity.value;
+          }
+          else {
+            this.unitRate = data[0].gas.value;
+          }
+          console.log(this.unitRate)
+        }
+      }
+    )
   }
 
 
   submitForm(value: any, step: number): void {
-    var pence = 0;
-    if (this.switchType == "electricity") {
-      pence = 13;
-    }
-    else {
-      pence = 3.5;
-    }
+
     this.switchService.step2Obj = {
+      unitRate: this.unitRate,
       annualSpend: value.usageGroup.annualSpend ? value.usageGroup.annualSpend : '',
       annualUsage: value.usageGroup.annualUsage ? value.usageGroup.annualUsage : '',
       contractEndDate: value.contractEndDate,
@@ -95,8 +106,8 @@ export class Step2Component implements OnInit {
       checkManual: value.supplierGroup.checkManual,
       billingType: value.billingType,
       smartMeter: value.smartMeter,
-      consumption: value.usageGroup.annualSpend ? (value.usageGroup.annualSpend / (pence / 100)).toFixed(0) : value.usageGroup.annualUsage,
-      spendAmount: value.usageGroup.annualSpend ? value.usageGroup.annualSpend : ((value.usageGroup.annualUsage * pence) / 100).toFixed(0)
+      consumption: value.usageGroup.annualSpend ? (value.usageGroup.annualSpend / (this.unitRate / 100)).toFixed(0) : value.usageGroup.annualUsage,
+      spendAmount: value.usageGroup.annualSpend ? value.usageGroup.annualSpend : ((value.usageGroup.annualUsage * this.unitRate) / 100).toFixed(0)
     }
     if (this.switchForm.valid && step == 3) {
       this.router.navigate([this.switchType + '/pricing-list']);

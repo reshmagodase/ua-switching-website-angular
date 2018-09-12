@@ -25,7 +25,7 @@ export class Step1Component implements OnInit {
 
     this.switchForm = fb.group({
       'postCode': [step1Obj.postCode ? step1Obj.postCode : '',
-      Validators.compose([Validators.required, Validators.maxLength(8)])],
+      Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(8)])],
       'supplyAddress': [step1Obj.formattedSupplyAddress ? step1Obj.formattedSupplyAddress : '', Validators.required]
     });
     this.showHideSupplyAddress = step1Obj.formattedSupplyAddress ? false : true;
@@ -40,52 +40,54 @@ export class Step1Component implements OnInit {
   }
 
   getSupplyAddress() {
-    this.showHideSupplyAddress = true;
-    var request = {
-      postCode: this.switchForm.controls['postCode'].value
-    }
-    this.switchService.getSupplyAddresses(request).subscribe(
-      (data: any) => {
-        var addressList = data.GetAddressesResult.Addresses;
-        if (addressList.length > 0) {
-          var jsonAddress = {};
-          var addressArr = [];
+    if (this.switchForm.controls['postCode'].valid) {
+      this.showHideSupplyAddress = true;
+      var request = {
+        postCode: this.switchForm.controls['postCode'].value
+      }
+      this.switchService.getSupplyAddresses(request).subscribe(
+        (data: any) => {
+          var addressList = data.GetAddressesResult.Addresses;
+          if (addressList.length > 0) {
+            var jsonAddress = {};
+            var addressArr = [];
 
-          var switchType = this.switchType;
-          for (var i = 0; i < addressList.length; i++) {
-            jsonAddress = {};
-            var address = addressList[i].map(function (obj) {
-              jsonAddress[obj.Key] = obj.Value
-              if (obj.Key == "MPANCore") {
-                jsonAddress["supplyType"] = "electricity";
+            var switchType = this.switchType;
+            for (var i = 0; i < addressList.length; i++) {
+              jsonAddress = {};
+              var address = addressList[i].map(function (obj) {
+                jsonAddress[obj.Key] = obj.Value
+                if (obj.Key == "MPANCore") {
+                  jsonAddress["supplyType"] = "electricity";
+                }
+                else if (obj.Key == "MPRN") {
+                  jsonAddress["supplyType"] = "gas";
+                }
+                return jsonAddress;
+              })
+              if (address[0].supplyType == "electricity" && switchType == "electricity") {
+                addressArr.push(address[0]);
               }
-              else if (obj.Key == "MPRN") {
-                jsonAddress["supplyType"] = "gas";
+              else if (address[0].supplyType == "gas" && switchType == "gas") {
+                addressArr.push(address[0]);
               }
-              return jsonAddress;
-            })
-            if (address[0].supplyType == "electricity" && switchType == "electricity") {
-              addressArr.push(address[0]);
             }
-            else if (address[0].supplyType == "gas" && switchType == "gas") {
-              addressArr.push(address[0]);
-            }
+            this.addresses = addressArr;
+            this.switchService.step1Obj.addresses = addressArr;
+            this.showHideSupplyAddress = false;
+
+            this.showHidePostCode = true;
           }
-          this.addresses = addressArr;
-          this.switchService.step1Obj.addresses = addressArr;
-          this.showHideSupplyAddress = false;
+          else {
+            this.showHidePostCode = false;
+            this.spinner.hide();
+          }
 
-          this.showHidePostCode = true;
-        }
-        else {
-          this.showHidePostCode = false;
-          this.spinner.hide();
-        }
-
-      },
-      err => this.spinner.hide(),
-      () => this.spinner.hide()
-    );
+        },
+        err => this.spinner.hide(),
+        () => this.spinner.hide()
+      );
+    }
   }
 
 

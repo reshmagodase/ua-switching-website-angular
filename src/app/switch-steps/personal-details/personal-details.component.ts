@@ -6,17 +6,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var $: any;
 
-export const emailMatcher = (control: AbstractControl): { [key: string]: boolean } => {
-  const email = control.get('emailAddress');
-  const confirm = control.get('confirmEmailAddress');
-  if (!email || !confirm) return null;
-  return email.value === confirm.value ? null : { nomatch: true };
-};
-export const passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
-  const password = control.get('password');
-  const confirm = control.get('confirmPassword');
-  if (!password || !confirm) return null;
-  return password.value === confirm.value ? null : { nomatch: true };
+
+export const termsRequired = (control: AbstractControl): { [key: string]: boolean } => {
+  const terms = control.get('terms');
+  if (!terms.value) {
+    return { required: true };
+  }
+  else {
+    return null;
+  }
 };
 
 
@@ -25,6 +23,9 @@ export const passwordMatcher = (control: AbstractControl): { [key: string]: bool
   templateUrl: './personal-details.component.html',
   styleUrls: ['./personal-details.component.css']
 })
+
+
+
 export class PersonalDetailsComponent implements OnInit {
   switchType: string = '';
   switchForm: FormGroup;
@@ -33,25 +34,27 @@ export class PersonalDetailsComponent implements OnInit {
   error: String;
   session: Boolean;
   emailError: String;
-  constructor(private router: Router, public switchService: SwitchService, public fb: FormBuilder, public spinner: NgxSpinnerService) {
+  constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, public spinner: NgxSpinnerService) {
     this.switchForm = this.fb.group({
       'name': ['', Validators.required],
       'companyName': ['', Validators.required],
       'companyType': ['', Validators.required],
       'companyRegNo': ['', Validators.required],
-      'mobileNo': ['', Validators.compose([Validators.required])],
+      'terms': [''],
+      'mobileNo': ['', Validators.compose([Validators.required, Validators.maxLength(20),
+      Validators.pattern(/^[\s\d]+$/)])],
       'emailGroup': this.fb.group({
         'emailAddress': ['',
           Validators.compose([Validators.required, Validators.email])],
         'confirmEmailAddress': ['',
           Validators.compose([Validators.required, Validators.email])],
-      }, { validator: emailMatcher }),
+      }, { validator: this.emailMatcher }),
       'passwordGroup': this.fb.group({
         'password': ['', Validators.compose([Validators.required])],
         'confirmPassword': ['', Validators.compose([Validators.required])],
-      }, { validator: passwordMatcher })
+      }, { validator: this.passwordMatcher })
 
-    });
+    },{ validator: termsRequired });
 
     this.loginForm = this.fb.group({
       'emailAddress': ['', Validators.compose([Validators.required, Validators.email])],
@@ -59,10 +62,44 @@ export class PersonalDetailsComponent implements OnInit {
     });
 
   }
+  emailMatcher = (control: AbstractControl): { [key: string]: boolean } => {
+    const email = control.get('emailAddress');
+    const confirm = control.get('confirmEmailAddress');
+    if (!email || !confirm) {
 
+      return null;
+    }
+    else if (email.value === confirm.value && email.touched) {
+      this.switchService.checkEmail({ email: email.value }).subscribe(
+        (data: any) => {
+          this.spinner.hide();
+          if (data.count > 0) {
+            this.emailError = "Email - " + email.value + " already registered. Please login to continue.";
+            $("#loginModal").modal("show");
+            return { emailExists: true };
+          }
+          else {
+            return null;
+          }
+        }
+      )
+    }
+    else {
+      return { nomatch: true }
+    }
+
+  };
+
+
+  passwordMatcher = (control: AbstractControl): { [key: string]: boolean } => {
+    const password = control.get('password');
+    const confirm = control.get('confirmPassword');
+    if (!password || !confirm) return null;
+    return password.value === confirm.value ? null : { nomatch: true };
+  };
 
   ngOnInit() {
-    if (localStorage.getItem("stepsId") !== null && localStorage.getItem("userId") !== null) {
+    if (localStorage.getItem("stepsId") !== null) {
       this.switchService.getSteps({ stepsId: localStorage.getItem("stepsId") }).subscribe(
         (data: any) => {
           this.switchService.step1Obj = data.step1Obj;
@@ -71,31 +108,37 @@ export class PersonalDetailsComponent implements OnInit {
           this.switchService.currentUrl = data.switchType;
           this.switchType = data.switchType;
           this.spinner.hide();
-          this.session = true;
-          this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
-            (data: any) => {
+          if (localStorage.getItem("userId") !== null) {
+            this.session = true;
+            this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
+              (data: any) => {
+                if (data) {
+                  this.switchService.personalObj = data;
+                  this.switchService.addressObj = data.addressObj ? data.addressObj : {};
+                  this.switchService.paymentObj = data.paymentObj ? data.paymentObj : {};
+                  this.switchForm = this.fb.group({
+                    'name': [data.name ? data.name : '', Validators.required],
+                    'companyName': [data.companyName ? data.companyName : '', Validators.required],
+                    'companyType': [data.companyType ? data.companyType : '', Validators.required],
+                    'companyRegNo': [data.companyRegNo ? data.companyRegNo : '', Validators.required],
+                    'terms': [''],
+                    'mobileNo': [data.mobileNo ? data.mobileNo : '', 
+                    Validators.compose([Validators.required, Validators.maxLength(20),
+                    Validators.pattern(/^[\s\d]+$/)])]
+                  },{ validator: termsRequired });
+                }
+                this.spinner.hide();
+              },
+              err => {
+                this.spinner.hide()
+              },
+              () => this.spinner.hide()
+            )
+          }
+          else {
+            this.session = false;
+          }
 
-              if (data) {
-                this.switchService.personalObj = data;
-                this.switchService.addressObj = data.addressObj ? data.addressObj : {};
-                this.switchService.paymentObj = data.paymentObj ? data.paymentObj : {};
-                this.switchForm = this.fb.group({
-                  'name': [data.name ? data.name : '', Validators.required],
-                  'companyName': [data.companyName ? data.companyName : '', Validators.required],
-                  'companyType': [data.companyType ? data.companyType : '', Validators.required],
-                  'companyRegNo': [data.companyRegNo ? data.companyRegNo : '', Validators.required],
-                  'mobileNo': [data.mobileNo ? data.mobileNo : '', Validators.compose([Validators.required])]
-                });
-              }
-
-
-              this.spinner.hide();
-            },
-            err => {
-              this.spinner.hide()
-            },
-            () => this.spinner.hide()
-          )
         },
         err => {
           this.spinner.hide()
@@ -126,8 +169,7 @@ export class PersonalDetailsComponent implements OnInit {
           localStorage.setItem('userId', data._id);
           localStorage.setItem('name', data.name);
           this.router.navigate([this.switchType + '/address-details']);
-          /*     this.emailError = "Email already registered. Please login to continue.";
-              $("#loginModal").modal("show"); */
+
           this.spinner.hide();
         },
         err => {
@@ -205,5 +247,6 @@ export class PersonalDetailsComponent implements OnInit {
 
 
 }
+
 
 

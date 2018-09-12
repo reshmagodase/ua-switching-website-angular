@@ -165,12 +165,9 @@
         <div class="col-sm-6">
           <select class="form-control" formControlName="billingType">
             <option value="">--Select Billing Type--</option>
-            <option value="Direct Debit (Monthly)">Direct Debit (Monthly)</option>
-            <option value="Quarterly Direct Debit">Quarterly Direct Debit</option>
-            <option value="Cash or Cheque">Cash or Cheque</option>
-            <option value="PAYG Prepayment Meter">PAYG Prepayment Meter</option>
-
-
+            <option value="DD">Direct Debit</option>
+            <option value="BACS">BACS</option>
+            <option value="Cheque">Cheque</option>
           </select>
           <div class=" alert-danger" *ngIf="switchForm.controls['billingType'].touched && !switchForm.controls['billingType'].valid">
             <span *ngIf="switchForm.controls['billingType'].hasError('required') ">

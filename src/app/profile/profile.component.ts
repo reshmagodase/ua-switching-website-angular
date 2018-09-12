@@ -48,6 +48,31 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  downloadPDF(supplier, supplyType, refID) {
+    var json = {
+      supplier: supplier,
+      supplyType: supplyType,
+      refID: refID
+    }
+    this.switchService.getDocuSignPDF(json).subscribe(
+      (pdfData: any) => {
+        this.spinner.hide();
 
 
+        var byteArray = new Uint8Array(pdfData);
+        var blob = new Blob([byteArray], { type: "application/pdf" });
+        var objectURL = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        var date = new Date();
+        a.download = supplier + " - " + supplyType + " " + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + ".pdf";
+        a.href = objectURL;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+      })
+
+
+
+  }
 }

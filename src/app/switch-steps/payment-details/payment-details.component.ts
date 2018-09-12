@@ -41,6 +41,7 @@ export const termsRequired = (control: AbstractControl): { [key: string]: boolea
 export class PaymentDetailsComponent implements OnInit {
   switchType: string = '';
   switchForm: FormGroup;
+  invalidBank: boolean = false;
 
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.switchForm = fb.group({
@@ -71,34 +72,34 @@ export class PaymentDetailsComponent implements OnInit {
           this.switchType = data.switchType;
           this.spinner.hide();
 
-            this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
-              (data: any) => {
-                this.switchService.personalObj = data;
-                this.switchService.addressObj = data.addressObj ? data.addressObj : {};
-                this.switchService.paymentObj = data.paymentObj ? data.paymentObj : {};
-                if (data.paymentObj) {
-                  this.switchForm = this.fb.group({
-                    'accountHolderName': [data.paymentObj.accountHolderName ? data.paymentObj.accountHolderName : '', Validators.required],
-                    'sortCode': [data.paymentObj.sortCode ? data.paymentObj.sortCode : ''
-                      , [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/), Validators.required]],
-                    'accountNumber': [data.paymentObj.accountNumber ? data.paymentObj.accountNumber : ''
-                      , [Validators.pattern(/^(\d){8}$/), Validators.required]],
-                    'terms': [''],
-                    'bankGroup': this.fb.group({
-                      'bankName': [data.paymentObj.bankName ? data.paymentObj.bankName : ''],
-                      'checkManual': [data.paymentObj.checkManual ? data.paymentObj.checkManual : false],
-                      'manualBankName': [data.paymentObj.manualBankName ? data.paymentObj.manualBankName : ''],
-                    }, { validator: bankRequired })
-                  }, { validator: termsRequired });
-                }
+          this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
+            (data: any) => {
+              this.switchService.personalObj = data;
+              this.switchService.addressObj = data.addressObj ? data.addressObj : {};
+              this.switchService.paymentObj = data.paymentObj ? data.paymentObj : {};
+              if (data.paymentObj) {
+                this.switchForm = this.fb.group({
+                  'accountHolderName': [data.paymentObj.accountHolderName ? data.paymentObj.accountHolderName : '', Validators.required],
+                  'sortCode': [data.paymentObj.sortCode ? data.paymentObj.sortCode : ''
+                    , [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/), Validators.required]],
+                  'accountNumber': [data.paymentObj.accountNumber ? data.paymentObj.accountNumber : ''
+                    , [Validators.pattern(/^(\d){8}$/), Validators.required]],
+                  'terms': [''],
+                  'bankGroup': this.fb.group({
+                    'bankName': [data.paymentObj.bankName ? data.paymentObj.bankName : ''],
+                    'checkManual': [data.paymentObj.checkManual ? data.paymentObj.checkManual : false],
+                    'manualBankName': [data.paymentObj.manualBankName ? data.paymentObj.manualBankName : ''],
+                  }, { validator: bankRequired })
+                }, { validator: termsRequired });
+              }
 
-                this.spinner.hide();
-              },
-              err => {
-                this.spinner.hide()
-              },
-              () => this.spinner.hide()
-            )
+              this.spinner.hide();
+            },
+            err => {
+              this.spinner.hide()
+            },
+            () => this.spinner.hide()
+          )
 
         },
         err => {
@@ -114,7 +115,22 @@ export class PaymentDetailsComponent implements OnInit {
 
   }
 
+  /* onChangeAccountNumber(event) {
+    this.switchService.verifyBankAccountNumber({
+      sortCode: this.switchForm.controls['sortCode'].value,
+      accountNumber: event.value
+    }).subscribe(
+      (data: any) => {
+        this.invalidBank = true;
+        console.log(data);
 
+      },
+      err => {
+        this.spinner.hide()
+      },
+      () => this.spinner.hide()
+    )
+  } */
 
   submitForm(value: any): void {
     var url = this.switchType + '/details';

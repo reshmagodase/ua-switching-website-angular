@@ -62,15 +62,29 @@ export class SwitchService {
     return this.http.get('/api/getPostCode', httpOptions).pipe(
       map(data => data),
       catchError((error: any) => {
-          return Observable.throw(new Error(error));
+        return Observable.throw(new Error(error));
+      }))
+  }
+
+  getDocuSignPDF(request) {
+    this.spinner.show();
+    return this.http.post('/api/getDocuSignPDF', request).pipe(
+      map(data => data),
+      catchError((error: any) => {
+        return Observable.throw(new Error(error));
       }))
   }
 
   checkEmail(request) {
     this.spinner.show();
-    return this.http.post('/api/checkEmail', request)
+    return this.http.get('/api/checkEmail?email=' + request.email, httpOptions)
   }
 
+
+  verifyBankAccountNumber(request) {
+    this.spinner.show();
+    return this.http.post('/api/verifyBankAccountNumber', request, httpOptions)
+  }
 
 
 
@@ -118,13 +132,18 @@ export class SwitchService {
 
   getQuotations(request) {
     this.spinner.show();
-    return this.http.get('/api/quotations?userId=' + request.userId, httpOptions)
+    return this.http.get('/api/quotations?sort=-created_at&userId=' + request.userId, httpOptions)
   }
 
   changePassword(request) {
     this.spinner.show();
     return this.http.post('/api/changePassword', request)
   }
+
+  getUnitRate() {
+    return this.http.get('/api/unitrate', httpOptions)
+  }
+
 
 }
 

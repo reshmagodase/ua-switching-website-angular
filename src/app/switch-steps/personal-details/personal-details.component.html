@@ -119,7 +119,10 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Email Address</label>
-              <input placeholder="Email Address" type="email" class="form-control" formControlName="emailAddress">
+              <input preventCutCopyPaste placeholder="Email Address" type="email" class="form-control" formControlName="emailAddress">
+              <span *ngIf="switchForm.get('emailGroup').get('emailAddress').hasError('emailExists') ">
+                Email already registered! Please login to continue.
+              </span>
               <div class=" alert-danger" *ngIf="switchForm.controls['emailGroup'].touched && !switchForm.controls['emailGroup'].valid">
                 <span *ngIf="switchForm.get('emailGroup').get('emailAddress').hasError('required') ">
                   Email Address is required!
@@ -127,6 +130,7 @@
                 <span *ngIf="switchForm.get('emailGroup').get('emailAddress').hasError('email') ">
                   Invalid Email Address!
                 </span>
+
               </div>
             </div>
 
@@ -134,7 +138,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Confirm Email Address</label>
-              <input placeholder="Confirm Email Address" class="form-control" type="email" formControlName="confirmEmailAddress">
+              <input preventCutCopyPaste placeholder="Confirm Email Address" class="form-control" type="email" formControlName="confirmEmailAddress">
               <div class=" alert-danger" *ngIf="switchForm.controls['emailGroup'].touched && !switchForm.controls['emailGroup'].valid">
                 <span *ngIf="switchForm.get('emailGroup').get('confirmEmailAddress').hasError('required') ">
                   Confirm Email Address is required!
@@ -157,7 +161,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Password</label>
-              <input placeholder="Password" class="form-control" type="password" formControlName="password" style="font-family:Arial">
+              <input preventCutCopyPaste placeholder="Password" class="form-control" type="password" formControlName="password" style="font-family:Arial">
               <div class=" alert-danger" *ngIf="switchForm.controls['passwordGroup'].touched && !switchForm.controls['passwordGroup'].valid">
                 <span *ngIf="switchForm.get('passwordGroup').get('password').hasError('required') ">
                   Password is required!
@@ -168,7 +172,8 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Confirm Password</label>
-              <input placeholder="Confirm Password" class="form-control" type="password" formControlName="confirmPassword" style="font-family:Arial">
+              <input preventCutCopyPaste placeholder="Confirm Password" class="form-control" type="password" formControlName="confirmPassword"
+                style="font-family:Arial">
 
               <div class=" alert-danger" *ngIf="switchForm.controls['passwordGroup'].touched && !switchForm.controls['passwordGroup'].valid">
                 <span *ngIf="switchForm.get('passwordGroup').get('confirmPassword').hasError('required') ">
@@ -181,8 +186,12 @@
             </div>
           </div>
         </div>
-      </ng-container>
 
+
+      </ng-container>
+      <div style="font-weight: bold"> We may need to contact you as a part of process via email or telephone. </div>
+      <input type="checkbox" name="terms" id="terms" formControlName="terms">
+      <label for="terms" style="font-weight:normal">I agree to the <a href="terms" target="_blank"> Terms and Conditions.</a></label>
       <hr>
       <footer style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
         <button class="btn btn-secondary customBtn" *ngIf="!switchService.updateForm" type="submit" [disabled]='!switchForm.valid'>
@@ -211,12 +220,17 @@
         <button type="button" class="close" data-dismiss="modal" style="color: white">&times;</button>
       </div>
       <div class="modal-body">
-        <div class=" alert-danger">
-          <span>{{emailError}}</span>
-        </div>
+
         <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
           <div class="container">
+
             <div class="row form-group">
+              <div class="col-sm-12">
+                <div class=" alert-danger">
+                  <span>{{emailError}}</span>
+                </div>
+              </div>
+
               <div class="col-sm-4">
                 <label>Email Address</label>
               </div>
@@ -244,8 +258,7 @@
               </div>
               <div class="col-sm-8">
                 <div class="input-group mb-3">
-                  <input style="font-family: Arial, Helvetica, sans-serif" placeholder="Enter Password" class="form-control" type="password"
-                    formControlName="password">
+                  <input style="font-family: vag_roundedregular" placeholder="Enter Password" class="form-control" type="password" formControlName="password">
                 </div>
 
               </div>

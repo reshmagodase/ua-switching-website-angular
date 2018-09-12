@@ -32,7 +32,7 @@
           </div>
 
         </div>
-        
+
       </div>
 
 
@@ -63,6 +63,9 @@
               <span *ngIf="switchForm.controls['accountNumber'].hasError('pattern')" class="help-block">
                 Please enter valid Account Number
               </span>
+              <!--    <span *ngIf="!invalidBank" class="help-block">
+                  Sortcode and Bank Account are not valid
+                </span> -->
             </div>
           </div>
         </div>
@@ -124,21 +127,22 @@
               This Guarantee is offered by all Banks and Building Societies that accept instructions to pay Direct Debits
             </li>
             <li>
-              If there are any changes to the amount, date or frequency of your Direct Debit, {{switchService?.step3Obj?.supplier?.Supplier}} will notify you 10 working
-              days in advance of your account being debited or as otherwise agreed
+              If there are any changes to the amount, date or frequency of your Direct Debit, {{switchService?.step3Obj?.supplier?.Supplier}}
+              will notify you 10 working days in advance of your account being debited or as otherwise agreed
             </li>
             <li>
-              If you request {{switchService?.step3Obj?.supplier?.Supplier}} to collect a payment, confirmation of the amount and date will be given to you at the time of
-              the request
+              If you request {{switchService?.step3Obj?.supplier?.Supplier}} to collect a payment, confirmation of the amount and date
+              will be given to you at the time of the request
             </li>
             <li>
-              If an error is made in the payment of your Direct Debit, by {{switchService?.step3Obj?.supplier?.Supplier}} or your Bank or Building Society, you are entitled
-              to a full and immediate refund of the amount paid from your Bank or Building Society If you receive a refund
-              you are not entitled to, you must pay it back when {{switchService?.step3Obj?.supplier?.Supplier}} asks you to
+              If an error is made in the payment of your Direct Debit, by {{switchService?.step3Obj?.supplier?.Supplier}} or your Bank
+              or Building Society, you are entitled to a full and immediate refund of the amount paid from your Bank or Building
+              Society If you receive a refund you are not entitled to, you must pay it back when {{switchService?.step3Obj?.supplier?.Supplier}}
+              asks you to
             </li>
             <li>
               You can cancel a Direct Debit at any time by simply contacting your Bank or Building Society Written confirmation may be
-              required. Please also notify First Utility
+              required. Please also notify {{switchService?.step3Obj?.supplier?.Supplier}}
             </li>
           </ul>
 
@@ -150,7 +154,7 @@
 
 
 
-       <!--    <div class=" alert-danger" *ngIf="switchForm.controls['terms'].touched && !switchForm.controls['terms'].valid">
+          <!--    <div class=" alert-danger" *ngIf="switchForm.controls['terms'].touched && !switchForm.controls['terms'].valid">
             <span *ngIf="switchForm.controls['terms'].hasError('required') ">
               You must agree to the terms and conditions
             </span>

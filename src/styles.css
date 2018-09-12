@@ -8,8 +8,8 @@
 
 @font-face {
     font-family: 'vag_roundedregular';
-    src: url('assets/fonts/vag_rounded_thin-webfont.eot');
-    src: url('assets/fonts/vag_rounded_thin-webfont.eot?#iefix') format('embedded-opentype'), url('assets/fonts/vag_rounded_thin-webfont.woff') format('woff'), url('assets/fonts/vag_rounded_thin-webfont.ttf') format('truetype'), url('assets/fonts/vag_rounded_thin-webfont.svg#vag_roundedregular') format('svg');
+    src: url('assets/fonts/vag_rounded_thin-webfont.eot?234');
+    src: url('assets/fonts/vag_rounded_thin-webfont.eot?#iefix') format('embedded-opentype'), url('assets/fonts/vag_rounded_thin-webfont.woff?21') format('woff'), url('assets/fonts/vag_rounded_thin-webfont.ttf') format('truetype'), url('assets/fonts/vag_rounded_thin-webfont.svg#vag_roundedregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }

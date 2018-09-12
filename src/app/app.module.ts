@@ -21,7 +21,8 @@ import { ModalModule } from 'angular-custom-modal';
 import { ProfileComponent } from './profile/profile.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-
+import {DisableCutCopyPasteDirective} from './disableCutCopyPaste.directive';
+import { TermsComponent } from './terms/terms.component';
 
 
 
@@ -97,6 +98,10 @@ const appRoutes: Routes = [
     path: 'profile',
     component: ProfileComponent
   }
+  , {
+    path: 'terms',
+    component: TermsComponent
+  }
 ];
 
 @NgModule({
@@ -112,7 +117,9 @@ const appRoutes: Routes = [
     PaymentDetailsComponent,
     DetailComponent,
     ThankyouComponent,
-    ProfileComponent
+    ProfileComponent,
+    DisableCutCopyPasteDirective,
+    TermsComponent
   ],
   imports: [
     BrowserModule,
