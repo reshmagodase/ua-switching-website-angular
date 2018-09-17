@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ProfileComponent implements OnInit {
   switchingHistory: any;
+  personalObj: any;
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
 
   }
@@ -20,9 +21,7 @@ export class ProfileComponent implements OnInit {
       this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
         (data: any) => {
           if (data) {
-            this.switchService.personalObj = data;
-            this.switchService.addressObj = data.addressObj ? data.addressObj : {};
-            this.switchService.paymentObj = data.paymentObj ? data.paymentObj : {};
+            this.personalObj = data;
           }
           this.spinner.hide();
         },

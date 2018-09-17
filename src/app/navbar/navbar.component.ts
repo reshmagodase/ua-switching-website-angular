@@ -54,6 +54,17 @@ export class NavbarComponent implements OnInit {
       this.session = false;
       $(".session").hide();
     }
+    this.switchService.getSuppliers().subscribe(
+      (data: any) => {
+        localStorage.setItem('suppliers', JSON.stringify(data));
+        console.log(JSON.parse(localStorage.getItem("suppliers")))
+        this.spinner.hide();
+      },
+      err => {
+        this.spinner.hide()
+      },
+      () => this.spinner.hide()
+    )
   }
 
   logout() {

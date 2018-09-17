@@ -95,6 +95,21 @@ export class Step2Component implements OnInit {
 
 
   submitForm(value: any, step: number): void {
+    var supplierList = JSON.parse(localStorage.getItem("suppliers"));
+    var oldSupplierId = "";
+    if (value.supplierGroup.currentSupplier) {
+      for (var i = 0; i < supplierList.length; i++) {
+        if (supplierList[i].supplierName == value.supplierGroup.currentSupplier) {
+          if (this.switchService.salesforceEnvironment == "test") {
+            oldSupplierId = supplierList[i].salesforceSupplierId;
+          }
+          else {
+            oldSupplierId = supplierList[i].salesforceLiveSupplierId;
+          }
+          // return supplierList.supplierName;
+        }
+      }
+    }
 
     this.switchService.step2Obj = {
       unitRate: this.unitRate,
@@ -103,6 +118,7 @@ export class Step2Component implements OnInit {
       contractEndDate: value.contractEndDate,
       currentSupplier: value.supplierGroup.currentSupplier,
       manualCurrentSupplier: value.supplierGroup.manualCurrentSupplier,
+      oldSupplierId: oldSupplierId,
       checkManual: value.supplierGroup.checkManual,
       billingType: value.billingType,
       smartMeter: value.smartMeter,

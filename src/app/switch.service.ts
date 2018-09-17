@@ -23,6 +23,7 @@ export class SwitchService {
   paymentObj: any = {};
   currentUrl: string = '';
   updateForm: boolean = false;
+  salesforceEnvironment="test";
 
 
   constructor(private http: HttpClient, private spinner: NgxSpinnerService) {
@@ -143,6 +144,11 @@ export class SwitchService {
   getUnitRate() {
     return this.http.get('/api/unitrate', httpOptions)
   }
+
+  getSuppliers() {
+    return this.http.get('/api/suppliers', httpOptions)
+  }
+
 
 
 }

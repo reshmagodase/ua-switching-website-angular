@@ -13,9 +13,11 @@ export class Step3Component implements OnInit {
   switchType: string = '';
   prices: any;
   spendAmount: string;
+  supplierList: any;
   constructor(private router: Router, public switchService: SwitchService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.supplierList = JSON.parse(localStorage.getItem("suppliers"));
     this.spendAmount = this.switchService.step2Obj.spendAmount;
     if (this.switchService.currentUrl == "") {
       this.router.navigate(['']);
@@ -90,7 +92,8 @@ export class Step3Component implements OnInit {
     this.router.navigate([this.switchType]);
   }
 
-  switchNow(supplier) {
+  switchNow(supplier,supplierDetails) {
+    console.log(supplierDetails);
     this.switchService.step3Obj.supplier = supplier;
     var request = {
       step1Obj: this.switchService.step1Obj,

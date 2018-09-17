@@ -247,8 +247,8 @@ export class DetailComponent implements OnInit {
       step2Obj: this.switchService.step2Obj,
       step3Obj: this.switchService.step3Obj,
       personalObj: this.switchService.personalObj,
-      addressObj: this.switchService.addressObj,
-      paymentObj: this.switchService.paymentObj,
+      // addressObj: this.switchService.addressObj,
+      // paymentObj: this.switchService.paymentObj,
       currentUrl: this.switchService.currentUrl,
       userId: localStorage.getItem("userId")
     }

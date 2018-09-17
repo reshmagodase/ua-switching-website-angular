@@ -1,3 +1,8 @@
+<style>
+  .pagination{
+    float: right;
+  }
+</style>
 <!-- First Container -->
 <div class="container-fluid text-center">
   <div style="padding: 20px 0px">
@@ -67,7 +72,7 @@
             Annual Usage:
           </div>
           <div class="col-7">
-            <span>{{switchService.step2Obj.consumption}} kWh</span> 
+            <span>{{switchService.step2Obj.consumption}} kWh</span>
           </div>
         </div>
       </div>
@@ -150,33 +155,35 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let price of mf.data">
-            <tr *ngIf="price.AnnualPrice">
-              <td>
-                <img src="assets/images/energyLogo.png">
-                <br> {{price.Supplier}}
-              </td>
-              <td>{{(price.DayUnitrate/1).toFixed(2)}} pence per kWh</td>
-              <td>{{(price.StandingCharge/1).toFixed(2)}} pence per day</td>
-              <td>
-                  <b style="color:black">{{price.AnnualPrice}}</b> when you choose for {{price.Term}} year.
-                  <br>
-                <ng-container *ngIf="price.AnnualPrice.replace(',','').replace('£','')/1  > spendAmount;else viewProfit">
-                  You added
-                  <span style='font-size:20px;color:red'>£{{(price.AnnualPrice.replace(',','').replace('£','') - spendAmount).toFixed(2)}}</span>/Yr
-                 
-                </ng-container>
-                <ng-template #viewProfit>
-                  You save
-                  <span style='font-size:20px;color:green'>£{{(spendAmount - price.AnnualPrice.replace(',','').replace('£','')).toFixed(2)}}</span>/Yr
-                  
-                  
-                </ng-template>
-              </td>
-              <td class="switchNowBtn">
-                <button class="prev1 btn customBtn" style='border:1px solid #4f95c7' (click)="switchNow(price)">Switch Now </button>
-              </td>
-            </tr>
+          <ng-container *ngFor="let price of mf.data; let i=index">
+            <ng-container *ngFor="let suppliers of supplierList;">
+              <ng-container *ngIf="suppliers.supplierName==price.Supplier">
+                <tr *ngIf="price.AnnualPrice">
+                  <td>
+                    <img [src]="suppliers.supplierLogo" style="max-width: 100px;">
+                    <br> {{price.Supplier}}
+                  </td>
+                  <td>{{(price.DayUnitrate/1).toFixed(2)}} pence per kWh</td>
+                  <td>{{(price.StandingCharge/1).toFixed(2)}} pence per day</td>
+                  <td>
+                    <b style="color:black">{{price.AnnualPrice}}</b> when you choose for {{price.Term}} year.
+                    <br>
+                    <ng-container *ngIf="price.AnnualPrice.replace(',','').replace('£','')/1  > spendAmount;else viewProfit">
+                      You added
+                      <span style='font-size:20px;color:red'>£{{(price.AnnualPrice.replace(',','').replace('£','') - spendAmount).toFixed(2)}}</span>/Yr
+
+                    </ng-container>
+                    <ng-template #viewProfit>
+                      You save
+                      <span style='font-size:20px;color:green'>£{{(spendAmount - price.AnnualPrice.replace(',','').replace('£','')).toFixed(2)}}</span>/Yr
+                    </ng-template>
+                  </td>
+                  <td class="switchNowBtn">
+                    <button class="prev1 btn customBtn" style='border:1px solid #4f95c7' (click)="switchNow(price,suppliers)">Switch Now </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
           </ng-container>
         </tbody>
         <tfoot>
