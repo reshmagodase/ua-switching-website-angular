@@ -37,12 +37,13 @@
 
 
             <div class="input-group mb-3">
-              <input placeholder="Annual Spend" class="form-control" type="number" [(ngModel)]="annualSpend" (keypress)="annualUsage=''"
-                formControlName="annualSpend">
+
 
               <div class="input-group-append">
                 <span class="input-group-text" style="font-size:20px">&#163;</span>
               </div>
+              <input placeholder="Annual Spend" class="form-control" type="number" [(ngModel)]="annualSpend" (keypress)="annualUsage=''"
+                formControlName="annualSpend">
             </div>
           </div>
 
@@ -86,12 +87,8 @@
 
           <div class="input-group">
 
-            <input type="text"
-            placeholder="dd-mm-yyyy"
-            class="form-control" formControlName="contractEndDate"
-            bsDatepicker
-            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',showWeekNumbers:false }">
-            
+            <input type="text" placeholder="dd-mm-yyyy" class="form-control" formControlName="contractEndDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',showWeekNumbers:false }">
+
             <!-- <div class="input-group-append">
               <button class="btn " (click)="d2.toggle()" type="button">
                 <img src="assets/images/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
@@ -115,21 +112,11 @@
           </div>
           <div class="col-sm-6">
             <select class="form-control" formControlName="currentSupplier">
-              <option value="">--Select Supplier--</option>
-              <option value="Axis">Axis</option>
-              <option value="Bristol Energy">Bristol Energy</option>
-              <option value="Brook Green">Brook Green</option>
-              <option value="Clear Business">Clear Business</option>
-              <option value="Corona Energy">Corona Energy</option>
-              <option value="D-Energi">D-Energi</option>
-              <option value="Dual Energy">Dual Energy</option>
-              <option value="Ecotricity">Ecotricity</option>
-              <option value="E-ON">E-ON</option>
-              <option value="Extra Energy">Extra Energy</option>
-              <option value="EDF">EDF</option>
-              <option value="Hudson Energy">Hudson Energy</option>
-              <option value="Npower">Npower</option>
-              <option value="Scottish Power">Scottish Power</option>
+                <option value="">--Select Supplier--</option>
+              <option *ngFor="let suppliers of allSuppliers" value='{{suppliers.supplierName}}'>
+                {{suppliers.supplierName}}
+              </option>
+
             </select>
 
           </div>

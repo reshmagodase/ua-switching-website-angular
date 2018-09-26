@@ -190,6 +190,10 @@ export class DetailComponent implements OnInit {
         "Key": "new supplier electricity",
         "Value": this.switchService.step3Obj.supplier.Supplier
       });
+      MainDetailsData.push({
+        "Key": "elec new contract length",
+        "Value": this.switchService.step3Obj.supplier.Term * 12
+      });
     }
     else {
       ItsAGasContract = true;
@@ -204,6 +208,10 @@ export class DetailComponent implements OnInit {
       MainDetailsData.push({
         "Key": "new supplier gas",
         "Value": this.switchService.step3Obj.supplier.Supplier
+      });
+      MainDetailsData.push({
+        "Key": "gas new contract length",
+        "Value": this.switchService.step3Obj.supplier.Term * 12
       });
     }
 

@@ -60,7 +60,7 @@
             Annual Spend:
           </div>
           <div class="col-7">
-            <span>{{switchService.step2Obj.spendAmount}} &#163;
+            <span> &#163;{{switchService.step2Obj.spendAmount}}
             </span>
           </div>
         </div>
@@ -132,9 +132,9 @@
 
 
 
-    <div style="max-width:1000px;margin-top:100px;overflow-x:auto;">
+    <div style="margin-top:100px;overflow-x:auto;">
       <!-- <table id="pricinglist" class="display text-center" style="width:100%"> -->
-      <table class="table table-striped text-center" [mfData]="prices" #mf="mfDataTable" [mfRowsOnPage]="10">
+      <table style="width: 100%" class="table table-striped text-center" [mfData]="prices" #mf="mfDataTable" [mfRowsOnPage]="10">
 
         <thead>
           <tr>
@@ -143,13 +143,16 @@
             </th>
 
             <th>
-              <mfDefaultSorter by="DayUnitrate">Day Rate</mfDefaultSorter>
+              <mfDefaultSorter by="DayUnitrate">Rate (pence per kWh)</mfDefaultSorter>
             </th>
             <th>
               <mfDefaultSorter by="StandingCharge">Standing Charge</mfDefaultSorter>
             </th>
             <th>
               <mfDefaultSorter by="AnnualPrice">Cost Per Year</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="Term">Duration<br> (In Months)</mfDefaultSorter>
             </th>
             <th style="background:none !important"></th>
           </tr>
@@ -163,20 +166,25 @@
                     <img [src]="suppliers.supplierLogo" style="max-width: 100px;">
                     <br> {{price.Supplier}}
                   </td>
-                  <td>{{(price.DayUnitrate/1).toFixed(2)}} pence per kWh</td>
-                  <td>{{(price.StandingCharge/1).toFixed(2)}} pence per day</td>
+                  <td>Day Rate: {{(price.DayUnitrate/1).toFixed(2)}}<br>
+                    Night Rate: {{(price.NightUnitrate/1).toFixed(2)}}
+                  </td>
+                  <td>{{(price.StandingCharge/1).toFixed(2)}} pence per day </td>
                   <td>
-                    <b style="color:black">{{price.AnnualPrice}}</b> when you choose for {{price.Term}} year.
+                    <b style="color:black">{{price.AnnualPrice}}</b> yearly cost of this option.
                     <br>
                     <ng-container *ngIf="price.AnnualPrice.replace(',','').replace('£','')/1  > spendAmount;else viewProfit">
-                      You added
-                      <span style='font-size:20px;color:red'>£{{(price.AnnualPrice.replace(',','').replace('£','') - spendAmount).toFixed(2)}}</span>/Yr
+                      Which means an increase of 
+                      <span style='font-size:20px;color:red'>£{{(price.AnnualPrice.replace(',','').replace('£','') - spendAmount).toFixed(2)}}</span>/year
 
                     </ng-container>
                     <ng-template #viewProfit>
-                      You save
-                      <span style='font-size:20px;color:green'>£{{(spendAmount - price.AnnualPrice.replace(',','').replace('£','')).toFixed(2)}}</span>/Yr
+                      Which means a saving of 
+                      <span style='font-size:20px;color:green'>£{{(spendAmount - price.AnnualPrice.replace(',','').replace('£','')).toFixed(2)}}</span>/year
                     </ng-template>
+                  </td>
+                  <td>
+                    {{price.Term * 12}}
                   </td>
                   <td class="switchNowBtn">
                     <button class="prev1 btn customBtn" style='border:1px solid #4f95c7' (click)="switchNow(price,suppliers)">Switch Now </button>

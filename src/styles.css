@@ -298,7 +298,9 @@ table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
         content: "";
     }
     .table td:nth-of-type(2):before {
-        content: "Day Rate :";
+        content: "Rate (pence per kWh) :";
+        display:table;
+        width: 100%;
     }
     .table td:nth-of-type(3):before {
         content: "Standing Charge :";
@@ -307,11 +309,11 @@ table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
         content: "";
     }
     .table td:nth-of-type(5):before {
-        content: "";
+        content: "Duration in Months :";
     }
     .table .switchNowBtn {
         margin-top: -50px;
-        top: -150px;
+        top: -200px;
         right: -60%;
     }
     .table {

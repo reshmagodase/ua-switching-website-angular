@@ -48,7 +48,8 @@ export class Step2Component implements OnInit {
   annualSpend: string;
   annualUsage: string;
   unitRate: number;
-
+  allSuppliers: any;
+  
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private datePipe: DatePipe) {
     var step2Obj = this.switchService.step2Obj;
     this.switchForm = fb.group({
@@ -70,6 +71,9 @@ export class Step2Component implements OnInit {
   }
 
   ngOnInit() {
+    this.allSuppliers = JSON.parse(localStorage.getItem("suppliers"));
+
+
     if (this.switchService.currentUrl == "") {
       this.router.navigate(['']);
     }
@@ -87,7 +91,6 @@ export class Step2Component implements OnInit {
           else {
             this.unitRate = data[0].gas.value;
           }
-          console.log(this.unitRate)
         }
       }
     )

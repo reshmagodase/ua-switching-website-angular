@@ -10,13 +10,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  switchingHistory: any;
-  personalObj: any;
+  switchingHistory: any =[];
+  personalObj: any = {};
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
 
   }
 
   ngOnInit() {
+    this.personalObj.addressObj={};
+    this.personalObj.paymentObj={};
     if (localStorage.getItem('userId') !== null) {
       this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
         (data: any) => {
@@ -33,7 +35,6 @@ export class ProfileComponent implements OnInit {
       this.switchService.getQuotations({ userId: localStorage.getItem('userId') }).subscribe(
         (data: any) => {
           if (data) {
-            console.log("history", data)
             this.switchingHistory = data;
           }
           this.spinner.hide();

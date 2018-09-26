@@ -91,8 +91,8 @@ export class Step1Component implements OnInit {
   }
 
 
-  getPostCode() {
-    this.switchService.getPostCode().subscribe(
+  getLocation() {
+    this.switchService.getLocation().subscribe(
       (data: any) => {
         this.spinner.hide();
         if (data.postCode == "") {

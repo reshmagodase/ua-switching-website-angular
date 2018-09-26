@@ -38,17 +38,15 @@ export class HomeComponent implements OnInit {
     }
     this.switchService.login(request).subscribe(
       (data: any) => {
-        if (data.code == 200) {
-          localStorage.setItem('userId', data.userId);
-          localStorage.setItem('name', data.name);
-          location.reload();
-        }
-        else {
-          this.error = data.message;
-        }
+        localStorage.setItem('userId', data._id);
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('token', data.token);
+
+        location.reload();
       },
       err => {
-        this.spinner.hide()
+        this.spinner.hide();
+        this.error = "Email or password is invalid!";
       },
       () => this.spinner.hide()
     )

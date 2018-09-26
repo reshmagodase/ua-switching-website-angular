@@ -92,9 +92,10 @@ export class Step3Component implements OnInit {
     this.router.navigate([this.switchType]);
   }
 
-  switchNow(supplier,supplierDetails) {
-    console.log(supplierDetails);
+  switchNow(supplier, supplierDetails) {
     this.switchService.step3Obj.supplier = supplier;
+    this.switchService.step3Obj.newSupplierId = this.switchService.salesforceEnvironment == "test" ? supplierDetails.salesforceSupplierId : supplierDetails.salesforceLiveSupplierId;
+    this.switchService.step3Obj.supplierLogo = supplierDetails.supplierLogo;
     var request = {
       step1Obj: this.switchService.step1Obj,
       step2Obj: this.switchService.step2Obj,

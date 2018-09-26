@@ -8,7 +8,7 @@
           <p>Please complete the form below. If we already hold the information, it is pre-filled for your convenience.</p>
         </div>
         <div class="col-md-4 text-center">
-          <img src="assets/images/energyLogo.png">
+          <img [src]="switchService?.step3Obj?.supplierLogo" style="max-width: 150px;width:100%">
           <h3>{{switchService?.step3Obj?.supplier?.Supplier}}</h3>
         </div>
       </div>
@@ -40,7 +40,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Sort Code</label>
-            <input placeholder="00-00-00" class="form-control" formControlName="sortCode">
+            <input placeholder="Sort Code" class="form-control" formControlName="sortCode">
             <div class=" alert-danger" *ngIf="switchForm.controls['sortCode'].touched && !switchForm.controls['sortCode'].valid">
               <span *ngIf="switchForm.controls['sortCode'].hasError('required') ">
                 Sort Code is required!
@@ -150,7 +150,9 @@
 
 
           <input type="checkbox" name="terms" id="terms" formControlName="terms">
-          <label for="terms" style="font-weight:normal"> I agree to the Terms and Conditions.</label>
+          <label for="terms" style="font-weight:normal">I agree to the Terms and Conditions and confirm I am an authorised to set up direct debits on this account.
+
+          </label>
 
 
 

@@ -54,7 +54,7 @@ export class PersonalDetailsComponent implements OnInit {
         'confirmPassword': ['', Validators.compose([Validators.required])],
       }, { validator: this.passwordMatcher })
 
-    },{ validator: termsRequired });
+    }, { validator: termsRequired });
 
     this.loginForm = this.fb.group({
       'emailAddress': ['', Validators.compose([Validators.required, Validators.email])],
@@ -122,10 +122,10 @@ export class PersonalDetailsComponent implements OnInit {
                     'companyType': [data.companyType ? data.companyType : '', Validators.required],
                     'companyRegNo': [data.companyRegNo ? data.companyRegNo : '', Validators.required],
                     'terms': [''],
-                    'mobileNo': [data.mobileNo ? data.mobileNo : '', 
+                    'mobileNo': [data.mobileNo ? data.mobileNo : '',
                     Validators.compose([Validators.required, Validators.maxLength(20),
                     Validators.pattern(/^[\s\d]+$/)])]
-                  },{ validator: termsRequired });
+                  }, { validator: termsRequired });
                 }
                 this.spinner.hide();
               },
@@ -168,6 +168,7 @@ export class PersonalDetailsComponent implements OnInit {
         (data: any) => {
           localStorage.setItem('userId', data._id);
           localStorage.setItem('name', data.name);
+          localStorage.setItem('token', data.token);
           this.router.navigate([this.switchType + '/address-details']);
 
           this.spinner.hide();
@@ -228,18 +229,14 @@ export class PersonalDetailsComponent implements OnInit {
     }
     this.switchService.login(request).subscribe(
       (data: any) => {
-        if (data.code == 200) {
-          localStorage.setItem('userId', data.userId);
-          localStorage.setItem('name', data.name);
-          location.reload();
-        }
-        else {
-          this.error = data.message;
-        }
-        this.spinner.hide();
+        localStorage.setItem('userId', data._id);
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('token', data.token);
+        location.reload();
       },
       err => {
-        this.spinner.hide()
+        this.spinner.hide();
+        this.error = "Email or password is invalid!";
       },
       () => this.spinner.hide()
     )

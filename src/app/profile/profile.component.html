@@ -11,36 +11,36 @@
         </tr>
         <tr>
           <td>Name:</td>
-          <td class="fontBold">{{personalObj.name}}</td>
+          <td class="fontBold">{{personalObj?.name}}</td>
         </tr>
         <tr>
           <td>Company Name:</td>
-          <td class="fontBold">{{personalObj.companyName}}</td>
+          <td class="fontBold">{{personalObj?.companyName}}</td>
         </tr>
         <tr>
           <td>Company Type:</td>
-          <td class="fontBold">{{personalObj.companyType}}</td>
+          <td class="fontBold">{{personalObj?.companyType}}</td>
         </tr>
         <tr>
           <td>Registration No.:</td>
-          <td class="fontBold">{{personalObj.companyRegNo}}</td>
+          <td class="fontBold">{{personalObj?.companyRegNo}}</td>
         </tr>
         <tr>
           <td>Mobile No.:</td>
-          <td class="fontBold">{{personalObj.mobileNo}}</td>
+          <td class="fontBold">{{personalObj?.mobileNo}}</td>
         </tr>
 
-        <tr [hidden]="!personalObj.addressObj.checkBillingAddress">
+        <tr [hidden]="!personalObj?.addressObj?.checkBillingAddress">
           <td>Billing Address:</td>
-          <td class="fontBold"> {{this.personalObj.addressObj.billingAddressLine1 + ' ' + this.personalObj.addressObj.billingAddressLine2 +
-            ' ' + this.personalObj.addressObj.billingCity + ' ' + this.personalObj.addressObj.billingCountry + ' ' +
-            this.personalObj.addressObj.billingPostCode}}
+          <td class="fontBold"> {{this.personalObj?.addressObj?.billingAddressLine1 + ' ' + this.personalObj?.addressObj?.billingAddressLine2 +
+            ' ' + this.personalObj?.addressObj?.billingCity + ' ' + this.personalObj?.addressObj?.billingCountry + ' ' +
+            this.personalObj?.addressObj?.billingPostCode}}
           </td>
         </tr>
-        <tr [hidden]="!(personalObj.addressObj.yearsAtProperty<3 && personalObj.addressObj.yearsAtProperty!=='')">
+        <tr [hidden]="!(personalObj?.addressObj?.yearsAtProperty<3 && personalObj?.addressObj?.yearsAtProperty!=='' && this.personalObj?.addressObj?.prevAddressLine1)">
           <td>Previous Address:</td>
-          <td class="fontBold"> {{this.personalObj.addressObj.prevAddressLine1 + ' ' + this.personalObj.addressObj.prevAddressLine2 + ' ' +
-            this.personalObj.addressObj.prevCity + ' ' + this.personalObj.addressObj.prevCountry + ' ' + this.personalObj.addressObj.prevPostCode}}</td>
+          <td class="fontBold"> {{this.personalObj?.addressObj?.prevAddressLine1 + ' ' + this.personalObj?.addressObj?.prevAddressLine2 + ' ' +
+            this.personalObj?.addressObj?.prevCity + ' ' + this.personalObj?.addressObj?.prevCountry + ' ' + this.personalObj?.addressObj?.prevPostCode}}</td>
         </tr>
 
       </table>
@@ -53,19 +53,19 @@
         </tr>
         <tr>
           <td>Account Holder Name:</td>
-          <td class="fontBold">{{personalObj.paymentObj.accountHolderName}}</td>
+          <td class="fontBold">{{personalObj?.paymentObj?.accountHolderName}}</td>
         </tr>
         <tr>
           <td>Sort Code:</td>
-          <td class="fontBold">{{personalObj.paymentObj.sortCode}}</td>
+          <td class="fontBold">{{personalObj?.paymentObj?.sortCode}}</td>
         </tr>
         <tr>
           <td>Account Number:</td>
-          <td class="fontBold">{{personalObj.paymentObj.accountNumber}}</td>
+          <td class="fontBold">{{personalObj?.paymentObj?.accountNumber}}</td>
         </tr>
         <tr>
           <td>Bank Name:</td>
-          <td class="fontBold">{{personalObj.paymentObj.checkManual ? personalObj.paymentObj.manualBankName : personalObj.paymentObj.bankName}}</td>
+          <td class="fontBold">{{personalObj?.paymentObj?.checkManual ? personalObj?.paymentObj?.manualBankName : personalObj?.paymentObj?.bankName}}</td>
         </tr>
 
 
@@ -88,13 +88,13 @@
           </th>
 
           <th>
-            Supply Details
+            Supply Address
           </th>
           <th>
-            Previous Supply Details
+            Previous Usage
           </th>
           <th>
-            Switch Details
+            New Supply Details
           </th>
           <th>
             Status
@@ -116,15 +116,16 @@
               <b>
                 {{history.quotationDetails.step1Obj.supplyAddress}}</b>
               <br> MPAN/MPRN:
-              <b> {{history.quotationDetails.currentUrl=='electricity' ? history.quotationDetails.step1Obj.MPANBottomLineNo :history.quotationDetails.step1Obj.MPRN}}</b>
+              <b> {{history.quotationDetails.currentUrl=='electricity' ? history.quotationDetails.step1Obj.MPANBottomLineNo :history.quotationDetails.step1Obj.MPRNNo}}</b>
             </td>
             <td>Annual Spend:
-              <b>{{history.quotationDetails.step2Obj.spendAmount}}</b>
+              <b>&pound;{{history.quotationDetails.step2Obj.spendAmount}} 
+              </b>
               <br> Annual Usage:
-              <b>{{history.quotationDetails.step2Obj.consumption}} </b>
+              <b>{{history.quotationDetails.step2Obj.consumption}} kWh </b>
               <br> Contract End Date:
               <b>
-                {{history.quotationDetails.step2Obj.contractEndDate}}</b>
+                {{history.quotationDetails.step2Obj.contractEndDate | date:'dd/MM/yyyy'}}</b>
               <br> Current Supplier:
               <b>
                 {{history.quotationDetails.step2Obj.checkManual ? history.quotationDetails.step2Obj.manualCurrentSupplier : history.quotationDetails.step2Obj.currentSupplier}}</b>
@@ -137,6 +138,8 @@
 
             </td>
             <td>
+              <img [src]="history.quotationDetails.step3Obj.supplierLogo" style="max-width: 100px;">
+              <br>
               <b style="color: #3697c2">
                 {{history.quotationDetails.step3Obj.supplier.Supplier}}</b>
               <br> Day Rate:
@@ -145,6 +148,10 @@
               <br> Standing Charge:
               <b>
                 {{(history.quotationDetails.step3Obj.supplier.StandingCharge/1).toFixed(2)}}</b> pence per day
+              <br> Duration in Months:
+              <b>
+                {{(history.quotationDetails.step3Obj.supplier.Term *12)}}</b>
+
 
 
             </td>
@@ -158,14 +165,14 @@
                   <span class="badge badge-pill badge-success">Completed</span>
                   <br>
                   <span style="cursor: pointer;" (click)="downloadPDF(history.quotationDetails.step3Obj.supplier.Supplier,history.quotationDetails.currentUrl,history.docuSignRefID)">
-                    <img alt="DocuSign" src="assets/images/docuSign.png" style="width:40px;margin-top: 5px;" title="Download DocuSign">
+                    <img alt="DocuSign" src="assets/images/docuSign.png" style="width:70px;margin-top: 5px;" title="Download DocuSign">
                   </span>
                 </ng-template>
                 <ng-template #pendingLOA>
                   <span class="badge badge-pill badge-primary">Pending LOA</span>
                   <br>
                   <span style="cursor: pointer;" (click)="downloadPDF(history.quotationDetails.step3Obj.supplier.Supplier,history.quotationDetails.currentUrl,history.docuSignRefID)">
-                    <img alt="DocuSign" src="assets/images/docuSign.png" style="width:40px;margin-top: 5px;" title="Download DocuSign">
+                    <img alt="DocuSign" src="assets/images/docuSign.png" style="width:70px;margin-top: 5px;" title="Download DocuSign">
                   </span>
                 </ng-template>
               </ng-template>

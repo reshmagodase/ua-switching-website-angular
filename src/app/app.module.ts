@@ -13,7 +13,7 @@ import { PersonalDetailsComponent } from './switch-steps/personal-details/person
 import { AddressDetailsComponent } from './switch-steps/address-details/address-details.component';
 import { PaymentDetailsComponent } from './switch-steps/payment-details/payment-details.component';
 import { DetailComponent } from './switch-steps/detail/detail.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { DataTableModule } from "angular-6-datatable";
 import { ThankyouComponent } from './switch-steps/thankyou/thankyou.component';
@@ -23,6 +23,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import {DisableCutCopyPasteDirective} from './disableCutCopyPaste.directive';
 import { TermsComponent } from './terms/terms.component';
+
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
 
 
 
@@ -132,7 +135,10 @@ const appRoutes: Routes = [
     DataTableModule,
     ModalModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -57,13 +57,25 @@
         content: "";
     }
     .table td:nth-of-type(2):before {
-        content: "";
+        display: table;
+        color: #3697c2;
+        width: 100%;
+        font-weight: bold;
+        content: "Supply Address";
     }
     .table td:nth-of-type(3):before {
-        content: "";
+        display: table;
+        color: #3697c2;
+        width: 100%;
+        font-weight: bold;
+        content: "Previous Usage";
     }
     .table td:nth-of-type(4):before {
-        content: "";
+        display: table;
+        color: #3697c2;
+        width: 100%;
+        font-weight: bold;
+        content: "New Supply Details";
     }
     .table td:nth-of-type(5):before {
         content: "";
