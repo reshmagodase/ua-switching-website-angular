@@ -32,14 +32,32 @@ export class Step3Component implements OnInit {
   getPriceList() {
     var request = {};
     if (this.switchType == 'electricity') {
-      request = {
-        ElectricSupply: {
-          DayConsumption: { Amount: this.switchService.step2Obj.consumption, Type: "Day" },
-          MPANTop: this.switchService.step1Obj.MPANTopLineNo,
-          MPANBottom: this.switchService.step1Obj.MPANBottomLineNo
-        },
-        PaymentMethod: this.switchService.step2Obj.billingType
+
+      if (this.switchService.step1Obj.meterType == "day-night") {
+        var dayConsumption = (70 * (this.switchService.step2Obj.consumption)) / 100;
+        var nightConsumption = (30 * (this.switchService.step2Obj.consumption)) / 100;
+        console.log(dayConsumption,nightConsumption,"day-night")
+        request = {
+          ElectricSupply: {
+            DayConsumption: { Amount: dayConsumption, Type: "Day" },
+            NightConsumption: { Amount: nightConsumption, Type: "Night" },
+            MPANTop: this.switchService.step1Obj.MPANTopLineNo,
+            MPANBottom: this.switchService.step1Obj.MPANBottomLineNo
+          },
+          PaymentMethod: this.switchService.step2Obj.billingType
+        }
       }
+      else {
+        request = {
+          ElectricSupply: {
+            DayConsumption: { Amount: this.switchService.step2Obj.consumption, Type: "Day" },
+            MPANTop: this.switchService.step1Obj.MPANTopLineNo,
+            MPANBottom: this.switchService.step1Obj.MPANBottomLineNo
+          },
+          PaymentMethod: this.switchService.step2Obj.billingType
+        }
+      }
+
       this.switchService.getElectricPricesList(request).subscribe(
         (data: any) => {
           if (data.GetElectricRatesResult.Rates.length > 1) {

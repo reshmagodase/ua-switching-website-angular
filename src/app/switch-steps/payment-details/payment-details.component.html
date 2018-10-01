@@ -1,5 +1,5 @@
 <!-- First Container -->
-<form [formGroup]="switchForm" (ngSubmit)="submitForm(switchForm.value)">
+<form [formGroup]="switchForm">
   <div class="details switchforms">
     <div class="container">
       <div class="row headDetails">
@@ -168,7 +168,7 @@
       </div>
       <hr>
       <footer style="TEXT-ALIGN: RIGHT; MARGIN-TOP: 2%;margin-bottom:5px;">
-        <button class="btn btn-secondary customBtn" *ngIf="!switchService.updateForm" type="submit" [disabled]='!switchForm.valid'>
+        <button class="btn btn-secondary customBtn" *ngIf="!switchService.updateForm" (click)="submitForm(switchForm.value)" [disabled]='!switchForm.valid'>
           CONTINUE
         </button>
         <button class="btn btn-secondary customBtn" *ngIf="switchService.updateForm" (click)="updateForm(switchForm.value)" [disabled]='!switchForm.valid'>

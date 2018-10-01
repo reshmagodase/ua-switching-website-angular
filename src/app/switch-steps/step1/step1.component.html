@@ -89,7 +89,7 @@
 
         </div>
         <div class="col-md-12">
-          <div class="text-center">
+          <div class="text-center" style="font-size: 15px">
             <div class=" alert-danger">
               If your Supply Address is not listed, please call us at
               <span style="color:#3697c2;font-weight:bold">0808 1788 170</span>.
@@ -104,13 +104,13 @@
             {{switchType=="electricity" ? "MPAN" : "MPRN"}}
           </label>
         </div>
-        <div class="col-sm-6 text-left">
+        <div class="col-sm-6 text-left" >
           <label>
-            {{switchType=="electricity" ? MPANBottomLineNo : MPRNNo}}
-
-            <a *ngIf="switchType=='electricity'" href="" style="cursor:pointer;color:#3693cd;font-weight: bold;text-decoration: underline"
+            <span style="font-weight: bold">{{switchType=="electricity" ? MPANBottomLineNo : MPRNNo}}</span>
+&nbsp;&nbsp;
+            <a  *ngIf="switchType=='electricity'" href="" style="font-size: 15px;cursor:pointer;color:#3693cd;font-weight: bold;text-decoration: underline"
               data-toggle="modal" data-target="#mpanImagePopup">Is this your {{switchType=="electricity" ? "MPAN" : "MPRN"}} number?</a>
-            <a *ngIf="switchType=='gas'" href="" style="cursor:pointer;color:#3693cd;font-weight: bold;text-decoration: underline" data-toggle="modal"
+            <a  *ngIf="switchType=='gas'" href="" style="font-size: 15px;cursor:pointer;color:#3693cd;font-weight: bold;text-decoration: underline" data-toggle="modal"
               data-target="#mprnImagePopup">Is this your {{switchType=="electricity" ? "MPAN" : "MPRN"}} number?</a>
           </label>
         </div>
@@ -124,7 +124,7 @@
 
               </div>
               <div class="modal-body">
-                <p>Your gas MPAN (Meter Point Administration Number) is the unique identifying electricity number for your property.
+                <p>Your electricity MPAN (Meter Point Administration Number) is the unique identifying electricity number for your property.
                   Your MPAN is sometimes referred to as a S Number. It is unique to your property and does not change if
                   you change supplier.
                   <img src="assets/images/MPAN_Format.jpg" style="border: 3px solid black;border-radius: 10px" width="100%">

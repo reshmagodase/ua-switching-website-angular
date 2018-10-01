@@ -47,7 +47,7 @@ export class PaymentDetailsComponent implements OnInit {
     this.switchForm = fb.group({
       'accountHolderName': ['', Validators.required],
       'sortCode': ['', [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/), Validators.required]],
-      'accountNumber': ['', [Validators.pattern(/^(\d){8}$/), Validators.required]],
+      'accountNumber': ['', [Validators.pattern(/^(\d){7,9}$/), Validators.required]],
       'terms': [''],
       'bankGroup': this.fb.group({
         'bankName': [''],
@@ -83,7 +83,7 @@ export class PaymentDetailsComponent implements OnInit {
                   'sortCode': [data.paymentObj.sortCode ? data.paymentObj.sortCode : ''
                     , [Validators.pattern(/^(?!(?:0{6}|00-00-00))(?:\d{6}|\d\d-\d\d-\d\d)$/), Validators.required]],
                   'accountNumber': [data.paymentObj.accountNumber ? data.paymentObj.accountNumber : ''
-                    , [Validators.pattern(/^(\d){8}$/), Validators.required]],
+                    , [Validators.pattern(/^(\d){7,9}$/), Validators.required]],
                   'terms': [''],
                   'bankGroup': this.fb.group({
                     'bankName': [data.paymentObj.bankName ? data.paymentObj.bankName : ''],

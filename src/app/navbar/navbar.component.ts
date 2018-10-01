@@ -70,7 +70,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.switchService.logout().subscribe(
       (data: any) => {
-        location.reload();
+        this.router.navigate(['']);
         this.spinner.hide();
       },
       err => {

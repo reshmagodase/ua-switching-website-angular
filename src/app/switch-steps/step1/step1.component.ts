@@ -134,6 +134,14 @@ export class Step1Component implements OnInit {
       this.switchService.step1Obj.MPANBottomLineNo = code[1];
       this.switchService.step1Obj.MPANTopLineNo = code[2];
       this.MPANBottomLineNo = code[1];
+      var profileClass=code[2].substring(0, 2);
+      if(profileClass=="02" || profileClass == "04"){
+        this.switchService.step1Obj.meterType="day-night";
+      }
+      else{
+        this.switchService.step1Obj.meterType="day";
+      }
+      
     }
     else {
       this.switchService.step1Obj.MPRNNo = code[1];

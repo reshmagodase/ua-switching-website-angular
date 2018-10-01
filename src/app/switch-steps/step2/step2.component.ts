@@ -49,7 +49,7 @@ export class Step2Component implements OnInit {
   annualUsage: string;
   unitRate: number;
   allSuppliers: any;
-  
+
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private datePipe: DatePipe) {
     var step2Obj = this.switchService.step2Obj;
     this.switchForm = fb.group({
@@ -138,5 +138,15 @@ export class Step2Component implements OnInit {
 
 
 
+  setEndDate(event) {
+    if (event.target.checked) {
+      var date = new Date()
+      date.setDate(date.getDate() + 1)
+      this.switchForm.controls['contractEndDate'].setValue(date);
+    }
+    else {
+      this.switchForm.controls['contractEndDate'].setValue("");
+    }
+  }
 
 }

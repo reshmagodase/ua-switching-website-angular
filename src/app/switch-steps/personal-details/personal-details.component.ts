@@ -158,7 +158,6 @@ export class PersonalDetailsComponent implements OnInit {
   submitForm(value: any): void {
     this.setValues(value);
 
-
     if (localStorage.getItem("userId") == null) {
       this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
       this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;
@@ -197,6 +196,7 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   updateForm(value: any): void {
+
     this.setValues(value)
     this.switchService.updateUser(this.switchService.personalObj).subscribe(
       (data: any) => {
@@ -217,7 +217,8 @@ export class PersonalDetailsComponent implements OnInit {
       companyType: value.companyType,
       companyRegNo: value.companyRegNo,
       mobileNo: value.mobileNo,
-      stepsId: localStorage.getItem("stepsId")
+      stepsId: localStorage.getItem("stepsId"),
+      userId: localStorage.getItem("userId")
     }
   }
 

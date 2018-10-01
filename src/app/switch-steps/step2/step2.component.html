@@ -89,6 +89,10 @@
 
             <input type="text" placeholder="dd-mm-yyyy" class="form-control" formControlName="contractEndDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',showWeekNumbers:false }">
 
+            <div class="col-sm-12 labelTag" style="text-align: left">
+                <input type="checkbox" name="dontKnowEndDate" id="dontKnowEndDate" (change)="setEndDate($event)">
+                <label for="dontKnowEndDate" style="font-weight:normal"> I don't know my contract end date</label>
+              </div>
             <!-- <div class="input-group-append">
               <button class="btn " (click)="d2.toggle()" type="button">
                 <img src="assets/images/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
