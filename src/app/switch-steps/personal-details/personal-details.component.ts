@@ -168,6 +168,7 @@ export class PersonalDetailsComponent implements OnInit {
           localStorage.setItem('userId', data._id);
           localStorage.setItem('name', data.name);
           localStorage.setItem('token', data.token);
+          location.reload();
           this.router.navigate([this.switchType + '/address-details']);
 
           this.spinner.hide();
