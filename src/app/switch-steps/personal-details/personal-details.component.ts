@@ -158,6 +158,13 @@ export class PersonalDetailsComponent implements OnInit {
   submitForm(value: any): void {
     this.setValues(value);
 
+    var request = {
+      stepsId: localStorage.getItem("stepsId"),
+      lastStageReached: 'Personal Details'
+    }
+    this.switchService.updateSteps(request).subscribe();
+    
+
     if (localStorage.getItem("userId") == null) {
       this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
       this.switchService.personalObj.confirmEmailAddress = value.emailGroup.confirmEmailAddress;

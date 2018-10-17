@@ -65,6 +65,13 @@ export class DetailComponent implements OnInit {
     this.router.navigate([this.switchType + '/' + page]);
   }
   submitDetails() {
+    var requestSteps = {
+      stepsId: localStorage.getItem("stepsId"),
+      lastStageReached: 'Final Step'
+    }
+    this.switchService.updateSteps(requestSteps).subscribe();
+
+
     var supplyAddressArr = this.switchService.step1Obj.supplyAddress.split(" ");
     var position = (supplyAddressArr.length) / 4;
     var address1 = supplyAddressArr.slice(0, position);

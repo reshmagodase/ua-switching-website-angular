@@ -93,6 +93,12 @@ export class AddressDetailsComponent implements OnInit {
 
 
   submitForm(value: any): void {
+    var request = {
+      stepsId: localStorage.getItem("stepsId"),
+      lastStageReached: 'Address Details'
+    }
+    this.switchService.updateSteps(request).subscribe();
+
     var url = this.switchType + '/payment-details';
     this.setAddressObj(value, url);
 

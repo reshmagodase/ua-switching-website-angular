@@ -126,6 +126,12 @@ export class SwitchService {
       catchError((error: any) => throwError(error)))
   }
 
+  updateSteps(request) {
+    this.spinner.show();
+    return this.http.put(this.baseUrl + '/api/steps/' + request.stepsId,request).pipe(
+      map(data => data),
+      catchError((error: any) => throwError(error)))
+  }
 
   registerUser(request) {
     this.spinner.show();

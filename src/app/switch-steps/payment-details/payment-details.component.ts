@@ -133,6 +133,13 @@ export class PaymentDetailsComponent implements OnInit {
   } */
 
   submitForm(value: any): void {
+
+    var request = {
+      stepsId: localStorage.getItem("stepsId"),
+      lastStageReached: 'Payment Details'
+    }
+    this.switchService.updateSteps(request).subscribe();
+
     var url = this.switchType + '/details';
     this.setValues(value, url);
   }
