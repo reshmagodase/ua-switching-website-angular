@@ -158,12 +158,8 @@ export class PersonalDetailsComponent implements OnInit {
   submitForm(value: any): void {
     this.setValues(value);
 
-    var request = {
-      stepsId: localStorage.getItem("stepsId"),
-      lastStageReached: 'Personal Details'
-    }
-    this.switchService.updateSteps(request).subscribe();
-    
+
+
 
     if (localStorage.getItem("userId") == null) {
       this.switchService.personalObj.emailAddress = value.emailGroup.emailAddress;
@@ -172,6 +168,13 @@ export class PersonalDetailsComponent implements OnInit {
       this.switchService.personalObj.confirmPassword = value.passwordGroup.confirmPassword;
       this.switchService.registerUser(this.switchService.personalObj).subscribe(
         (data: any) => {
+          var request = {
+            stepsId: localStorage.getItem("stepsId"),
+            lastStageReached: 'Personal Details',
+            userId: data._id
+          }
+          this.switchService.updateSteps(request).subscribe();
+          
           localStorage.setItem('userId', data._id);
           localStorage.setItem('name', data.name);
           localStorage.setItem('token', data.token);
@@ -187,6 +190,13 @@ export class PersonalDetailsComponent implements OnInit {
       )
     }
     else {
+      var request = {
+        stepsId: localStorage.getItem("stepsId"),
+        lastStageReached: 'Personal Details',
+        userId: localStorage.getItem("userId")
+      }
+      this.switchService.updateSteps(request).subscribe();
+
       this.switchService.personalObj.userId = localStorage.getItem("userId");
       this.switchService.updateUser(this.switchService.personalObj).subscribe(
         (data: any) => {
