@@ -16,8 +16,14 @@ export const usageRequired = (
 ): { [key: string]: boolean } => {
   const annualSpend = control.get("annualSpend");
   const annualUsage = control.get("annualUsage");
-  if (!annualSpend.value && !annualUsage.value) {
-    return { required: true };
+  const allowSpendAndUsage = control.get("allowSpendAndUsage");
+  if ((!annualSpend.value || !annualUsage.value)) {
+    if (allowSpendAndUsage.value == true && (!annualSpend.value && !annualUsage.value) || allowSpendAndUsage.value == true && (!annualSpend.value || !annualUsage.value)) {
+      return { atleastOneMissing: true };
+    }
+    else if (!annualSpend.value && !annualUsage.value) {
+      return { required: true };
+    }
   } else {
     return null;
   }
@@ -54,6 +60,7 @@ export class Step2Component implements OnInit {
   unitRate: number;
   allSuppliers: any;
   manualEndDate: boolean;
+  allowSpendAndUsage: boolean;
 
   constructor(
     private router: Router,
@@ -75,7 +82,8 @@ export class Step2Component implements OnInit {
       usageGroup: this.fb.group(
         {
           annualSpend: [step2Obj.annualSpend ? step2Obj.annualSpend : ""],
-          annualUsage: [step2Obj.annualUsage ? step2Obj.annualUsage : ""]
+          annualUsage: [step2Obj.annualUsage ? step2Obj.annualUsage : ""],
+          allowSpendAndUsage: [step2Obj.allowSpendAndUsage ? step2Obj.allowSpendAndUsage : false]
         },
         { validator: usageRequired }
       ),
@@ -91,9 +99,11 @@ export class Step2Component implements OnInit {
         },
         { validator: supplierRequired }
       )
+
     });
     this.annualSpend = step2Obj.annualSpend ? step2Obj.annualSpend : "";
     this.annualUsage = step2Obj.annualUsage ? step2Obj.annualUsage : "";
+    this.allowSpendAndUsage = step2Obj.allowSpendAndUsage ? step2Obj.allowSpendAndUsage : false;
   }
 
   ngOnInit() {
@@ -114,6 +124,15 @@ export class Step2Component implements OnInit {
         }
       }
     });
+  }
+
+  initializeforSpendAndUsage() {
+    this.allowSpendAndUsage = !this.allowSpendAndUsage;
+    if (this.allowSpendAndUsage === false) {
+      this.annualSpend = '';
+      this.annualUsage = '';
+    }
+    console.log("allow?", this.allowSpendAndUsage);
   }
 
   submitForm(value: any, step: number): void {
@@ -150,9 +169,10 @@ export class Step2Component implements OnInit {
       checkManual: value.supplierGroup.checkManual,
       billingType: value.billingType,
       smartMeter: value.smartMeter,
-      consumption: value.usageGroup.annualSpend
-        ? (value.usageGroup.annualSpend / (this.unitRate / 100)).toFixed(0)
-        : value.usageGroup.annualUsage,
+      allowSpendAndUsage: this.allowSpendAndUsage,
+      consumption: value.usageGroup.annualUsage
+        ? value.usageGroup.annualUsage
+        : (value.usageGroup.annualSpend / (this.unitRate / 100)).toFixed(0),
       spendAmount: value.usageGroup.annualSpend
         ? value.usageGroup.annualSpend
         : ((value.usageGroup.annualUsage * this.unitRate) / 100).toFixed(0)

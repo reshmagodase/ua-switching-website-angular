@@ -22,11 +22,11 @@ export class SwitchService {
   currentUrl: string = "";
   updateForm: boolean = false;
   salesforceEnvironment = "live";
-  // salesforceEnvironment = "test";
+  //salesforceEnvironment = "test";
 
   baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient, private spinner: NgxSpinnerService) {}
+  constructor(private http: HttpClient, private spinner: NgxSpinnerService) { }
 
   getSupplyAddresses(request) {
     this.spinner.show();
@@ -177,8 +177,8 @@ export class SwitchService {
     return this.http
       .get(
         this.baseUrl +
-          "/api/quotations?sort=-created_at&userId=" +
-          request.userId
+        "/api/quotations?sort=-created_at&userId=" +
+        request.userId
       )
       .pipe(
         map(data => data),

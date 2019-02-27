@@ -331,6 +331,17 @@ table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
     }
 }
 
+.mobile-device {
+margin-left:25%;
+text-align:left !important;
+}
+
+@media only screen and (max-width: 600px){
+.mobile-device {
+    margin-left:0% !important; 
+}
+} 
+
 input[type="checkbox"] {
     visibility: hidden;
     height: 0px !important;

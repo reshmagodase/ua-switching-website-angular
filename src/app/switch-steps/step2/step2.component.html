@@ -29,6 +29,13 @@
     <div class="tab">
       <div formGroupName="usageGroup">
         <div class="row form-group">
+          <div class="col-sm-12 labelTag mobile-device">
+            <input type="checkbox" name="allowSpendAndUsage" id="allowSpendAndUsage" [(ngModel)]="allowSpendAndUsage"
+              (click)="initializeforSpendAndUsage()" formControlName="allowSpendAndUsage">
+            <label for="allowSpendAndUsage" style="font-weight:normal"> I know both my Annual Spend as well as Annual
+              Usage</label>
+          </div>
+
           <div class="col-sm-3 labelTag">
             <label>Annual Spend*</label>
           </div>
@@ -42,13 +49,12 @@
               <div class="input-group-append">
                 <span class="input-group-text" style="font-size:20px">&#163;</span>
               </div>
-              <input placeholder="Annual Spend" class="form-control" type="number" [(ngModel)]="annualSpend" (keypress)="annualUsage=''"
+              <input placeholder="Annual Spend" class="form-control" type="number" [(ngModel)]="annualSpend" (keypress)="allowSpendAndUsage == false ? annualUsage='' : annualUsage=annualUsage"
                 formControlName="annualSpend">
             </div>
           </div>
-
         </div>
-        <div class="row form-group">
+        <div *ngIf="!allowSpendAndUsage" class="row form-group">
           <div class="col-sm-3 labelTag">
           </div>
           <div class="col-sm-6 text-center">
@@ -62,14 +68,19 @@
           <div class="col-sm-6">
 
             <div class="input-group mb-3">
-              <input placeholder="Annual Usage" class="form-control" type="number" [(ngModel)]="annualUsage" (keypress)="annualSpend=''"
+              <input placeholder="Annual Usage" class="form-control" type="number" [(ngModel)]="annualUsage" (keypress)="allowSpendAndUsage == false ? annualSpend='' : annualSpend=annualSpend"
                 formControlName="annualUsage">
 
               <div class="input-group-append">
                 <span class="input-group-text" style="font-size:20px">kWh</span>
               </div>
             </div>
-
+            <div class=" alert-danger" *ngIf="(switchForm.controls['usageGroup'].touched && !switchForm.controls['usageGroup'].valid)">
+              <span *ngIf="switchForm.controls['usageGroup'].hasError('atleastOneMissing')">
+                If you have selected 'I know both my Annual Spend as well as Annual Usage' then you must enter values
+                for both!
+              </span>
+            </div>
             <div class=" alert-danger" *ngIf="(switchForm.controls['usageGroup'].touched && !switchForm.controls['usageGroup'].valid)">
               <span *ngIf="switchForm.controls['usageGroup'].hasError('required')">
                 Annual Usage or Annual Spend is required!
@@ -87,12 +98,13 @@
 
           <div class="input-group">
 
-            <input type="text" placeholder="dd-mm-yyyy" class="form-control" formControlName="contractEndDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',showWeekNumbers:false }">
+            <input type="text" placeholder="dd-mm-yyyy" class="form-control" formControlName="contractEndDate"
+              bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',showWeekNumbers:false }">
 
             <div class="col-sm-12 labelTag" style="text-align: left">
-                <input type="checkbox" name="dontKnowEndDate" id="dontKnowEndDate" (change)="setEndDate($event)">
-                <label for="dontKnowEndDate" style="font-weight:normal"> I don't know my contract end date</label>
-              </div>
+              <input type="checkbox" name="dontKnowEndDate" id="dontKnowEndDate" (change)="setEndDate($event)">
+              <label for="dontKnowEndDate" style="font-weight:normal"> I don't know my contract end date</label>
+            </div>
             <!-- <div class="input-group-append">
               <button class="btn " (click)="d2.toggle()" type="button">
                 <img src="assets/images/calendar.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
@@ -116,7 +128,7 @@
           </div>
           <div class="col-sm-6">
             <select class="form-control" formControlName="currentSupplier">
-                <option value="">--Select Supplier--</option>
+              <option value="">--Select Supplier--</option>
               <option *ngFor="let suppliers of allSuppliers" value='{{suppliers.supplierName}}'>
                 {{suppliers.supplierName}}
               </option>
@@ -130,7 +142,8 @@
           </div>
           <div class="col-sm-9 labelTag" style="text-align: left">
             <input type="checkbox" name="checkManual" id="checkManual" formControlName="checkManual">
-            <label for="checkManual" style="font-weight:normal"> My Current Supplier is not automatically listed so I prefer to enter it manually.</label>
+            <label for="checkManual" style="font-weight:normal"> My Current Supplier is not automatically listed so I
+              prefer to enter it manually.</label>
           </div>
         </div>
         <div class="row form-group" *ngIf="switchForm.get('supplierGroup').get('checkManual').value">
