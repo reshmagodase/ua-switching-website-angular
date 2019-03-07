@@ -36,7 +36,7 @@ export class Step3Component implements OnInit {
       if (this.switchService.step1Obj.meterType == "day-night") {
         var dayConsumption = (70 * (this.switchService.step2Obj.consumption)) / 100;
         var nightConsumption = (30 * (this.switchService.step2Obj.consumption)) / 100;
-        console.log(dayConsumption,nightConsumption,"day-night")
+        console.log(dayConsumption, nightConsumption, "day-night")
         request = {
           ElectricSupply: {
             DayConsumption: { Amount: dayConsumption, Type: "Day" },
@@ -111,14 +111,17 @@ export class Step3Component implements OnInit {
   }
 
   switchNow(supplier, supplierDetails) {
+    console.log("supplier", supplier);
+    console.log("supplierDetails", supplierDetails);
     this.switchService.step3Obj.supplier = supplier;
     this.switchService.step3Obj.newSupplierId = this.switchService.salesforceEnvironment == "test" ? supplierDetails.salesforceSupplierId : supplierDetails.salesforceLiveSupplierId;
     this.switchService.step3Obj.supplierLogo = supplierDetails.supplierLogo;
+    this.switchService.step3Obj.contractEndDateFromUD = supplier.ContractEndDate;
     var request = {
       step1Obj: this.switchService.step1Obj,
       step2Obj: this.switchService.step2Obj,
       step3Obj: this.switchService.step3Obj,
-      switchType: this.switchType
+      switchType: this.switchType,
     }
     if (localStorage.getItem("userId") !== null) {
       request["userId"] = localStorage.getItem("userId")

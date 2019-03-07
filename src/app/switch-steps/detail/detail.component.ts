@@ -17,7 +17,7 @@ export class DetailComponent implements OnInit {
     public switchService: SwitchService,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.switchService.updateForm = false;
@@ -88,6 +88,7 @@ export class DetailComponent implements OnInit {
     var contractStartDate = new Date(
       this.switchService.step2Obj.contractEndDate
     );
+
     contractStartDate.setDate(contractStartDate.getDate() + 1);
     var contractStartDateStr =
       contractStartDate.getUTCFullYear() +
@@ -96,13 +97,15 @@ export class DetailComponent implements OnInit {
       "-" +
       contractStartDate.getUTCDate();
 
-    var contractEndDate = new Date(this.switchService.step2Obj.contractEndDate);
-    var contractEndDateStr =
+    var contractEndDate = new Date(this.switchService.step3Obj.contractEndDateFromUD);
+    var contractEndDateStr =  /* this.switchService.step3Obj.contractEndDateFromUD; */
+
       contractEndDate.getUTCFullYear() +
       "-" +
       (contractEndDate.getUTCMonth() + 1) +
       "-" +
       contractEndDate.getUTCDate();
+
 
     var MainDetailsData = [
       {
@@ -259,6 +262,15 @@ export class DetailComponent implements OnInit {
         Key: "elec new contract end date",
         Value: contractEndDateStr
       });
+      MainDetailsData.push({
+        Key: "elec contract end date",
+        Value: contractEndDateStr
+      });
+      MainDetailsData.push({
+        Key: "elec new contract date",
+        Value: contractStartDateStr
+      });
+
     } else {
       ItsAGasContract = true;
       MainDetailsData.push({
@@ -313,6 +325,28 @@ export class DetailComponent implements OnInit {
       {
         Key: "eveandwendusage",
         Value: "0"
+      },
+    ];
+
+    var TemplateOptions = [
+      {
+        PlanType: this.switchService.step3Obj.supplier.PlanType,
+        HalfHourly: this.switchService.step3Obj.supplier.HalfHourly ? this.switchService.step3Obj.supplier.HalfHourly : false
+      }
+    ];
+
+    var MeterDetailsData = [
+      {
+        Key: "sc",
+        Value: this.switchService.step3Obj.supplier.SC
+      },
+      {
+        Key: "period",
+        Value: this.switchService.step3Obj.supplier.Period
+      },
+      {
+        Key: "fits",
+        Value: this.switchService.step3Obj.supplier.Fits
       }
     ];
 
@@ -334,8 +368,11 @@ export class DetailComponent implements OnInit {
       ItsAGasContract: ItsAGasContract,
       MainDetailsData: MainDetailsData,
       UsageRatesData: UsageRatesData,
+      TemplateOptions: TemplateOptions,
+      MeterDetailsData: MeterDetailsData,
       quotationDetails: quotationDetails
     };
+    console.log(JSON.stringify(request));
     this.switchService.sendDocuSign(request).subscribe(
       (data: any) => {
         this.spinner.hide();
