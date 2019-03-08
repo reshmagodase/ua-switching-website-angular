@@ -123,6 +123,22 @@ export class Step3Component implements OnInit {
       step3Obj: this.switchService.step3Obj,
       switchType: this.switchType,
     }
+    console.log("request", request);
+    if (this.switchType == "electricity") {
+      if (this.switchService.step1Obj.meterType == "day-night") {
+        this.switchService.step3Obj.dayConsumption = (70 * (this.switchService.step2Obj.consumption)) / 100;
+        this.switchService.step3Obj.nightConsumption = (30 * (this.switchService.step2Obj.consumption)) / 100;
+      }
+      else {
+        this.switchService.step3Obj.dayConsumption = this.switchService.step2Obj.consumption;
+        this.switchService.step3Obj.nightConsumption = 0;
+      }
+    }
+    else {
+      this.switchService.step3Obj.dayConsumption = this.switchService.step2Obj.consumption;
+      this.switchService.step3Obj.nightConsumption = 0;
+    }
+
     if (localStorage.getItem("userId") !== null) {
       request["userId"] = localStorage.getItem("userId")
     }

@@ -136,6 +136,7 @@ export class Step2Component implements OnInit {
   }
 
   submitForm(value: any, step: number): void {
+    console.log(value);
     var supplierList = JSON.parse(localStorage.getItem("suppliers"));
     var oldSupplierId = "";
     if (value.supplierGroup.currentSupplier) {

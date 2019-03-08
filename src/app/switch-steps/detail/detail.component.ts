@@ -316,11 +316,11 @@ export class DetailComponent implements OnInit {
       },
       {
         Key: "dayusage",
-        Value: this.switchService.step2Obj.consumption
+        Value: this.switchService.step3Obj.dayConsumption
       },
       {
         Key: "nightusage",
-        Value: "0"
+        Value: this.switchService.step3Obj.nightConsumption
       },
       {
         Key: "eveandwendusage",
