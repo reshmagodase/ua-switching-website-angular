@@ -270,6 +270,10 @@ export class DetailComponent implements OnInit {
         Key: "elec new contract date",
         Value: contractStartDateStr
       });
+      MainDetailsData.push({
+        Key: "electric smart meter",
+        Value: this.switchService.step2Obj.smartMeter == true ? 1 : 0
+      });
 
     } else {
       ItsAGasContract = true;
@@ -294,6 +298,10 @@ export class DetailComponent implements OnInit {
       MainDetailsData.push({
         Key: "gas new contract end date",
         Value: contractEndDateStr
+      });
+      MainDetailsData.push({
+        Key: "gas smart meter",
+        Value: this.switchService.step2Obj.smartMeter == true ? 1 : 0
       });
     }
 

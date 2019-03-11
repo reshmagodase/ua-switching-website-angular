@@ -21,8 +21,8 @@ export class SwitchService {
   paymentObj: any = {};
   currentUrl: string = "";
   updateForm: boolean = false;
-  //salesforceEnvironment = "live";
-  salesforceEnvironment = "test";
+  salesforceEnvironment = "live";
+  //salesforceEnvironment = "test";
 
   baseUrl = environment.baseUrl;
 
