@@ -177,6 +177,9 @@
                       <b style="color:black">{{
                         (price.NightUnitrate / 1).toFixed(2)
                       }}</b>
+                    </ng-container><br>
+                    <ng-container *ngIf="PlanType !='null'">
+                      Plan Type: <b>{{price.PlanType ? price.PlanType : '-'}}</b>
                     </ng-container>
                   </td>
                   <td>
