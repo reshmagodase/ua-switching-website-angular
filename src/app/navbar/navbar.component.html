@@ -10,6 +10,14 @@
             freephone:
             <span>0808 1788 170</span>
         </div>
+        <p class="alreadyLoggedIn" style="text-align: right;
+                  font-weight:100;
+                  font-size:16.5px;
+                  margin-bottom: 0;
+                  width: 100%;">
+            Already have an account?
+            <a data-toggle="modal" data-target="#loginModal" style="color:#0897C7;cursor:pointer">Login</a>
+        </p>
         <h5 class="session">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
@@ -39,6 +47,86 @@
 
 
 
+<!-- Modal -->
+<div id="loginModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background: #17252a !important">
+                <img class="logo" src="assets/images/Utilityaid_New.png" style="height: 40px">
+                <button type="button" class="close" data-dismiss="modal" style="color: white">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+                    <div class="container">
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="input-group mb-3">
+                                    <input placeholder="Enter Email" class="form-control" type="text" formControlName="emailAddress">
+
+                                </div>
+                            </div>
+                            <div class="col-12 text-center ">
+                                <div class="alert-danger" *ngIf="loginForm.controls['emailAddress'].touched && !loginForm.controls['emailAddress'].valid">
+                                    <span *ngIf="loginForm.get('emailAddress').hasError('required') ">
+                                        Email is required!
+                                    </span>
+                                    <span *ngIf="loginForm.get('emailAddress').hasError('email') ">
+                                        Invalid Email!
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label>Password</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="input-group mb-3">
+                                    <input placeholder="Enter Password" class="form-control" type="password"
+                                        formControlName="password">
+                                </div>
+
+                            </div>
+                            <div class="col-12 text-center ">
+                                <div class=" alert-danger" *ngIf="loginForm.controls['password'].touched && !loginForm.controls['password'].valid">
+
+                                    <span *ngIf="loginForm.get('password').hasError('required') ">
+                                        Password is required!
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="btnRow">
+                                    <button class="next2 btn btn-secondary customBtn" [disabled]='!loginForm.valid'>Login
+                                    </button>
+
+                                    <div class=" alert-danger">
+
+                                        <span>
+                                            {{error}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 <!-- Modal -->
 <div id="changePasswordModal" class="modal fade" role="dialog">
@@ -59,8 +147,9 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="input-group mb-3">
-                                    <input style="font-size:14px;font-family:  Arial, Helvetica, sans-serif" placeholder="Enter Old Password" class="form-control"
-                                        type="password" formControlName="oldPassword">
+                                    <input style="font-size:14px;font-family:  Arial, Helvetica, sans-serif"
+                                        placeholder="Enter Old Password" class="form-control" type="password"
+                                        formControlName="oldPassword">
 
 
                                 </div>
@@ -79,15 +168,16 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="input-group mb-3">
-                                    <input style="font-size:14px;font-family:  Arial, Helvetica, sans-serif" placeholder="Enter New Password" class="form-control"
-                                        type="password" formControlName="password">
+                                    <input style="font-size:14px;font-family:  Arial, Helvetica, sans-serif"
+                                        placeholder="Enter New Password" class="form-control" type="password"
+                                        formControlName="password">
 
                                 </div>
                                 <div class=" alert-danger" *ngIf="changePasswordForm.controls['passwordGroup'].touched && !changePasswordForm.controls['passwordGroup'].valid">
                                     <span *ngIf="!changePasswordForm.get('passwordGroup').get('password').hasError('required') && changePasswordForm.controls['passwordGroup'].hasError('match')">
                                         New password should not be same as old password!
                                     </span>
-                                   
+
                                 </div>
                             </div>
 
@@ -98,8 +188,9 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="input-group mb-3">
-                                    <input style="font-size:14px;font-family:  Arial, Helvetica, sans-serif" placeholder="Enter New Password" class="form-control"
-                                        type="password" formControlName="confirmPassword">
+                                    <input style="font-size:14px;font-family:  Arial, Helvetica, sans-serif"
+                                        placeholder="Enter New Password" class="form-control" type="password"
+                                        formControlName="confirmPassword">
 
                                 </div>
                                 <div class=" alert-danger" *ngIf="changePasswordForm.controls['passwordGroup'].get('confirmPassword').touched && !changePasswordForm.controls['passwordGroup'].valid">
@@ -118,7 +209,8 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <div class="btnRow">
-                                    <button class="next2 btn btn-secondary customBtn"  (click)="changePassword(changePasswordForm.value)" [disabled]='!changePasswordForm.valid'>Change Password </button>
+                                    <button class="next2 btn btn-secondary customBtn" (click)="changePassword(changePasswordForm.value)"
+                                        [disabled]='!changePasswordForm.valid'>Change Password </button>
 
                                     <div class=" alert-danger">
 

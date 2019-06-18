@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SwitchService } from '../switch.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, RoutesRecognized } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { filter, pairwise } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -10,15 +11,30 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  switchingHistory: any =[];
+  switchingHistory: any = [];
   personalObj: any = {};
+  hasSwitched: Boolean = false;
+  previousUrl: any = [];
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+    router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(({ urlAfterRedirects }: NavigationEnd) => {
+      this.previousUrl = [...this.previousUrl, urlAfterRedirects];
+      console.log("previous url", localStorage.getItem('previousUrl'));
+    });
 
   }
 
   ngOnInit() {
-    this.personalObj.addressObj={};
-    this.personalObj.paymentObj={};
+    this.personalObj.addressObj = {};
+    this.personalObj.paymentObj = {};
+    if (localStorage.getItem('previousUrl')) {
+      this.previousUrl = localStorage.getItem('previousUrl').toString();
+      var filename = this.previousUrl.substring(this.previousUrl.lastIndexOf('/') + 1);
+      if (filename == "details") {
+        this.hasSwitched = true;
+        localStorage.removeItem("previousUrl");
+      }
+    }
+
     if (localStorage.getItem('userId') !== null) {
       this.switchService.getUser({ userId: localStorage.getItem('userId') }).subscribe(
         (data: any) => {
@@ -74,5 +90,10 @@ export class ProfileComponent implements OnInit {
 
 
 
+  }
+
+  switchanotherSupply() {
+    //localStorage.removeItem("previousUrl");
+    this.router.navigate([""]);
   }
 }

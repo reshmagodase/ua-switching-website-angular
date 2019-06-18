@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 import Swal from "sweetalert2";
+import swal from "sweetalert2";
 
 @Component({
   selector: "app-detail",
@@ -381,13 +382,19 @@ export class DetailComponent implements OnInit {
       quotationDetails: quotationDetails
     };
     console.log(JSON.stringify(request));
+
+
     this.switchService.sendDocuSign(request).subscribe(
       (data: any) => {
         this.spinner.hide();
         console.log(data);
         if (data.code == 200) {
           localStorage.removeItem("stepsId");
-          this.router.navigate(["thankyou"]);
+          Swal("Utility-Aid", "<h5> Thank you for using UtilityAid to switch your " + this.switchType.toString() + " supplier! Please check your email for a document to review and sign.</h5>", "success").then(() => {
+            localStorage.setItem("previousUrl", window.location.pathname);
+            this.router.navigate(["profile"]);
+          });
+          //this.router.navigate(["thankyou"]);
         } else {
           Swal(data.message);
         }

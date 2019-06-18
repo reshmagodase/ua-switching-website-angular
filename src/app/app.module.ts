@@ -26,6 +26,8 @@ import { TermsComponent } from './terms/terms.component';
 
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
+import { FooterComponent } from './footer/footer.component';
+import { HalfhourlyerrorComponent } from './halfhourlyerror/halfhourlyerror.component';
 
 // import { GoogleAnalyticsEventsService } from "./google-anaytics.service";
 
@@ -106,6 +108,10 @@ const appRoutes: Routes = [
     path: 'terms',
     component: TermsComponent
   }
+  , {
+    path: 'halfhourlyerror',
+    component: HalfhourlyerrorComponent
+  }
 ];
 
 @NgModule({
@@ -123,7 +129,9 @@ const appRoutes: Routes = [
     ThankyouComponent,
     ProfileComponent,
     DisableCutCopyPasteDirective,
-    TermsComponent
+    TermsComponent,
+    FooterComponent,
+    HalfhourlyerrorComponent
   ],
   imports: [
     BrowserModule,

@@ -146,7 +146,86 @@
 
                     <span>
                       {{error}}
-                    </span>
+                    </span><!-- Modal -->
+                    <div id="loginModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header" style="background: #17252a !important">
+                            <img class="logo" src="assets/images/Utilityaid_New.png" style="height: 40px">
+                            <button type="button" class="close" data-dismiss="modal" style="color: white">&times;</button>
+                          </div>
+                          <div class="modal-body">
+                            <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+                              <div class="container">
+                                <div class="row form-group">
+                                  <div class="col-sm-4">
+                                    <label>Email</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <div class="input-group mb-3">
+                                      <input placeholder="Enter Email" class="form-control" type="text" formControlName="emailAddress">
+
+                                    </div>
+                                  </div>
+                                  <div class="col-12 text-center ">
+                                    <div class="alert-danger" *ngIf="loginForm.controls['emailAddress'].touched && !loginForm.controls['emailAddress'].valid">
+                                      <span *ngIf="loginForm.get('emailAddress').hasError('required') ">
+                                        Email is required!
+                                      </span>
+                                      <span *ngIf="loginForm.get('emailAddress').hasError('email') ">
+                                        Invalid Email!
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div class="row form-group">
+                                  <div class="col-sm-4">
+                                    <label>Password</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <div class="input-group mb-3">
+                                      <input placeholder="Enter Password" class="form-control" type="password"
+                                        formControlName="password">
+                                    </div>
+
+                                  </div>
+                                  <div class="col-12 text-center ">
+                                    <div class=" alert-danger" *ngIf="loginForm.controls['password'].touched && !loginForm.controls['password'].valid">
+
+                                      <span *ngIf="loginForm.get('password').hasError('required') ">
+                                        Password is required!
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-md-12 text-center">
+                                    <div class="btnRow">
+                                      <button class="next2 btn btn-secondary customBtn" [disabled]='!loginForm.valid'>Login
+                                      </button>
+
+                                      <div class=" alert-danger">
+
+                                        <span>
+                                          {{error}}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

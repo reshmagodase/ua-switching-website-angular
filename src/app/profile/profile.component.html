@@ -32,15 +32,19 @@
 
         <tr [hidden]="!personalObj?.addressObj?.checkBillingAddress">
           <td>Billing Address:</td>
-          <td class="fontBold"> {{this.personalObj?.addressObj?.billingAddressLine1 + ' ' + this.personalObj?.addressObj?.billingAddressLine2 +
-            ' ' + this.personalObj?.addressObj?.billingCity + ' ' + this.personalObj?.addressObj?.billingCountry + ' ' +
+          <td class="fontBold"> {{this.personalObj?.addressObj?.billingAddressLine1 + ' ' +
+            this.personalObj?.addressObj?.billingAddressLine2 +
+            ' ' + this.personalObj?.addressObj?.billingCity + ' ' + this.personalObj?.addressObj?.billingCountry + ' '
+            +
             this.personalObj?.addressObj?.billingPostCode}}
           </td>
         </tr>
         <tr [hidden]="!(personalObj?.addressObj?.yearsAtProperty<3 && personalObj?.addressObj?.yearsAtProperty!=='' && this.personalObj?.addressObj?.prevAddressLine1)">
           <td>Previous Address:</td>
-          <td class="fontBold"> {{this.personalObj?.addressObj?.prevAddressLine1 + ' ' + this.personalObj?.addressObj?.prevAddressLine2 + ' ' +
-            this.personalObj?.addressObj?.prevCity + ' ' + this.personalObj?.addressObj?.prevCountry + ' ' + this.personalObj?.addressObj?.prevPostCode}}</td>
+          <td class="fontBold"> {{this.personalObj?.addressObj?.prevAddressLine1 + ' ' +
+            this.personalObj?.addressObj?.prevAddressLine2 + ' ' +
+            this.personalObj?.addressObj?.prevCity + ' ' + this.personalObj?.addressObj?.prevCountry + ' ' +
+            this.personalObj?.addressObj?.prevPostCode}}</td>
         </tr>
 
       </table>
@@ -65,7 +69,8 @@
         </tr>
         <tr>
           <td>Bank Name:</td>
-          <td class="fontBold">{{personalObj?.paymentObj?.checkManual ? personalObj?.paymentObj?.manualBankName : personalObj?.paymentObj?.bankName}}</td>
+          <td class="fontBold">{{personalObj?.paymentObj?.checkManual ? personalObj?.paymentObj?.manualBankName :
+            personalObj?.paymentObj?.bankName}}</td>
         </tr>
 
 
@@ -76,121 +81,137 @@
 
     </div>
   </div>
+  <!-- -webkit-box-shadow: inset 1px 6px 12px ;
+  -moz-box-shadow: inset 1px 6px 12px; -->
   <div style="padding-top:20px">
     <h2 class="fontBold">Switching History</h2>
-  </div>
-  <div style="overflow-x:auto;">
-    <table class="table table-striped" [mfData]="switchingHistory" #mf="mfDataTable" [mfRowsOnPage]="10">
-      <thead>
-        <tr>
-          <th>
-            Sr No.
-          </th>
-
-          <th>
-            Supply Address
-          </th>
-          <th>
-            Previous Usage
-          </th>
-          <th>
-            New Supply Details
-          </th>
-          <th>
-            Status
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngFor="let history of mf.data;let i=index">
+    <div *ngIf="hasSwitched" style="text-align: right">
+      <button class="prev1 btn customBtn" style="border:1px solid #4f95c7; 
+                                                 background-color: #4f95c7; 
+                                                 color:white; z-index: 2; 
+                                                 margin-top: -50px;
+                                                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                                                 top: -200px;
+                                                 right: -60%;"
+        (click)="switchanotherSupply()">
+        Switch another supply
+      </button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="table table-striped" [mfData]="switchingHistory" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
           <tr>
-            <td class="text-center">
-              <b style="text-decoration: underline">{{i+1}}</b>
-            </td>
+            <th>
+              Sr No.
+            </th>
 
-            <td style="max-width: 300px;">Supply Type:
-              <b>{{history.quotationDetails.currentUrl | uppercase}}</b>
-              <br> Post Code:
-              <b>{{history.quotationDetails.step1Obj.postCode | uppercase}} </b>
-              <br> Supply Address:
-              <b>
-                {{history.quotationDetails.step1Obj.supplyAddress}}</b>
-              <br> MPAN/MPRN:
-              <b> {{history.quotationDetails.currentUrl=='electricity' ? history.quotationDetails.step1Obj.MPANBottomLineNo :history.quotationDetails.step1Obj.MPRNNo}}</b>
-            </td>
-            <td>Annual Spend:
-              <b>&pound;{{history.quotationDetails.step2Obj.spendAmount}} 
-              </b>
-              <br> Annual Usage:
-              <b>{{history.quotationDetails.step2Obj.consumption}} kWh </b>
-              <br> Contract End Date:
-              <b>
-                {{history.quotationDetails.step2Obj.contractEndDate | date:'dd/MM/yyyy'}}</b>
-              <br> Current Supplier:
-              <b>
-                {{history.quotationDetails.step2Obj.checkManual ? history.quotationDetails.step2Obj.manualCurrentSupplier : history.quotationDetails.step2Obj.currentSupplier}}</b>
-              <br> Billing Type:
-              <b>
-                {{history.quotationDetails.step2Obj.billingType}}</b>
-              <br> Smart Meter:
-              <b>
-                {{history.quotationDetails.step2Obj.smartMeter ? "Yes" : "No"}}</b>
+            <th>
+              Supply Address
+            </th>
+            <th>
+              Previous Usage
+            </th>
+            <th>
+              New Supply Details
+            </th>
+            <th>
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let history of mf.data;let i=index">
+            <tr>
+              <td class="text-center">
+                <b style="text-decoration: underline">{{i+1}}</b>
+              </td>
 
-            </td>
-            <td>
-              <img [src]="history.quotationDetails.step3Obj.supplierLogo" style="max-width: 100px;">
-              <br>
-              <b style="color: #3697c2">
-                {{history.quotationDetails.step3Obj.supplier.Supplier}}</b>
-              <br> Day Rate:
-              <b>
-                {{(history.quotationDetails.step3Obj.supplier.DayUnitrate/1).toFixed(2)}}</b> pence per kWh
-              <br> Standing Charge:
-              <b>
-                {{(history.quotationDetails.step3Obj.supplier.StandingCharge/1).toFixed(2)}}</b> pence per day
-              <br> Duration in Months:
-              <b>
-                {{(history.quotationDetails.step3Obj.supplier.Term *12)}}</b>
+              <td style="max-width: 300px;">Supply Type:
+                <b>{{history.quotationDetails.currentUrl | uppercase}}</b>
+                <br> Post Code:
+                <b>{{history.quotationDetails.step1Obj.postCode | uppercase}} </b>
+                <br> Supply Address:
+                <b>
+                  {{history.quotationDetails.step1Obj.supplyAddress}}</b>
+                <br> MPAN/MPRN:
+                <b> {{history.quotationDetails.currentUrl=='electricity' ?
+                  history.quotationDetails.step1Obj.MPANBottomLineNo :history.quotationDetails.step1Obj.MPRNNo}}</b>
+              </td>
+              <td>Annual Spend:
+                <b>&pound;{{history.quotationDetails.step2Obj.spendAmount}}
+                </b>
+                <br> Annual Usage:
+                <b>{{history.quotationDetails.step2Obj.consumption}} kWh </b>
+                <br> Contract End Date:
+                <b>
+                  {{history.quotationDetails.step2Obj.contractEndDate | date:'dd/MM/yyyy'}}</b>
+                <br> Current Supplier:
+                <b>
+                  {{history.quotationDetails.step2Obj.checkManual ?
+                  history.quotationDetails.step2Obj.manualCurrentSupplier :
+                  history.quotationDetails.step2Obj.currentSupplier}}</b>
+                <br> Billing Type:
+                <b>
+                  {{history.quotationDetails.step2Obj.billingType}}</b>
+                <br> Smart Meter:
+                <b>
+                  {{history.quotationDetails.step2Obj.smartMeter ? "Yes" : "No"}}</b>
+
+              </td>
+              <td>
+                <img [src]="history.quotationDetails.step3Obj.supplierLogo" style="max-width: 100px;">
+                <br>
+                <b style="color: #3697c2">
+                  {{history.quotationDetails.step3Obj.supplier.Supplier}}</b>
+                <br> Day Rate:
+                <b>
+                  {{(history.quotationDetails.step3Obj.supplier.DayUnitrate/1).toFixed(2)}}</b> pence per kWh
+                <br> Standing Charge:
+                <b>
+                  {{(history.quotationDetails.step3Obj.supplier.StandingCharge/1).toFixed(2)}}</b> pence per day
+                <br> Duration in Months:
+                <b>
+                  {{(history.quotationDetails.step3Obj.supplier.Term *12)}}</b>
 
 
 
-            </td>
-            <td class="text-center" style="vertical-align: middle">
-              <ng-container *ngIf="history.documentSigned; then documentSigned; else pendingDocumentSigned">
-              </ng-container>
-              <ng-template #documentSigned>
-                <ng-container *ngIf="history.LOASigned; then completed; else pendingLOA">
+              </td>
+              <td class="text-center" style="vertical-align: middle">
+                <ng-container *ngIf="history.documentSigned; then documentSigned; else pendingDocumentSigned">
                 </ng-container>
-                <ng-template #completed>
-                  <span class="badge badge-pill badge-success">Completed</span>
-                <!--   <br>
+                <ng-template #documentSigned>
+                  <ng-container *ngIf="history.LOASigned; then completed; else pendingLOA">
+                  </ng-container>
+                  <ng-template #completed>
+                    <span class="badge badge-pill badge-success">Completed</span>
+                    <!--   <br>
                   <span style="cursor: pointer;" (click)="downloadPDF(history.quotationDetails.step3Obj.supplier.Supplier,history.quotationDetails.currentUrl,history.docuSignRefID)">
                     <img alt="DocuSign" src="assets/images/docuSign.png" style="width:70px;margin-top: 5px;" title="Download DocuSign">
                   </span> -->
-                </ng-template>
-                <ng-template #pendingLOA>
-                  <span class="badge badge-pill badge-primary">Pending LOA</span>
-                 <!--  <br>
+                  </ng-template>
+                  <ng-template #pendingLOA>
+                    <span class="badge badge-pill badge-primary">Pending LOA</span>
+                    <!--  <br>
                   <span style="cursor: pointer;" (click)="downloadPDF(history.quotationDetails.step3Obj.supplier.Supplier,history.quotationDetails.currentUrl,history.docuSignRefID)">
                     <img alt="DocuSign" src="assets/images/docuSign.png" style="width:70px;margin-top: 5px;" title="Download DocuSign">
                   </span> -->
+                  </ng-template>
                 </ng-template>
-              </ng-template>
-              <ng-template #pendingDocumentSigned>
-                <span class="badge badge-pill badge-danger">Pending DocuSign</span>
-              </ng-template>
+                <ng-template #pendingDocumentSigned>
+                  <span class="badge badge-pill badge-danger">Pending DocuSign</span>
+                </ng-template>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5" style="font-family:Arial, Helvetica, sans-serif">
+              <mfBootstrapPaginator></mfBootstrapPaginator>
             </td>
           </tr>
-        </ng-container>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="5" style="font-family:Arial, Helvetica, sans-serif">
-            <mfBootstrapPaginator></mfBootstrapPaginator>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
+        </tfoot>
+      </table>
+    </div>
 
-</div>
+  </div>

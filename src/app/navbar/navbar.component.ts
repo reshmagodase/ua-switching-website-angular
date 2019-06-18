@@ -29,10 +29,11 @@ export const passwordMatcher = (control: AbstractControl): { [key: string]: bool
 })
 
 export class NavbarComponent implements OnInit {
+  loginForm: FormGroup;
+  error: String;
   session: Boolean = true;
   name: String;
   changePasswordForm: FormGroup;
-  error: String;
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.changePasswordForm = this.fb.group({
       'passwordGroup': this.fb.group({
@@ -41,18 +42,25 @@ export class NavbarComponent implements OnInit {
         'confirmPassword': ['', Validators.compose([Validators.required])]
       }, { validator: passwordMatcher })
     });
+
+    this.loginForm = fb.group({
+      'emailAddress': ['', Validators.compose([Validators.required, Validators.email])],
+      'password': ['', Validators.required]
+    });
   }
 
 
   ngOnInit() {
-    if (localStorage.getItem("userId") !== null) {
+    if (localStorage.getItem("userId")) {
       this.session = true;
       this.name = localStorage.getItem("name");
       $(".session").show();
+      $(".alreadyLoggedIn").hide();
     }
     else {
       this.session = false;
       $(".session").hide();
+      $(".alreadyLoggedIn").show();
     }
     this.switchService.getSuppliers().subscribe(
       (data: any) => {
@@ -83,7 +91,26 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  login(value) {
+    var request = {
+      emailAddress: value.emailAddress,
+      password: value.password
+    }
+    this.switchService.login(request).subscribe(
+      (data: any) => {
+        localStorage.setItem('userId', data._id);
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('token', data.token);
 
+        location.reload();
+      },
+      err => {
+        this.spinner.hide();
+        this.error = "Email or password is invalid!";
+      },
+      () => this.spinner.hide()
+    )
+  }
 
   changePassword(value) {
     var request = {
@@ -95,9 +122,8 @@ export class NavbarComponent implements OnInit {
     this.switchService.changePassword(request).subscribe(
       (data: any) => {
         if (data.code == 200) {
-          Swal("", "Password changed successfully! Please login to continue.", "success").then(() => {
-            this.logout();
-          })
+          Swal("", "Password changed successfully! Please login to continue.", "success")
+
         }
         else {
           this.error = data.message;

@@ -18,6 +18,7 @@ export class Step1Component implements OnInit {
   MPRNNo: string = '';
   showHideSupplyAddress: boolean = true;
   showHidePostCode: boolean = true;
+  isHalfhourly: boolean = false;
 
   constructor(private router: Router, public switchService: SwitchService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     var step1Obj = this.switchService.step1Obj;
@@ -108,23 +109,31 @@ export class Step1Component implements OnInit {
   }
 
   submitForm(value: any, step: number): void {
-
-    if (value.supplyAddress) {
-
-      var supplyAddress = value.supplyAddress.split("AAA");
-
-      this.switchService.step1Obj.postCode = value.postCode;
-      this.switchService.step1Obj.formattedSupplyAddress = value.supplyAddress;
-      this.switchService.step1Obj.supplyAddress = supplyAddress[0];
-
-      if (this.switchForm.valid && step == 2) {
-        this.router.navigate([this.switchType + '/usage']);
-        this.switchService.step1Obj.completed = true;
-      }
-      else if (this.switchService.step2Obj.completed && step == 3) {
-        this.router.navigate([this.switchType + '/pricing-list']);
-      }
+    console.log(this.isHalfhourly);
+    if (this.isHalfhourly == true) {
+      this.router.navigate(["halfhourlyerror"]);
     }
+    else {
+      if (value.supplyAddress) {
+
+        var supplyAddress = value.supplyAddress.split("AAA");
+
+        this.switchService.step1Obj.postCode = value.postCode;
+        this.switchService.step1Obj.formattedSupplyAddress = value.supplyAddress;
+        this.switchService.step1Obj.supplyAddress = supplyAddress[0];
+
+        if (this.switchForm.valid && step == 2) {
+          this.router.navigate([this.switchType + '/usage']);
+          this.switchService.step1Obj.completed = true;
+        }
+        else if (this.switchService.step2Obj.completed && step == 3) {
+          this.router.navigate([this.switchType + '/pricing-list']);
+        }
+      }
+
+    }
+
+
 
   }
 
@@ -134,14 +143,18 @@ export class Step1Component implements OnInit {
       this.switchService.step1Obj.MPANBottomLineNo = code[1];
       this.switchService.step1Obj.MPANTopLineNo = code[2];
       this.MPANBottomLineNo = code[1];
-      var profileClass=code[2].substring(0, 2);
-      if(profileClass=="02" || profileClass == "04"){
-        this.switchService.step1Obj.meterType="day-night";
+      var profileClass = code[2].substring(0, 2);
+      if (profileClass == "02" || profileClass == "04") {
+        this.switchService.step1Obj.meterType = "day-night";
       }
-      else{
-        this.switchService.step1Obj.meterType="day";
+      else {
+        this.switchService.step1Obj.meterType = "day";
       }
-      
+
+      if (profileClass == "00" || profileClass == "05" || profileClass == "06" || profileClass == "07" || profileClass == "08") {
+        this.isHalfhourly = true;
+      }
+
     }
     else {
       this.switchService.step1Obj.MPRNNo = code[1];
