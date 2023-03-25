@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //baseUrl: "https://utility-aid.co.uk:3001"
-  baseUrl: "https://192.168.0.105:3001"
+  baseUrl: "https://utility-aid.co.uk:3001"
+  // baseUrl: "https://localhost:3001"
 };
 
 /*

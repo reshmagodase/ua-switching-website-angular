@@ -28,6 +28,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { FooterComponent } from './footer/footer.component';
 import { HalfhourlyerrorComponent } from './halfhourlyerror/halfhourlyerror.component';
+import { UnderMaintenanceComponent } from './under-maintenance/under-maintenance.component';
 
 // import { GoogleAnalyticsEventsService } from "./google-anaytics.service";
 
@@ -37,81 +38,82 @@ import { HalfhourlyerrorComponent } from './halfhourlyerror/halfhourlyerror.comp
 const appRoutes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: UnderMaintenanceComponent
   },
-  {
-    path: 'gas',
-    component: Step1Component
-  },
-  {
-    path: 'electricity',
-    component: Step1Component
-  },
-  {
-    path: 'electricity/usage',
-    component: Step2Component
-  }
-  , {
-    path: 'electricity/pricing-list',
-    component: Step3Component
-  }
-  ,
-  {
-    path: 'gas/usage',
-    component: Step2Component
-  }
-  , {
-    path: 'gas/pricing-list',
-    component: Step3Component
-  }
-  , {
-    path: 'electricity/personal-details',
-    component: PersonalDetailsComponent
-  }
-  , {
-    path: 'electricity/address-details',
-    component: AddressDetailsComponent
-  }
-  , {
-    path: 'electricity/payment-details',
-    component: PaymentDetailsComponent
-  }
-  , {
-    path: 'gas/personal-details',
-    component: PersonalDetailsComponent
-  }
-  , {
-    path: 'gas/address-details',
-    component: AddressDetailsComponent
-  }
-  , {
-    path: 'gas/payment-details',
-    component: PaymentDetailsComponent
-  }
-  , {
-    path: 'electricity/details',
-    component: DetailComponent
-  }
-  , {
-    path: 'gas/details',
-    component: DetailComponent
-  }
-  , {
-    path: 'thankyou',
-    component: ThankyouComponent
-  }
-  , {
-    path: 'profile',
-    component: ProfileComponent
-  }
-  , {
-    path: 'terms',
-    component: TermsComponent
-  }
-  , {
-    path: 'halfhourlyerror',
-    component: HalfhourlyerrorComponent
-  }
+  // {
+  //   path: 'gas',
+  //   component: Step1Component
+  // },
+  // {
+  //   path: 'electricity',
+  //   component: Step1Component
+  // },
+  // {
+  //   path: 'electricity/usage',
+  //   component: Step2Component
+  // }
+  // , {
+  //   path: 'electricity/pricing-list',
+  //   component: Step3Component
+  // }
+  // ,
+  // {
+  //   path: 'gas/usage',
+  //   component: Step2Component
+  // }
+  // , {
+  //   path: 'gas/pricing-list',
+  //   component: Step3Component
+  // }
+  // , {
+  //   path: 'electricity/personal-details',
+  //   component: PersonalDetailsComponent
+  // }
+  // , {
+  //   path: 'electricity/address-details',
+  //   component: AddressDetailsComponent
+  // }
+  // , {
+  //   path: 'electricity/payment-details',
+  //   component: PaymentDetailsComponent
+  // }
+  // , {
+  //   path: 'gas/personal-details',
+  //   component: PersonalDetailsComponent
+  // }
+  // , {
+  //   path: 'gas/address-details',
+  //   component: AddressDetailsComponent
+  // }
+  // , {
+  //   path: 'gas/payment-details',
+  //   component: PaymentDetailsComponent
+  // }
+  // , {
+  //   path: 'electricity/details',
+  //   component: DetailComponent
+  // }
+  // , {
+  //   path: 'gas/details',
+  //   component: DetailComponent
+  // }
+  // , {
+  //   path: 'thankyou',
+  //   component: ThankyouComponent
+  // }
+  // , {
+  //   path: 'profile',
+  //   component: ProfileComponent
+  // }
+  // , {
+  //   path: 'terms',
+  //   component: TermsComponent
+  // }
+  // , {
+  //   path: 'halfhourlyerror',
+  //   component: HalfhourlyerrorComponent
+  // }
+  { path: '**', component: UnderMaintenanceComponent }
 ];
 
 @NgModule({
@@ -131,7 +133,8 @@ const appRoutes: Routes = [
     DisableCutCopyPasteDirective,
     TermsComponent,
     FooterComponent,
-    HalfhourlyerrorComponent
+    HalfhourlyerrorComponent,
+    UnderMaintenanceComponent
   ],
   imports: [
     BrowserModule,

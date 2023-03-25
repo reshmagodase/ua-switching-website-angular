@@ -1,0 +1,45 @@
+html,
+body {
+    background: linear-gradient(180deg, #fafafa, #deebfa) fixed;
+    font-family: 'Open Sans', sans-serif;
+    height: 100%;
+    margin: 0 auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+main {
+    height: 100%;
+    display: flex;
+    margin: 0 20px;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+main svg {
+    fill: #48c5fd;
+    stroke: #2e7bfc;
+    stroke-width: 1.5;
+    height: 140px;
+    width: 200px;
+    margin-bottom: 25px;
+}
+
+main h1 {
+    color: #212121;
+    font-size: 2em;
+    font-weight: 300;
+    margin: 0;
+}
+
+main h2 {
+    color: #757575;
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-top: 10px;
+    max-width: 670px;
+}

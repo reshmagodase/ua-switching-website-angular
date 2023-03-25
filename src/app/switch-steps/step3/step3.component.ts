@@ -31,8 +31,16 @@ export class Step3Component implements OnInit {
 
   getPriceList() {
     var request = {};
+    let day = this.switchService.step2Obj.contractEndDate.getDate();
+    if (day < 10) {
+      day = `0${day}`;
+    }
+    let month = (this.switchService.step2Obj.contractEndDate.getMonth() + 1);
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    let contractEndDate = this.switchService.step2Obj.contractEndDate.getFullYear() + "-" + month + "-" + day;
     if (this.switchType == 'electricity') {
-
       if (this.switchService.step1Obj.meterType == "day-night") {
         var dayConsumption = (70 * (this.switchService.step2Obj.consumption)) / 100;
         var nightConsumption = (30 * (this.switchService.step2Obj.consumption)) / 100;
@@ -42,7 +50,8 @@ export class Step3Component implements OnInit {
             DayConsumption: { Amount: dayConsumption, Type: "Day" },
             NightConsumption: { Amount: nightConsumption, Type: "Night" },
             MPANTop: this.switchService.step1Obj.MPANTopLineNo,
-            MPANBottom: this.switchService.step1Obj.MPANBottomLineNo
+            MPANBottom: this.switchService.step1Obj.MPANBottomLineNo,
+            ContractEndDate: contractEndDate
           },
           PaymentMethod: this.switchService.step2Obj.billingType
         }
@@ -52,7 +61,8 @@ export class Step3Component implements OnInit {
           ElectricSupply: {
             DayConsumption: { Amount: this.switchService.step2Obj.consumption, Type: "Day" },
             MPANTop: this.switchService.step1Obj.MPANTopLineNo,
-            MPANBottom: this.switchService.step1Obj.MPANBottomLineNo
+            MPANBottom: this.switchService.step1Obj.MPANBottomLineNo,
+            ContractEndDate: contractEndDate
           },
           PaymentMethod: this.switchService.step2Obj.billingType
         }
@@ -77,7 +87,8 @@ export class Step3Component implements OnInit {
       request = {
         GasSupply: {
           Consumption: { Amount: this.switchService.step2Obj.consumption, Type: "Day" },
-          MPR: this.switchService.step1Obj.MPRNNo
+          MPR: this.switchService.step1Obj.MPRNNo,
+          ContractEndDate: contractEndDate
         },
         PaymentMethod: this.switchService.step2Obj.billingType,
         PostCode: this.switchService.step1Obj.postCode

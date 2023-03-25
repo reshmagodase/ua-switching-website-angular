@@ -10,14 +10,14 @@
             freephone:
             <span>0808 1788 170</span>
         </div>
-        <p class="alreadyLoggedIn" style="text-align: right;
+        <!-- <p class="alreadyLoggedIn" style="text-align: right;
                   font-weight:100;
                   font-size:16.5px;
                   margin-bottom: 0;
                   width: 100%;">
             Already have an account?
             <a data-toggle="modal" data-target="#loginModal" style="color:#0897C7;cursor:pointer">Login</a>
-        </p>
+        </p> -->
         <h5 class="session">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
@@ -66,12 +66,14 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="input-group mb-3">
-                                    <input placeholder="Enter Email" class="form-control" type="text" formControlName="emailAddress">
+                                    <input placeholder="Enter Email" class="form-control" type="text"
+                                        formControlName="emailAddress">
 
                                 </div>
                             </div>
                             <div class="col-12 text-center ">
-                                <div class="alert-danger" *ngIf="loginForm.controls['emailAddress'].touched && !loginForm.controls['emailAddress'].valid">
+                                <div class="alert-danger"
+                                    *ngIf="loginForm.controls['emailAddress'].touched && !loginForm.controls['emailAddress'].valid">
                                     <span *ngIf="loginForm.get('emailAddress').hasError('required') ">
                                         Email is required!
                                     </span>
@@ -94,7 +96,8 @@
 
                             </div>
                             <div class="col-12 text-center ">
-                                <div class=" alert-danger" *ngIf="loginForm.controls['password'].touched && !loginForm.controls['password'].valid">
+                                <div class=" alert-danger"
+                                    *ngIf="loginForm.controls['password'].touched && !loginForm.controls['password'].valid">
 
                                     <span *ngIf="loginForm.get('password').hasError('required') ">
                                         Password is required!
@@ -106,7 +109,8 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <div class="btnRow">
-                                    <button class="next2 btn btn-secondary customBtn" [disabled]='!loginForm.valid'>Login
+                                    <button class="next2 btn btn-secondary customBtn"
+                                        [disabled]='!loginForm.valid'>Login
                                     </button>
 
                                     <div class=" alert-danger">
@@ -153,8 +157,10 @@
 
 
                                 </div>
-                                <div class=" alert-danger" *ngIf="changePasswordForm.controls['passwordGroup'].touched && !changePasswordForm.controls['passwordGroup'].valid">
-                                    <span *ngIf="changePasswordForm.get('passwordGroup').get('oldPassword').hasError('required') ">
+                                <div class=" alert-danger"
+                                    *ngIf="changePasswordForm.controls['passwordGroup'].touched && !changePasswordForm.controls['passwordGroup'].valid">
+                                    <span
+                                        *ngIf="changePasswordForm.get('passwordGroup').get('oldPassword').hasError('required') ">
                                         Confirm Password is required!
                                     </span>
 
@@ -173,8 +179,10 @@
                                         formControlName="password">
 
                                 </div>
-                                <div class=" alert-danger" *ngIf="changePasswordForm.controls['passwordGroup'].touched && !changePasswordForm.controls['passwordGroup'].valid">
-                                    <span *ngIf="!changePasswordForm.get('passwordGroup').get('password').hasError('required') && changePasswordForm.controls['passwordGroup'].hasError('match')">
+                                <div class=" alert-danger"
+                                    *ngIf="changePasswordForm.controls['passwordGroup'].touched && !changePasswordForm.controls['passwordGroup'].valid">
+                                    <span
+                                        *ngIf="!changePasswordForm.get('passwordGroup').get('password').hasError('required') && changePasswordForm.controls['passwordGroup'].hasError('match')">
                                         New password should not be same as old password!
                                     </span>
 
@@ -193,12 +201,15 @@
                                         formControlName="confirmPassword">
 
                                 </div>
-                                <div class=" alert-danger" *ngIf="changePasswordForm.controls['passwordGroup'].get('confirmPassword').touched && !changePasswordForm.controls['passwordGroup'].valid">
-                                    <span *ngIf="changePasswordForm.get('passwordGroup').get('confirmPassword').hasError('required') ">
+                                <div class=" alert-danger"
+                                    *ngIf="changePasswordForm.controls['passwordGroup'].get('confirmPassword').touched && !changePasswordForm.controls['passwordGroup'].valid">
+                                    <span
+                                        *ngIf="changePasswordForm.get('passwordGroup').get('confirmPassword').hasError('required') ">
                                         Confirm password is required!
                                     </span>
 
-                                    <span *ngIf="!changePasswordForm.get('passwordGroup').get('confirmPassword').hasError('required') && changePasswordForm.controls['passwordGroup'].hasError('nomatch')">
+                                    <span
+                                        *ngIf="!changePasswordForm.get('passwordGroup').get('confirmPassword').hasError('required') && changePasswordForm.controls['passwordGroup'].hasError('nomatch')">
                                         Password doesn't match!
                                     </span>
                                 </div>
@@ -209,7 +220,8 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <div class="btnRow">
-                                    <button class="next2 btn btn-secondary customBtn" (click)="changePassword(changePasswordForm.value)"
+                                    <button class="next2 btn btn-secondary customBtn"
+                                        (click)="changePassword(changePasswordForm.value)"
                                         [disabled]='!changePasswordForm.valid'>Change Password </button>
 
                                     <div class=" alert-danger">
