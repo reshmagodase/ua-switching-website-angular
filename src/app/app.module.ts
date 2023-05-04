@@ -38,82 +38,82 @@ import { UnderMaintenanceComponent } from './under-maintenance/under-maintenance
 const appRoutes: Routes = [
   {
     path: '',
-    component: UnderMaintenanceComponent
+    component: HomeComponent
   },
-  // {
-  //   path: 'gas',
-  //   component: Step1Component
-  // },
-  // {
-  //   path: 'electricity',
-  //   component: Step1Component
-  // },
-  // {
-  //   path: 'electricity/usage',
-  //   component: Step2Component
-  // }
-  // , {
-  //   path: 'electricity/pricing-list',
-  //   component: Step3Component
-  // }
-  // ,
-  // {
-  //   path: 'gas/usage',
-  //   component: Step2Component
-  // }
-  // , {
-  //   path: 'gas/pricing-list',
-  //   component: Step3Component
-  // }
-  // , {
-  //   path: 'electricity/personal-details',
-  //   component: PersonalDetailsComponent
-  // }
-  // , {
-  //   path: 'electricity/address-details',
-  //   component: AddressDetailsComponent
-  // }
-  // , {
-  //   path: 'electricity/payment-details',
-  //   component: PaymentDetailsComponent
-  // }
-  // , {
-  //   path: 'gas/personal-details',
-  //   component: PersonalDetailsComponent
-  // }
-  // , {
-  //   path: 'gas/address-details',
-  //   component: AddressDetailsComponent
-  // }
-  // , {
-  //   path: 'gas/payment-details',
-  //   component: PaymentDetailsComponent
-  // }
-  // , {
-  //   path: 'electricity/details',
-  //   component: DetailComponent
-  // }
-  // , {
-  //   path: 'gas/details',
-  //   component: DetailComponent
-  // }
-  // , {
-  //   path: 'thankyou',
-  //   component: ThankyouComponent
-  // }
-  // , {
-  //   path: 'profile',
-  //   component: ProfileComponent
-  // }
-  // , {
-  //   path: 'terms',
-  //   component: TermsComponent
-  // }
-  // , {
-  //   path: 'halfhourlyerror',
-  //   component: HalfhourlyerrorComponent
-  // }
-  { path: '**', component: UnderMaintenanceComponent }
+  {
+    path: 'gas',
+    component: Step1Component
+  },
+  {
+    path: 'electricity',
+    component: Step1Component
+  },
+  {
+    path: 'electricity/usage',
+    component: Step2Component
+  }
+  , {
+    path: 'electricity/pricing-list',
+    component: Step3Component
+  }
+  ,
+  {
+    path: 'gas/usage',
+    component: Step2Component
+  }
+  , {
+    path: 'gas/pricing-list',
+    component: Step3Component
+  }
+  , {
+    path: 'electricity/personal-details',
+    component: PersonalDetailsComponent
+  }
+  , {
+    path: 'electricity/address-details',
+    component: AddressDetailsComponent
+  }
+  , {
+    path: 'electricity/payment-details',
+    component: PaymentDetailsComponent
+  }
+  , {
+    path: 'gas/personal-details',
+    component: PersonalDetailsComponent
+  }
+  , {
+    path: 'gas/address-details',
+    component: AddressDetailsComponent
+  }
+  , {
+    path: 'gas/payment-details',
+    component: PaymentDetailsComponent
+  }
+  , {
+    path: 'electricity/details',
+    component: DetailComponent
+  }
+  , {
+    path: 'gas/details',
+    component: DetailComponent
+  }
+  , {
+    path: 'thankyou',
+    component: ThankyouComponent
+  }
+  , {
+    path: 'profile',
+    component: ProfileComponent
+  }
+  , {
+    path: 'terms',
+    component: TermsComponent
+  }
+  , {
+    path: 'halfhourlyerror',
+    component: HalfhourlyerrorComponent
+  },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({
