@@ -33,9 +33,10 @@ import { UnderMaintenanceComponent } from './under-maintenance/under-maintenance
 // import { GoogleAnalyticsEventsService } from "./google-anaytics.service";
 
 
-
-
 const appRoutes: Routes = [
+
+  // { path: 'home1:param1/:param2', component: HomeComponent },
+
   {
     path: '',
     component: HomeComponent
